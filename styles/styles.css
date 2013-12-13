@@ -43,13 +43,11 @@ a:focus {
 	padding: 1em;
 	position: relative;
 }
-#filter {
+#oafilter {
 	margin: 1em 0;
-	border: 1px dashed #ffd407;
-	background-color: #FFF6CD;
-	height: 10em;
+	min-height: 10em;
 }
-#filter p {
+#oafilter p {
 	font-style: italic;
 	text-align: center;
 }
