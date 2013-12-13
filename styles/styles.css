@@ -43,13 +43,13 @@ a:focus {
 	padding: 1em;
 	position: relative;
 }
-#list-builder {
+#filter {
 	margin: 1em 0;
 	border: 1px dashed #ffd407;
 	background-color: #FFF6CD;
 	height: 10em;
 }
-#list-builder p {
+#filter p {
 	font-style: italic;
 	text-align: center;
 }
