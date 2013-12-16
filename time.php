@@ -1,6 +1,5 @@
-<link rel="stylesheet" href="/styles/time.css">
+<link rel="stylesheet" href="styles/time.css">
 <div id="chart"></div>
-<script src="http://d3js.org/d3.v3.js"></script>
 <script>
 
 var margin = {top: 20, right: 20, bottom: 30, left: 50},
