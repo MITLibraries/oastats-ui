@@ -1,10 +1,8 @@
-<link rel="stylesheet" href="/styles/map.css">
+<link rel="stylesheet" href="styles/map.css">
 <?php
 
 // connect to Mongo
-$m = new MongoClient();
-$db = $m->oastats;
-$collection = $db->requests;
+require_once('includes/include_mongo_connect.php');
 
 /*
 db.requests.aggregate(
@@ -195,4 +193,5 @@ d3.select(self.frameElement).style("height", height + "px");
 echo "<p>Data range from ".$lo." to ".$hi."</p>";
 var_dump($cursor);
 
+require_once('includes/include_mongo_disconnect.php'); 
 ?>

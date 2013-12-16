@@ -25,6 +25,8 @@ if(isset($_GET["a"])) {
 		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 		<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 		<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+		<script src="http://d3js.org/d3.geo.projection.v0.min.js" charset="utf-8"></script>
+		<script src="http://d3js.org/topojson.v1.min.js" charset="utf-8"></script>
 		<script src="scripts/listbuilder.js" charset="utf-8"></script>
 		<script>
 $(document).ready(function() {
