@@ -62,8 +62,10 @@ $(document).ready(function() {
 				<p>
 					<span class="semantic">You are here: </span>
 					<span class="level home"><a href="/oastats/">Home</a></span>
+					<?php if($strBreadcrumb!="") { ?>
 						<span class="semantic">in subsection </span>
-						<span class="level">Page</span>
+						<span class="level"><?php echo $strBreadcrumb; ?></span>
+					<?php }; ?>
 				</p>
 			</div>
 			<section class="main">

@@ -4,6 +4,7 @@
 <script>
 	$(document).ready(function() {
 		$( "table.data" ).dataTable({
+			"bFilter": false,
 			"bLengthChange": false,
 			"bPaginate": false,
 			"bInfo": false,
