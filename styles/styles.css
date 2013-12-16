@@ -1,0 +1,269 @@
+/* Tag styles */
+body {
+	background: #f2f2f2;
+	font-family: Arial, sans-serif;
+}
+h1 {
+	font-weight: bold;
+	font-size: 2em;
+	margin: 0;
+}
+dt {
+	font-weight: bold;
+}
+dd {
+	margin: 0;
+}
+pre {
+	font-family: monospace;
+	margin: 0.5em 0;
+}
+p {
+	margin-bottom: 1em;
+}
+h2, h3, h4, h5, h6 {
+	font-weight: bold;
+}
+a {
+	text-decoration: none;
+}
+a:hover,
+a:focus {
+	text-decoration: underline;
+}
+
+/* General styles */
+
+/* Page Elements */
+.container {
+	margin: 1em auto;
+	max-width: 960px;
+	background: #fff;
+	border: 1px solid #eaeaea;
+	padding: 1em;
+	position: relative;
+}
+#oafilter {
+	margin: 1em 0;
+	min-height: 10em;
+}
+#oafilter p {
+	font-style: italic;
+	text-align: center;
+}
+#tabs {
+}
+#tabs ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+#tabs ul li {
+	display: block;
+	width: 33.333%;
+	float: left;
+	text-align: center;
+}
+#tabs ul li a {
+	display: block;
+	padding: 0.5em;
+}
+#tabs ul li a:hover,
+#tabs ul li a:focus {
+	background: #f2f2f2;
+}
+#tabs ul li.ui-state-active {
+	background: #eaeaea;
+}
+.ui-tabs-panel {
+	clear: both;
+	background: #eaeaea;
+	padding: 1em;
+}
+.semantic {
+	position: absolute;
+	left: -999px;
+	top: -999px;
+}
+
+.inner {
+	display: block;
+	position: relative;
+}
+
+/* Header */
+header {
+    font-weight: bold;
+    height: 70px;
+	padding: 1em 1em 0 1em;
+}
+#logo {
+    position: absolute;
+    top: 14px;
+    left: 28px;
+    width: 132px;
+    height: 56px;
+    background: transparent url('../img/logo.png') no-repeat;
+    text-indent: -9999px;
+}
+#toolbox {
+    position: absolute;
+    top: 18px;
+    right: 26px;
+}
+#asktell {
+    display: inline-block;
+    padding: 0 0 0 18px;
+    position: relative;
+    top: 6px;
+    background: none !important;
+}
+.visible-phone {
+    display: none !important;
+}
+map {
+    display: inline;
+}
+
+/* Breadcrumb */
+#breadcrumb {
+	background-color: #eceaea;
+	font-size: 12px;
+	padding: .625rem;
+}
+#breadcrumb .level:before {
+	content: '> ';
+}
+#breadcrumb .level.home:before {
+	content: '';
+}
+
+/* Content Section */
+section h1 {
+	background: #333;
+	color: #fff;
+	padding: .571428em .35714em;
+	margin-bottom: 1em;
+	font-size: 28px;
+}
+/* Footer */
+footer[role="contentinfo"] {
+	clear: both;
+	font-size: 12px;
+	font-size: 0.857142857rem;
+	line-height: 2;
+	max-width: 960px;
+	max-width: 68.571428571rem;
+	margin-top: 24px;
+	margin-top: 1.714285714rem;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 24px 0;
+	padding: 1.714285714rem 0 0 0;
+}
+
+footer[role="contentinfo"] a {
+	color: #686868;
+}
+
+footer[role="contentinfo"] a:hover {
+	color: #21759b;
+}
+
+#footerHeader {
+	padding: 10px;
+	background: none repeat scroll 0 0 #333;
+	color: #ccc;
+	font-size: 14px;
+	position: relative;
+	height: 72px;
+}
+#footerHeader a {
+	color: #c9e3fc;
+}
+#footerHeader #footerMainLink {
+	left: 190px;
+	position: absolute;
+	top: 51px;
+}
+#footerHeader #footerSubLink {
+	position: absolute;
+	right: 20px;
+	top: 51px;
+}
+#footerHeader #socialFooter {
+	line-height: 17px;
+	position: absolute;
+	right: 17px;
+	text-align: right;
+	top: 20px;
+}
+.social {
+	background-image: url('../img/social-icons.png');
+	background-repeat: no-repeat;
+	display: inline-block;
+	height: 17px;
+	margin-left: 2px;
+	text-align: left;
+	text-indent: -9999px;
+	width: 17px;
+}
+#twitter {
+	background-position: 0 0;
+}
+#facebook {
+	background-position: -20px 0;
+}
+#rss {
+	background-position: -40px 0;	
+}
+#flickr {
+	background-position: -60px 0;	
+}
+#foursquare {
+	background-position: -80px 0;	
+}
+#google {
+	background-position: -100px 0;	
+}
+#logoFooter {
+	background: url("../img/logo-black.png") no-repeat scroll 0 0 rgba(0,0,0,0);
+	height: 47px;
+	left: 18px;
+	position: absolute;
+	text-indent: -9999px;
+	top: 16px;
+	width: 111px;
+}
+#footerFooter {
+	background: none repeat scroll 0 0 #f2f0f0;
+	border-top: 2px solid #fff;
+	display: block;
+	font-size: 12px;
+	padding-bottom: 24px;
+	position: relative;
+}
+#mitLogo {
+	background: url("../img/logo-mit.png") no-repeat scroll 0 0 rgba(0,0,0,0);
+	display: block;
+	float: left;
+	height: 39px;
+	margin: 25px 0 0 20px;
+	position: relative;
+	text-indent: -9999px;
+	width: 170px;
+}
+.copyright {
+	float: right;
+	margin-right: 20px;
+	margin-top: 19px;
+	position: relative;
+	width: 280px;
+}
+#footerFooter:after {
+	clear: both;
+	content: "";
+	display: table;
+}
+
+/* Page-specific styles */
