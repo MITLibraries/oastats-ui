@@ -54,41 +54,7 @@ $i = 0;
 foreach($cursor["result"] as $document) {
   if ( $document["downloads"] > $hi ) { $hi = $document["downloads"]; }
   if ( $document["downloads"] < $lo ) { $lo = $document["downloads"]; }
-  switch($document["_id"]) {
-    case "CA":
-      $cursor["result"][$i]["code"] = 124;
-      break;
-    case "DE":
-      $cursor["result"][$i]["code"] = 276;
-      break;
-    case "ES":
-      $cursor["result"][$i]["code"] = 724;
-      break;
-    case "FI":
-      $cursor["result"][$i]["code"] = 246;
-      break;
-    case "FR":
-      $cursor["result"][$i]["code"] = 250;
-      break;
-    case "GB":
-      $cursor["result"][$i]["code"] = 826;
-      break;
-    case "IT":
-      $cursor["result"][$i]["code"] = 380;
-      break;
-    case "MX":
-      $cursor["result"][$i]["code"] = 484;
-      break;
-    case "NO":
-      $cursor["result"][$i]["code"] = 578;
-      break;
-    case "SE":
-      $cursor["result"][$i]["code"] = 752;
-      break;
-    case "US":
-      $cursor["result"][$i]["code"] = 840;
-      break;
-  }
+  $cursor["result"][$i]["code"] = (int) $document["_id"];
   $i++;
 }
 
