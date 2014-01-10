@@ -16,82 +16,105 @@
 // connect to Mongo
 require_once('includes/include_mongo_connect.php');
 
+$strFilterTerm = 'dlc';
 // collect possible query parameters
 if(isset($_GET["d"])) {
-	$reqD = urldecode($_GET["d"]);
+	$reqD = $_GET["d"];
+	$strFilterTerm = 'author';
 }
 if(isset($_GET["a"])) {
-	$reqA = urldecode($_GET["a"]);
+	$reqA = $_GET["a"];
+	$strFilterTerm = 'handle';
+}
+if(isset($_GET["filter"])) {
+	$reqFilter = $_GET["filter"];
 }
 
-/*
-This needs to translate the MongoDB query into PHP syntax:
-db.requests.aggregate( [ 
-	{ $group : { _id : { dlc : "$dlc" , handle : "$handle" }, downloads : { $sum : 1 } } } , 
-	{ $group : { _id : "$_id.dlc" , size : { $sum : 1 } , downloads : { $sum: "$downloads"} } } ,
-	{ $sort : { _id : 1 } } 
-] )
-
-	array('$match'=>array('author'=>'http://example.com/author/1195')),
-	array('$group'=>array('_id'=>'$handle','downloads'=>array('$sum'=>1)))
-
-*/
+$arrQuery = array();
+// Apply filter values
+if(isset($reqFilter)){
+	$arrMatch = array();
+	$arrFilter = array();
+	// iterate over reqFilter, padding out values
+	foreach($reqFilter as $term) {
+		array_push($arrFilter,array($strFilterTerm=>$term));
+	}
+	$arrMatch = array('$match' => array( '$or' => $arrFilter));
+	// add arrMatch to built query
+	array_push($arrQuery,$arrMatch);
+}
 
 if(isset($reqD)) {
 	$strGroup = "Author";
 	$charNext = "a";
-	$cursor = $collection->aggregate(
-		array('$match' => array('dlc'=>$reqD) ),
+	array_push($arrQuery,
+		array('$match' => array('dlc'=>$reqD) )
+	);
+	array_push($arrQuery,
 		array('$group' => array(
 			'_id'=>array(
 				'author'=>'$author',
 				'handle'=>'$handle'
 			),'downloads'=>array('$sum'=>1)
 			)
-		),
+		)
+	);
+	array_push($arrQuery,
 		array('$group' => array(
 			'_id'=>'$_id.author', 
 			'size'=>array('$sum'=>1),
 			'downloads'=>array('$sum'=>'$downloads')
 			)
-		),
+		)
+	);
+	array_push($arrQuery,
 		array('$sort'=>array('_id'=>1))
 	);
 
 } elseif (isset($reqA)) {
 	$strGroup = "Paper";
 	$charNext = "";
-	$cursor = $collection->aggregate(
-		array('$match' => array('author'=>$reqA) ),
+	array_push($arrQuery,
+		array('$match' => array('author'=>$reqA) )
+	);
+	array_push($arrQuery,
 		array('$group' => array(
 			'_id'=>'$handle',
 			'downloads'=>array('$sum'=>1)
 			)
-		),
+		)
+	);
+	array_push($arrQuery,
 		array('$sort'=>array('_id'=>1))
 	);
 
 } else {
 	$strGroup = "Group";
 	$charNext = "d";
-	$cursor = $collection->aggregate(
+	array_push($arrQuery,
 		array('$group' => array(
 			'_id'=>array(
 				'dlc'=>'$dlc',
 				'handle'=>'$handle'
 			),'downloads'=>array('$sum'=>1)
 			)
-		),
+		)
+	);
+	array_push($arrQuery,
 		array('$group' => array(
 			'_id'=>'$_id.dlc', 
 			'size'=>array('$sum'=>1),
 			'downloads'=>array('$sum'=>'$downloads')
 			)
-		),
+		)
+	);
+	array_push($arrQuery,
 		array('$sort'=>array('_id'=>1))
 	);
 
 }
+
+$cursor = $collection->aggregate($arrQuery);
 
 ?>
 <table class="data">
