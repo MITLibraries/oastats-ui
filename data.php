@@ -16,105 +16,56 @@
 // connect to Mongo
 require_once('includes/include_mongo_connect.php');
 
-$strFilterTerm = 'dlc';
 // collect possible query parameters
+if(isset($_GET["user"])) {
+	$reqUser = urldecode($_GET["user"]);
+}
 if(isset($_GET["d"])) {
 	$reqD = $_GET["d"];
 	$strFilterTerm = 'author';
-}
-if(isset($_GET["a"])) {
+	$arrCriteria = array('type' => 'author');
+	$nextType = "a";
+	$strGroup = "Author";
+} elseif(isset($_GET["a"])) {
 	$reqA = $_GET["a"];
 	$strFilterTerm = 'handle';
+	$arrCriteria = array('type' => 'paper');
+	$nextType = "";
+	$strGroup = "Paper";
+} elseif(isset($_GET["p"])) {
+	$reqA = $_GET["user"];
+	$strFilterTerm = 'handle';
+	$arrCriteria = array('type' => 'paper');
+	$nextType = "";
+	$strGroup = "Paper";
+} else {
+	$strFilterTerm = '_id';
+	$arrCriteria = array('type' => 'dlc');
+	$nextType = "d";
+	$strGroup = "Department, Lab or Center";
 }
-if(isset($_GET["filter"])) {
-	$reqFilter = $_GET["filter"];
+if(isset($_GET["user"])) {
+	$reqUser = urldecode($_GET["user"]);
 }
 
-$arrQuery = array();
-// Apply filter values
-if(isset($reqFilter)){
-	$arrMatch = array();
+if(isset($_GET["filter"])) {
+	$reqFilter = $_GET["filter"];
 	$arrFilter = array();
 	// iterate over reqFilter, padding out values
 	foreach($reqFilter as $term) {
 		array_push($arrFilter,array($strFilterTerm=>$term));
 	}
-	$arrMatch = array('$match' => array( '$or' => $arrFilter));
-	// add arrMatch to built query
-	array_push($arrQuery,$arrMatch);
+	// if a filter is set, that should trump whatever was set as the criteria above
+	$arrCriteria = array( '$or' => $arrFilter);
 }
 
-if(isset($reqD)) {
-	$strGroup = "Author";
-	$charNext = "a";
-	array_push($arrQuery,
-		array('$match' => array('dlc'=>$reqD) )
-	);
-	array_push($arrQuery,
-		array('$group' => array(
-			'_id'=>array(
-				'author'=>'$author',
-				'handle'=>'$handle'
-			),'downloads'=>array('$sum'=>1)
-			)
-		)
-	);
-	array_push($arrQuery,
-		array('$group' => array(
-			'_id'=>'$_id.author', 
-			'size'=>array('$sum'=>1),
-			'downloads'=>array('$sum'=>'$downloads')
-			)
-		)
-	);
-	array_push($arrQuery,
-		array('$sort'=>array('_id'=>1))
-	);
+$arrProjection = array(
+	'_id'=>1,
+	'size'=>1,
+	'downloads'=>1
+);
 
-} elseif (isset($reqA)) {
-	$strGroup = "Paper";
-	$charNext = "";
-	array_push($arrQuery,
-		array('$match' => array('author'=>$reqA) )
-	);
-	array_push($arrQuery,
-		array('$group' => array(
-			'_id'=>'$handle',
-			'downloads'=>array('$sum'=>1)
-			)
-		)
-	);
-	array_push($arrQuery,
-		array('$sort'=>array('_id'=>1))
-	);
-
-} else {
-	$strGroup = "Group";
-	$charNext = "d";
-	array_push($arrQuery,
-		array('$group' => array(
-			'_id'=>array(
-				'dlc'=>'$dlc',
-				'handle'=>'$handle'
-			),'downloads'=>array('$sum'=>1)
-			)
-		)
-	);
-	array_push($arrQuery,
-		array('$group' => array(
-			'_id'=>'$_id.dlc', 
-			'size'=>array('$sum'=>1),
-			'downloads'=>array('$sum'=>'$downloads')
-			)
-		)
-	);
-	array_push($arrQuery,
-		array('$sort'=>array('_id'=>1))
-	);
-
-}
-
-$cursor = $collection->aggregate($arrQuery);
+$cursor = $summaries->find($arrCriteria,$arrProjection);
 
 ?>
 <table class="data">
@@ -127,12 +78,16 @@ $cursor = $collection->aggregate($arrQuery);
 	</thead>
 	<tbody>
 <?php
-foreach($cursor["result"] as $document) {
+foreach($cursor as $document) {
 ?>
 	<tr>
-		<td><a href="?<?php echo $charNext; ?>=<?php echo urlencode($document["_id"]); ?>"><?php echo $document["_id"]; ?></a></td>
-		<?php if(!isset($reqA)) { ?><td><?php echo $document["size"]; ?></td><?php } ?>
-		<td><?php echo $document["downloads"]; ?></td>
+		<?php if(isset($reqUser) && $reqUser == "admin") { ?>
+		<td><a href="?user=admin&amp;<?php echo $nextType; ?>=<?php echo urlencode($document["_id"]); ?>"><?php echo $document["_id"]; ?></a></td>
+		<?php } else { ?>
+		<td><?php echo $document["_id"]; ?></td>
+		<?php } ?>
+		<?php if(!isset($reqA)) { ?><td><?php echo number_format($document["size"]); ?></td><?php } ?>
+		<td><?php echo number_format($document["downloads"]); ?></td>
 	</tr>
 <?php
 }
