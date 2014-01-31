@@ -9,15 +9,21 @@ if(isset($_GET["filter"])){
 // build the right filter query
 if($reqD!="") {
 	$strInstructions = "Show only these Authors:";
-	$cursor = $collection->distinct('author',array('dlc'=>$reqD));
+	$arrCriteria = array('type' => 'author');
 } elseif($reqA!="") {
 	$strInstructions = "Show only these Papers:";
-	$cursor = $collection->distinct('handle',array('author'=>$reqA));
+	$arrCriteria = array('type' => 'paper');
 } else {
 	$strInstructions = "Show only these Departments, Labs or Centers:";
-	$cursor = $collection->distinct('dlc');	
+	$arrCriteria = array('type' => 'dlc');
 }
-sort($cursor);
+
+$arrProjection = array(
+	'_id'=>1,
+);
+
+$cursor = $summaries->find($arrCriteria,$arrProjection);
+
 ?>
 	<form method="get">
 		<?php
@@ -34,7 +40,7 @@ sort($cursor);
 			<?php
 				foreach($cursor as $document) {
 					?>
-					<option value="<?php echo $document; ?>" <?php if(in_array($document,$reqFilter)) { echo 'selected="selected"'; } ?> ><?php echo $document; ?></option>
+					<option value="<?php echo $document['_id']; ?>" <?php if(in_array($document['_id'],$reqFilter)) { echo 'selected="selected"'; } ?> ><?php echo $document['_id']; ?></option>
 					<?php
 				}
 			?>
