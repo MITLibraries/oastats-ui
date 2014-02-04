@@ -63,14 +63,9 @@ as the min/max values are calculated
 $arrProjection = array('countries'=>1);
 $cursor = $summaries->find($arrCriteria,$arrProjection);
 
-$lo = 999999999999;
-$hi = 0;
 $tempset = array();
 foreach($cursor as $document) {
   foreach($document["countries"] as $record) {
-
-    if ( $record["downloads"] > $hi ) { $hi = $record["downloads"]; }
-    if ( $record["downloads"] < $lo ) { $lo = $record["downloads"]; }
 
     // need to check for this item in dataset
     if(array_key_exists($record['country'],$tempset)) {
@@ -99,7 +94,12 @@ foreach($cursor as $document) {
 // now push the data into the format needed
 $datatable = '<table><tr><th scope="col">Country</th><th scope="col">Downloads</th></tr>';
 $dataset = array();
+$lo = 999999999999;
+$hi = 0;
 foreach($tempset as $key => $val) {
+  if ( $val > $hi ) { $hi = $val; }
+  if ( $val < $lo ) { $lo = $val; }
+
   $datatable .= '<tr><td>'.$key.'</td><td>'.$val.'</td></tr>';
   $dataItem = array();
   $dataItem['code'] = (int) $key;
@@ -143,7 +143,7 @@ var projection = d3.geo.equirectangular()
     .precision(.1);
 
 var downloadScale = d3.scale.linear()
-  .domain([0,<?php echo $hi; ?>])
+  .domain([<?php echo $lo; ?>,<?php echo $hi; ?>])
   .range([0,5]);
 
 var path = d3.geo.path()
@@ -204,6 +204,11 @@ d3.json("data/world-50m.json", function(error, world) {
 d3.select(self.frameElement).style("height", height + "px");
 
 </script>
-<?php echo '<p>'.$scope.'</p>'; ?>
-<?php echo $datatable; ?>
+<?php 
+  echo '<p>From '.$lo.' to '.$hi.'</p>';
+/*
+  echo '<p>'.$scope.'</p>';
+  echo $datatable; 
+*/
+?>
 <?php require_once('includes/include_mongo_disconnect.php'); ?>
