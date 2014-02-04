@@ -205,8 +205,8 @@ d3.select(self.frameElement).style("height", height + "px");
 
 </script>
 <?php 
-  echo '<p>From '.$lo.' to '.$hi.'</p>';
 /*
+  echo '<p>From '.$lo.' to '.$hi.'</p>';
   echo '<p>'.$scope.'</p>';
   echo $datatable; 
 */
