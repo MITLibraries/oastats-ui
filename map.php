@@ -117,6 +117,7 @@ $datatable .= '</table>';
 </div>
 
 <div id="map"></div>
+<div id="legend">Downloads: <span class="value"></span></div>
 <script>
 
 var mapdata = <?php echo json_encode($dataset); ?>;
@@ -149,7 +150,7 @@ var projection = d3.geo.equirectangular()
 
 var downloadScale = d3.scale.linear()
   .domain([<?php echo $lo; ?>,<?php echo $hi; ?>])
-  .range([0,5]);
+  .range([1,5]);
 
 var path = d3.geo.path()
     .projection(projection);
@@ -173,14 +174,12 @@ svg.append("use")
     .attr("class", "fill")
     .attr("xlink:href", "#sphere");
 
-svg.append("path")
-    .datum(graticule)
-    .attr("class", "graticule")
-    .attr("d", path);
-
 d3.json("data/world-50m.json", function(error, world) {
   var countries = topojson.feature(world, world.objects.countries).features,
       neighbors = topojson.neighbors(world.objects.countries.geometries);
+
+  svg.insert("g")
+    .attr("class", "base");
 
   svg.selectAll(".country")
       .data(countries)
@@ -191,19 +190,38 @@ d3.json("data/world-50m.json", function(error, world) {
       .attr("class", function(d, i) { 
         for(j=0;j<mapdata.length;j++){
           if(mapdata[j]["code"]===d.id) {
-            return "dl_"+Math.floor(downloadScale(mapdata[j]["downloads"]))+' n'+mapdata[j]["downloads"];
+            return "country dl_"+Math.floor(downloadScale(mapdata[j]["downloads"]))+' n'+mapdata[j]["downloads"];
           }
         }
-        // d.id - from the topojson file - is what we use to look up and then quantize downloads
         return "dnull d"+d.id
+      } )
+      .attr("data-value", function(d, i) {
+        for(j=0;j<mapdata.length;j++){
+          if(mapdata[j]["code"]===d.id) {
+            return mapdata[j]["downloads"];
+          }
+        }
+        return 0;
       } );
-      // .style("fill", function(d, i) { if(i===250){alert(d.id);dump(d);} return color(d.color = d3.max(neighbors[i], function(n) { return countries[n].color; }) + 1 | 0); });
-      // "#ffd407");
 
-  svg.insert("path", ".graticule")
-      .datum(topojson.mesh(world, world.objects.countries, function(a, b) { return a !== b; }))
-      .attr("class", "boundary")
-      .attr("d", path);
+  svg.insert("g")
+    .attr("class", "focus");
+
+  $(".country")
+    .on('mouseenter', function(e) {
+      $("g.focus").append(this);
+      // $(this).attr('data-state','focus');
+      // update legend
+      var value = $(this).attr('data-value');
+      $("#legend .value").text(value);
+    })
+    .on('mouseleave', function(e) {
+      $(this).attr('data-state','');
+      $("g.base").append(this);
+      // clear legend
+      $("#legend .value").text('');
+    });
+
 });
 
 d3.select(self.frameElement).style("height", height + "px");

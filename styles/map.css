@@ -29,6 +29,9 @@
   stroke-width: .5px;
 }
 
+path {
+  opacity: 0.8;
+}
 path.dnull {
   fill: white;
   stroke: #ccc;
@@ -56,4 +59,13 @@ path.dl_4 {
 path.dl_5 {
   fill: rgb(8,48,107);
   stroke: #ccc;
+}
+
+g.base path {
+  stroke: #ccc;
+  opacity: 0.8;
+}
+g.focus path {
+  stroke: #671E1E !important;
+  opacity: 1.0 !important;
 }
