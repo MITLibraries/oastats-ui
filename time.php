@@ -28,7 +28,7 @@ $(document).ready(function() {
       bottom: 90,
       left: 70,
       right: 30
-    };
+    };      
 
     var tooltip = id + '-tooltip';
     var tooltipElem = $('#' + tooltip);
@@ -57,11 +57,13 @@ $(document).ready(function() {
     var updateTooltip = function(xVal, yVal, index, date) {
       var animObj, d, value, _i, _len, _results;
       tooltipElem.show();
-      animObj = {
-        left: xVal,
-        top: yVal ? yVal : void 0
-      };
-      tooltipElem.stop().animate(animObj, 50, 'linear');
+      if (single) {
+        animObj = {
+          left: xVal,
+          top: yVal ? yVal : void 0
+        };
+        tooltipElem.stop().animate(animObj, 50, 'linear');
+      }
       tooltipElem.html('');
       if (_.isDate(date)) {
         date = timeFormat(date);
@@ -99,8 +101,11 @@ $(document).ready(function() {
     var render = function() {
       if(data.length > 1) {
         multi = true;
-        $('#' + tooltip).css('top', 50);
-        $('#' + tooltip).css('left', 80);
+        // adjust right margin
+        margin.right = 180;
+        // 
+        $('#' + tooltip).css('top', 30);
+        $('#' + tooltip).css('right', 0);
         $('#' + tooltip).show();
         // calculate maxY
         maxY = 0;
@@ -110,6 +115,7 @@ $(document).ready(function() {
 
       } else {
         maxY = data[0][data[0].length-1];
+        $('.tooltip').addClass('single');
       }
       single = !multi;
 
