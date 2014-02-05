@@ -1,4 +1,9 @@
 <link rel="stylesheet" href="styles/time.css">
+<div class="export">
+  <a>CSV</a>
+  <a>PDF</a>
+  <a>PNG</a>
+</div>
 <div class="vis new" id="time">
   <div id="time-tooltip" class="tooltip"></div>
 </div>

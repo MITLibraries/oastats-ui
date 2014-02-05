@@ -10,6 +10,7 @@ svg line {
 }
 
 .vis {
+  clear: both;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   background-color: #fff;
   border: 1px solid;

@@ -6,8 +6,8 @@
 		$( "table.data" ).dataTable({
 			"bFilter": false,
 			"bLengthChange": false,
-			"bPaginate": false,
 			"bInfo": false,
+			"sPaginationType": "full_numbers"
 		});
 	});
 </script>
@@ -68,6 +68,11 @@ $arrProjection = array(
 $cursor = $summaries->find($arrCriteria,$arrProjection);
 
 ?>
+<div class="export">
+	<a>CSV</a>
+	<a>PDF</a>
+</div>
+
 <table class="data">
 	<thead>
 		<tr>

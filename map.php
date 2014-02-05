@@ -110,6 +110,11 @@ $datatable .= '</table>';
 
 
 ?>
+<div class="export">
+  <a>CSV</a>
+  <a>PDF</a>
+  <a>PNG</a>
+</div>
 
 <div id="map"></div>
 <script>

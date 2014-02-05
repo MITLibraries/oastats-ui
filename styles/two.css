@@ -87,3 +87,30 @@ dd {
 	left: -999px;
 	top: -999px;
 }
+/* DataTables overrides */
+#page .dataTables_paginate {
+	float: none;
+	text-align: center;
+	margin-top: 1em;
+}
+/* Export controls */
+.export {
+	float: right;
+	margin-bottom: 1em;
+}
+.export a {
+	background-color: #ddd;
+	border: 1px solid #aaa;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	padding: 2px 5px;
+	margin: 0 3px;
+	cursor: pointer;
+	color: #333 !important;
+}
+.export a:hover,
+.export a:focus {
+	background-color: #ccc;
+	text-decoration: none;
+}
