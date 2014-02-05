@@ -298,6 +298,11 @@ $(document).ready(function() {
     init();
   };
 
+
+  var showTooLong = function() {
+    $(".export").before('<div class="warning"><strong>Please note:</strong> You have selected more filter items than this chart can display. Only the first nine have been displayed, although the full set is available using the export tools.</div>');
+  };
+
   $.getJSON('data/json-time-running.php?<?php echo $_SERVER["QUERY_STRING"];?>',function(data) {
     $.each(data,function(key,val) {
       if(key=="dates") {
@@ -312,6 +317,9 @@ $(document).ready(function() {
         $.each(val,function(key, val) {
           dataNamesRaw.push(val);
         });
+        if(dataNamesRaw.length > 9) {
+          showTooLong();
+        }
       } else if(key=="dataRaw") {
         $.each(val,function(key, val) {
           dataRaw.push(val);
@@ -326,4 +334,5 @@ $(document).ready(function() {
   });
 
 });
+
 </script>
