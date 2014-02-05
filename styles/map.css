@@ -69,3 +69,7 @@ g.focus path {
   stroke: #671E1E !important;
   opacity: 1.0 !important;
 }
+
+table.mapdata {
+  margin-top: 1em;
+}

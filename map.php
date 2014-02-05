@@ -92,7 +92,7 @@ foreach($cursor as $document) {
 }
 
 // now push the data into the format needed
-$datatable = '<table><tr><th scope="col">Country</th><th scope="col">Downloads</th></tr>';
+$datatable = '<table class="mapdata"><thead><tr><th scope="col">Country</th><th scope="col">Downloads</th></tr></thead><tbody>';
 $dataset = array();
 $lo = 999999999999;
 $hi = 0;
@@ -106,7 +106,7 @@ foreach($tempset as $key => $val) {
   $dataItem['downloads'] = (int) $val;
   array_push($dataset,$dataItem);
 }
-$datatable .= '</table>';
+$datatable .= '</tbody></table>';
 
 
 ?>
@@ -226,12 +226,21 @@ d3.json("data/world-50m.json", function(error, world) {
 
 d3.select(self.frameElement).style("height", height + "px");
 
+  $(document).ready(function() {
+    $( "table.mapdata" ).dataTable({
+      "bFilter": false,
+      "bLengthChange": false,
+      "bInfo": false,
+      "sPaginationType": "full_numbers"
+    });
+  });
+
 </script>
 <?php 
 /*
   echo '<p>From '.$lo.' to '.$hi.'</p>';
   echo '<p>'.$scope.'</p>';
-  echo $datatable; 
 */
+  echo $datatable; 
 ?>
 <?php require_once('includes/include_mongo_disconnect.php'); ?>
