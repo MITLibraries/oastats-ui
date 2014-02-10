@@ -31,11 +31,11 @@ if(isset($_GET["d"])) {
 		<link rel="stylesheet" href="styles/reset.css">
 		<link rel="stylesheet" href="styles/two.css">
 		<link rel="stylesheet" href="styles/listbuilder.css">
-		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-		<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-		<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-		<script src="http://d3js.org/d3.geo.projection.v0.min.js" charset="utf-8"></script>
-		<script src="http://d3js.org/topojson.v1.min.js" charset="utf-8"></script>
+		<script src="https://code.jquery.com/jquery-1.9.1.js"></script>
+		<script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+		<script src="scripts/d3.v3.min.js" charset="utf-8"></script>
+		<script src="scripts/d3.geo.projection.v0.min.js" charset="utf-8"></script>
+		<script src="scripts/topojson.v1.min.js" charset="utf-8"></script>
 		<script src="scripts/listbuilder.js" charset="utf-8"></script>
 		<script>
 $(document).ready(function() {
@@ -74,12 +74,8 @@ $(document).ready(function() {
 			<div class="page-inner">
 				<div id="masthead">
 					<h1>Open Access Statistics - Mockup Two</h1>
-				</div>			
-<?php
-	if(isset($reqUser) && $reqUser != "admin") {
-		echo '<div id="usertab"><a href="?user='.urlencode($reqUser).'&amp;p=mine">My Papers</a><a href="?user='.urlencode($reqUser).'">Public Stats</a></div>';
-	}
-?>					
+				</div>	
+				<?php require_once('includes/include_login.php'); ?>
 				<div id="breadcrumb">
 					<p>
 					<span class="semantic">You are here: </span>

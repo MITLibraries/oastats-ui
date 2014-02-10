@@ -36,6 +36,11 @@ strong {
 	margin: -0.5em;
 	background-image: url('../images/banner.png');
 }
+#usertab div.user {
+	margin-top: 0.5em;
+	padding: 0.25em;
+	float: left;
+}
 #usertab a {
 	margin-top: 0.5em;
 	margin-left: 1em;
