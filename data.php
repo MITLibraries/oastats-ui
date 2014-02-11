@@ -22,13 +22,13 @@ if(isset($_GET["user"])) {
 }
 if(isset($_GET["d"])) {
 	$reqD = $_GET["d"];
-	$strFilterTerm = 'author';
+	$strFilterTerm = '_id';
 	$arrCriteria = array('type' => 'author');
 	$nextType = "a";
 	$strGroup = "Author";
 } elseif(isset($_GET["a"])) {
 	$reqA = $_GET["a"];
-	$strFilterTerm = 'handle';
+	$strFilterTerm = '_id';
 	$arrCriteria = array('type' => 'paper');
 	$nextType = "";
 	$strGroup = "Paper";
@@ -98,4 +98,5 @@ foreach($cursor as $document) {
 }
 ?>
 </table>
+
 <?php require_once('includes/include_mongo_disconnect.php'); ?>
