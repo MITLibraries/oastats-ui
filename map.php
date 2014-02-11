@@ -102,12 +102,19 @@ foreach($tempset as $key => $val) {
 
   $datatable .= '<tr><td>'.$key.'</td><td>'.$val.'</td></tr>';
   $dataItem = array();
-  $dataItem['code'] = (int) $key;
+  $dataItem['fillKey'] = "q0";
   $dataItem['downloads'] = (int) $val;
-  array_push($dataset,$dataItem);
+  $dataset[$key] = $dataItem;
 }
 $datatable .= '</tbody></table>';
 
+// parse dataset, sorting records into quintiles
+foreach($dataset as $key => $val) {
+  $intQuintile = intval(($val['downloads'] / $hi)*4)+1;
+  if($intQuintile>5) {$intQuintile=5;}
+  $val['fillKey'] = "q".$intQuintile;
+  $dataset[$key] = $val;
+}
 
 ?>
 <div class="export">
@@ -116,115 +123,29 @@ $datatable .= '</tbody></table>';
   <a>PNG</a>
 </div>
 
-<div id="map"></div>
-<div id="legend">Downloads: <span class="value"></span></div>
+<div id="map" style="position: relative; width: 910px; height: 400px;"></div>
 <script>
 
-var mapdata = <?php echo json_encode($dataset); ?>;
+  var mapdata = <?php echo json_encode($dataset); ?>;
 
-function dump(obj) {
-    var out = '';
-    for (var i in obj) {
-        out += i + ": " + obj[i] + "\n";
-    }
-
-    console.log(out);
-
-    // or, if you wanted to avoid alerts...
-/*
-    var pre = document.createElement('pre');
-    pre.innerHTML = out;
-    document.body.appendChild(pre)
-*/
-}
-
-var width = 900,
-    height = 450;
-
-var color = d3.scale.category10();
-
-var projection = d3.geo.equirectangular()
-    .scale(143)
-    .translate([width / 2, height / 2])
-    .precision(.1);
-
-var downloadScale = d3.scale.linear()
-  .domain([<?php echo $lo; ?>,<?php echo $hi; ?>])
-  .range([1,5]);
-
-var path = d3.geo.path()
-    .projection(projection);
-
-var graticule = d3.geo.graticule();
-
-var svg = d3.select("#map").append("svg")
-    .attr("width", width)
-    .attr("height", height);
-
-svg.append("defs").append("path")
-    .datum({type: "Sphere"})
-    .attr("id", "sphere")
-    .attr("d", path);
-
-svg.append("use")
-    .attr("class", "stroke")
-    .attr("xlink:href", "#sphere");
-
-svg.append("use")
-    .attr("class", "fill")
-    .attr("xlink:href", "#sphere");
-
-d3.json("data/world-50m.json", function(error, world) {
-  var countries = topojson.feature(world, world.objects.countries).features,
-      neighbors = topojson.neighbors(world.objects.countries.geometries);
-
-  svg.insert("g")
-    .attr("class", "base");
-
-  svg.selectAll(".country")
-      .data(countries)
-    .enter().insert("path", ".graticule")
-      .attr("class", "country")
-      .attr("d", path)
-      .attr("name", "foo")
-      .attr("class", function(d, i) { 
-        for(j=0;j<mapdata.length;j++){
-          if(mapdata[j]["code"]===d.id) {
-            return "country dl_"+Math.floor(downloadScale(mapdata[j]["downloads"]))+' n'+mapdata[j]["downloads"];
-          }
-        }
-        return "dnull d"+d.id
-      } )
-      .attr("data-value", function(d, i) {
-        for(j=0;j<mapdata.length;j++){
-          if(mapdata[j]["code"]===d.id) {
-            return mapdata[j]["downloads"];
-          }
-        }
-        return 0;
-      } );
-
-  svg.insert("g")
-    .attr("class", "focus");
-
-  $(".country")
-    .on('mouseenter', function(e) {
-      $("g.focus").append(this);
-      // $(this).attr('data-state','focus');
-      // update legend
-      var value = $(this).attr('data-value');
-      $("#legend .value").text(value);
-    })
-    .on('mouseleave', function(e) {
-      $(this).attr('data-state','');
-      $("g.base").append(this);
-      // clear legend
-      $("#legend .value").text('');
-    });
-
-});
-
-d3.select(self.frameElement).style("height", height + "px");
+  var map = new Datamap({
+    element: document.getElementById('map'),
+    geographyConfig: {
+      popupTemplate: function(geography, data) {
+        return '<div class="hoverinfo"><strong>' + geography.properties.name + '<br>' + data.downloads.toLocaleString() + '</strong></div>';
+      }
+    },
+    fills: {
+      defaultFill: "#cccccc",
+      q0: "rgb(242,242,242)",
+      q1: "rgb(173,186,206)",
+      q2: "rgb(132,152,181)",
+      q3: "rgb(90,117,156)",
+      q4: "rgb(49,83,132)",
+      q5: "rgb(8,48,107)",
+    },
+    data: mapdata
+  });
 
   $(document).ready(function() {
     $( "table.mapdata" ).dataTable({
@@ -237,10 +158,6 @@ d3.select(self.frameElement).style("height", height + "px");
 
 </script>
 <?php 
-/*
-  echo '<p>From '.$lo.' to '.$hi.'</p>';
-  echo '<p>'.$scope.'</p>';
-*/
   echo $datatable; 
 ?>
 <?php require_once('includes/include_mongo_disconnect.php'); ?>
