@@ -1,24 +1,97 @@
-#time {
-	margin: 1em;
-	min-height: 10em;
-}
-#chart {
-  font: 10px sans-serif;
+#line-graph-new-multi {
+  background: white;
 }
 
-.axis path,
-.axis line {
+/* HEAP VIS */
+
+svg line {
   fill: none;
-  stroke: #000;
   shape-rendering: crispEdges;
 }
 
-.x.axis path {
-  display: none;
+.vis {
+  clear: both;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-color: #fff;
+  border: 1px solid;
+  width: 910px;
+  position: relative;
+  margin-bottom: 20px;
+  -webkit-font-smoothing: antialiased;
 }
 
-.line {
+.vis text.label {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.vis text.title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.vis .axis {
+  font-size: 12px;
+}
+
+.vis line {
+  stroke: #e9e4d8;
+  stroke-width: 1px;
+}
+
+.vis .axis path {
   fill: none;
-  stroke: steelblue;
-  stroke-width: 1.5px;
+}
+
+.vis .tooltip {
+  position: absolute;
+  background-color: #fff;
+  display: none;
+  padding: 6px 8px;
+}
+
+.vis.new .tooltip {
+  font-size: 12px;
+}
+.vis.new .tooltip.single {
+  border: 2px solid #555;
+  opacity: 0.8;
+}
+
+.vis .tooltip-key {
+  font-weight: bold;
+}
+
+.vis .tooltip .tooltip-title {
+  font-size: 12px;
+  font-weight: bold;
+  padding-bottom: 5px;
+}
+
+.vis .tooltip .tooltip-section {
+  overflow: auto;
+  width: 100%;
+  margin-bottom: 2px;
+  font-size: 11px;
+}
+
+.vis .tooltip .tooltip-section .tooltip-swatch {
+  float: left;
+  margin-right: 4px;
+  width: 16px;
+  height: 16px;
+}
+
+.vis .tooltip .tooltip-section .tooltip-label {
+  float: left;
+  width: 90px;
+  line-height: 16px;
+}
+
+.vis .tooltip .tooltip-section .tooltip-value {
+  float: left;
+  text-align: right;
+  font-weight: bold;
+  width: 42px;
+  height: 18px;
 }

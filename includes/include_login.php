@@ -1,0 +1,24 @@
+<?php
+	// Check for server variable, and update session variable if needed
+	if(isset($_SERVER["REMOTE_USER"])) {
+		$_SESSION["user"] = $_SERVER["REMOTE_USER"];
+	} 
+?>
+				<div id="navigation">
+					<ul>
+						<li><a href="two.php">Two Home</a></li>
+						<li><a href="two-about.php">About</a></li>
+<?php
+	if(isset($_SESSION["user"])) {
+?>
+						<li><a href="two-author.php">My Stats</a></li>
+						<li class="login"><a href="/Shibboleth.sso/Logout?return=/oastats/two-destroyer.php">Logout</a></li>
+<?php		
+	} else {
+?>
+						<li class="login"><a href="secure/">Login</a></li>
+<?php		
+	}
+?>						
+					</ul>
+				</div>

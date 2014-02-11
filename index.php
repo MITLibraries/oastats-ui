@@ -1,86 +1,35 @@
 <!doctype html>
-<?php
-
-$strBreadcrumb = "";
-// collect possible query parameters
-$reqD = "";
-if(isset($_GET["d"])) {
-	$reqD = urldecode($_GET["d"]);
-	$strBreadcrumb = $reqD;
-}
-$reqA = "";
-if(isset($_GET["a"])) {
-	$reqA = urldecode($_GET["a"]);
-	$strBreadcrumb = $reqA;
-}
-
-?>
 <html lang="en">
 	<head>
-		<?php require_once('includes/include_mongo_connect.php'); ?>
-		<title>OA Statistics Mockup</title>
+		<title>Open Access Statistics</title>
 		<link rel="stylesheet" href="styles/reset.css">
 		<link rel="stylesheet" href="styles/styles.css">
-		<link rel="stylesheet" href="styles/listbuilder.css">
-		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-		<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-		<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-		<script src="http://d3js.org/d3.geo.projection.v0.min.js" charset="utf-8"></script>
-		<script src="http://d3js.org/topojson.v1.min.js" charset="utf-8"></script>
-		<script src="scripts/listbuilder.js" charset="utf-8"></script>
-		<script>
-$(document).ready(function() {
-
-	var listbuilder = app.listbuilder;
-	listbuilder.initialize(
-		debugFlag = false
-	);
-
-	$('.listcontainer .option').click(function() {
-		// Stop whatever might otherwise happen
-		// event.preventDefault();
-		// Pass the value of the clicked item to listbuilder
-		var target = $(this);
-		listbuilder.getClick(target);
-	});
-
-	$( "#tabs" ).tabs({
-		beforeLoad: function( event, ui ) {
-			ui.jqXHR.error(function() {
-				ui.panel.html(
-				"Sorry, the contents of this tab could not be loaded right now." );
-			});
-		}
-	});
-});	
-		</script>		
+		<style type="text/css">
+div.card {
+	display: inline-block;
+	width: 460px;
+	text-align: center;
+}
+		</style>
 	</head>
 	<body>
 		<div class="container">
-			<?php require_once('includes/include_header.html'); ?>
-			<div id="breadcrumb">
-				<p>
-					<span class="semantic">You are here: </span>
-					<span class="level home"><a href="/oastats/">Home</a></span>
-					<?php if($strBreadcrumb!="") { ?>
-						<span class="semantic">in subsection </span>
-						<span class="level"><?php echo $strBreadcrumb; ?></span>
-					<?php }; ?>
-				</p>
-			</div>
 			<section class="main">
-				<h1>Open Access Statistics Mockup</h1>
-				<?php require_once('includes/form_filter.php'); ?>
-				<div id="tabs">
-					<ul>
-						<li><a href="data.php?<?php echo $_SERVER["QUERY_STRING"]; ?>">Data</a></li>
-						<li><a href="time.php?<?php echo $_SERVER["QUERY_STRING"]; ?>">Timeline</a></li>
-						<li><a href="map.php?<?php echo $_SERVER["QUERY_STRING"]; ?>">Map</a></li>
-					</ul>
+				<h1>Open Access Statistics</h1>
+				<p>This is the mockup for an Open Access Statistics application, currently under development. There are two visual styles being developed, although the functionality of each is the same. You can enter either version via the images below.</p>
+				<div class="card">
+					<h2><a href="one.php">One</a></h2>
+					<a href="one.php">
+						<img src="images/oastats_one.png" alt="Mockup One" />
+					</a>
+				</div>
+				<div class="card">
+					<h2><a href="two.php">Two</a></h2>
+					<a href="two.php">
+						<img src="images/oastats_two.png" alt="Mockup One" />
+					</a>
 				</div>
 			</section>
-			<?php require_once('includes/include_footer.html'); ?>
 		</div>
-		<?php require_once('includes/include_mongo_disconnect.php'); ?>
 	</body>
 </html>			
