@@ -20,6 +20,7 @@ ini_set('display_startup_errors', TRUE);
 		<script src="scripts/d3.v3.min.js" charset="utf-8"></script>
 		<script src="scripts/d3.geo.projection.v0.min.js" charset="utf-8"></script>
 		<script src="scripts/topojson.v1.min.js" charset="utf-8"></script>
+		<script src="scripts/datamaps.world.min.js" charset="utf-8"></script>
 		<script src="scripts/listbuilder.js" charset="utf-8"></script>
 	</head>
 	<body>

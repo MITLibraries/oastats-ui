@@ -3,8 +3,8 @@
 		// connect to Mongo
 		$m = new Mongo('mongodb://libdb-dev.mit.edu:27017');
 		// $m = new Mongo();
-		$db = $m->oastats;
-		$collection = $db->requests;
+		$db = $m->oatest;
+		$collection = $db->request;
 		$summaries = $db->summaries;
 	} catch (Exception $e) {
 		die('Error: ' . $e->getMessage());
