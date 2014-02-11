@@ -1,16 +1,24 @@
-				<div id="usertab">
 <?php
-	// if the user has logged in, the REMOTE_USER server variable will be set
+	// Check for server variable, and update session variable if needed
 	if(isset($_SERVER["REMOTE_USER"])) {
-		$reqUser = $_SERVER["REMOTE_USER"];
-		echo '<div class="user">'.$reqUser.'</div>';
-	}
-	if(isset($reqUser) && $reqUser != "admin") {
-		echo '<a href="/Shibboleth.sso/Logout?return=/oastats/two.php">Logout</a><a href="/oastats/two.php">Public Stats</a><a href="/oastats/secure/author.php">My Papers</a>';
-	} elseif(isset($reqUser) && $reqUser = "admin") {
-		echo '<a href="/oastats/two.php">Logout</a>';
+		$_SESSION["user"] = $_SERVER["REMOTE_USER"];
+	} 
+?>
+				<div id="navigation">
+					<ul>
+						<li><a href="two.php">Two Home</a></li>
+						<li><a href="two-about.php">About</a></li>
+<?php
+	if(isset($_SESSION["user"])) {
+?>
+						<li><a href="two-author.php">My Stats</a></li>
+						<li class="login"><a href="/Shibboleth.sso/Logout?return=/oastats/two-destroyer.php">Logout</a></li>
+<?php		
 	} else {
-		echo '<a href="/oastats/secure/author.php">Login</a>';
+?>
+						<li class="login"><a href="secure/">Login</a></li>
+<?php		
 	}
-?>					
+?>						
+					</ul>
 				</div>

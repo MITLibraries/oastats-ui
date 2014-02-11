@@ -36,19 +36,24 @@ strong {
 	margin: -0.5em;
 	background-image: url('../images/banner.png');
 }
-#usertab div.user {
+#navigation {
 	margin-top: 0.5em;
-	padding: 0.25em;
-	float: left;
 }
-#usertab a {
-	margin-top: 0.5em;
+#navigation li {
+	display: inline;
+	display: inline-block;
+}
+#navigation li a {
 	margin-left: 1em;
 	padding: 0.25em;
-	float: right;
+	display: inline-block;
+	width: 120px;
 	background: #DA9B9B;
-	text-decoration: none;
 	color: #000;
+	text-decoration: none;
+}
+#navigation li.login {
+	float: right;
 }
 #breadcrumb {
 	clear: both;
