@@ -37,6 +37,11 @@ $(document).ready(function() {
 		listbuilder.getFilter(this.value);
 	});
 
+	$('.listcontainer a.reset').click(function() {
+		listbuilder.resetFilter();
+		event.preventDefault();
+	});
+
 	$( "#tabs" ).tabs({
 		beforeLoad: function( event, ui ) {
 			ui.panel.html("Loading...");

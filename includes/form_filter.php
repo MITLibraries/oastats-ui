@@ -46,6 +46,7 @@ $cursor = $summaries->find($arrCriteria,$arrProjection);
 			?>
 			</select>
 		</label>
-	<input type="submit">
+	<input type="submit" name="Filter" value="Filter">
+	<div class="clear"></div>
 	</form>
 </div>

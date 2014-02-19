@@ -27,7 +27,7 @@ if(isset($_GET["user"])) {
 		<title>Open Access Statistics - Mockup One</title>
 		<link rel="stylesheet" href="styles/reset.css">
 		<link rel="stylesheet" href="styles/one.css">
-		<link rel="stylesheet" href="styles/listbuilder.css">
+		<link rel="stylesheet" href="styles/listbuilder-one.css">
 		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 		<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 		<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
@@ -54,6 +54,11 @@ $(document).ready(function() {
 		listbuilder.getFilter(this.value);
 	});
 
+	$('.listcontainer a.reset').click(function() {
+		listbuilder.resetFilter();
+		event.preventDefault();
+	});
+
 	$( "#tabs" ).tabs({
 		beforeLoad: function( event, ui ) {
 			ui.panel.html("Loading...");
@@ -72,7 +77,7 @@ $(document).ready(function() {
 			<div id="breadcrumb">
 				<p>
 					<span class="semantic">You are here: </span>
-					<span class="level home"><a href="/oastats/">Home</a></span>
+					<span class="level home"><a href="/">Home</a></span>
 					<span class="semantic">in subsection </span>
 					<span class="level"><a href="one.php">Mockup One</a></span>
 					<?php if($strBreadcrumb!="") { ?>

@@ -14,7 +14,7 @@ ini_set('display_startup_errors', TRUE);
 		<title>Open Access Statistics - Mockup Two</title>
 		<link rel="stylesheet" href="styles/reset.css">
 		<link rel="stylesheet" href="styles/two.css">
-		<link rel="stylesheet" href="styles/listbuilder.css">
+		<link rel="stylesheet" href="styles/listbuilder-two.css">
 		<script src="https://code.jquery.com/jquery-1.9.1.js"></script>
 		<script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 		<script src="scripts/d3.v3.min.js" charset="utf-8"></script>
@@ -33,7 +33,7 @@ ini_set('display_startup_errors', TRUE);
 				<div id="breadcrumb">
 					<p>
 					<span class="semantic">You are here: </span>
-					<span class="level home"><a href="/oastats/">Home</a></span>
+					<span class="level home"><a href="/">Home</a></span>
 					<span class="semantic">in subsection </span>
 					<span class="level"><a href="two.php">Mockup Two</a></span>
 						<?php if($strBreadcrumb!="") { ?>
