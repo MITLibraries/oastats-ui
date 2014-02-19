@@ -91,20 +91,32 @@ foreach($cursor as $document) {
   }
 }
 
-// now push the data into the format needed
+// load countries.json, merge with $tempset
+$countries = file_get_contents('data/countries.json');
+$countries = json_decode($countries,true);
+
 $datatable = '<table class="mapdata"><thead><tr><th scope="col">Country</th><th scope="col">Downloads</th></tr></thead><tbody>';
 $dataset = array();
 $lo = 999999999999;
 $hi = 0;
-foreach($tempset as $key => $val) {
-  if ( $val > $hi ) { $hi = $val; }
-  if ( $val < $lo ) { $lo = $val; }
 
-  $datatable .= '<tr><td>'.$key.'</td><td>'.$val.'</td></tr>';
+// we use countries.json as the authoritative list of countries, because there's no guarantee that all the countries will come back from the Mongo store
+foreach($countries as $country) {
+  // print_r($country);
+  $code = $country["cca3"];
+  if(array_key_exists($code,$tempset)){
+    $downloads = $tempset[$code];
+    if($downloads > $hi) { $hi = $downloads; }
+    if($downloads < $lo) { $lo = $downloads; }
+  } else {
+    $downloads = 0;
+    $lo = 0;
+  }
+  $datatable .= '<tr><td>'.$country["name"].'</td><td>'.$downloads.'</td></tr>';
   $dataItem = array();
   $dataItem['fillKey'] = "q0";
-  $dataItem['downloads'] = (int) $val;
-  $dataset[$key] = $dataItem;
+  $dataItem['downloads'] = (int) $downloads;
+  $dataset[$code] = $dataItem;
 }
 $datatable .= '</tbody></table>';
 
@@ -127,6 +139,10 @@ foreach($dataset as $key => $val) {
 <script>
 
   var mapdata = <?php echo json_encode($dataset); ?>;
+
+  $.getJSON( "data/countries.json", function( data ) {
+    console.log('loaded countries');
+  });
 
   var map = new Datamap({
     element: document.getElementById('map'),
