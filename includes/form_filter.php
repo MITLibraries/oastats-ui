@@ -8,14 +8,14 @@ if(isset($_GET["filter"])){
 }
 // build the right filter query
 if($reqD!="") {
-	$strInstructions = "Show only these Authors:";
+	$strInstructions = "Authors:";
 	$arrCriteria = array('type' => 'author');
 } elseif($reqA!="") {
 	$reqA = str_replace('@mit.edu','',$reqA);
-	$strInstructions = "Show only these Papers:";
+	$strInstructions = "Papers:";
 	$arrCriteria = array('type' => 'paper','parents'=>$reqA);
 } else {
-	$strInstructions = "Show only these Departments, Labs or Centers:";
+	$strInstructions = "Departments, Labs or Centers:";
 	$arrCriteria = array('type' => 'dlc');
 }
 
@@ -35,19 +35,16 @@ $cursor = $summaries->find($arrCriteria,$arrProjection);
 			echo '<input type="hidden" name="a" value="'.$reqA.'">';			
 		}
 		?>
-		<label for="filter">
-			<?php echo $strInstructions; ?><br>
-			<select id="filter" name="filter[]" multiple="true" class="listbuilder">
-			<?php
-				foreach($cursor as $document) {
-					?>
-					<option value="<?php echo $document['_id']; ?>" <?php if(in_array($document['_id'],$reqFilter)) { echo 'selected="selected"'; } ?> ><?php echo $document['_id']; ?></option>
-					<?php
-				}
-			?>
-			</select>
-		</label>
-	<input type="submit" name="Filter" value="Filter">
-	<div class="clear"></div>
+		<div class="filter">
+			<label class="checkbox" for="all"><input type="checkbox" name="filter[]" id="all" value="all">Show all <?php echo $strInstructions; ?></label>
+		<?php
+			foreach($cursor as $document) {
+		?>
+			<label class="checkbox" for="<?php echo $document['_id']; ?>"><input type="checkbox" name="filter[]" id="<?php echo $document['_id']; ?>" value="<?php echo $document['_id']; ?>"<?php if(in_array($document['_id'],$reqFilter)) { echo 'checked="checked"'; } ?>><?php echo $document['_id']; ?></label>
+		<?php
+			}
+		?>
+		</div>
+	<input type="submit">
 	</form>
 </div>
