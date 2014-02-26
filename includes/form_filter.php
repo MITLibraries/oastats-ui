@@ -11,8 +11,9 @@ if($reqD!="") {
 	$strInstructions = "Show only these Authors:";
 	$arrCriteria = array('type' => 'author');
 } elseif($reqA!="") {
+	$reqA = str_replace('@mit.edu','',$reqA);
 	$strInstructions = "Show only these Papers:";
-	$arrCriteria = array('type' => 'paper');
+	$arrCriteria = array('type' => 'paper','parents'=>$reqA);
 } else {
 	$strInstructions = "Show only these Departments, Labs or Centers:";
 	$arrCriteria = array('type' => 'dlc');

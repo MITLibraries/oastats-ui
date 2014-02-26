@@ -28,8 +28,9 @@ if(isset($_GET["d"])) {
 	$strGroup = "Author";
 } elseif(isset($_GET["a"])) {
 	$reqA = $_GET["a"];
+	$reqA = str_replace('@mit.edu','',$reqA);
 	$strFilterTerm = '_id';
-	$arrCriteria = array('type' => 'paper');
+	$arrCriteria = array('type' => 'paper','parents'=>$reqA);
 	$nextType = "";
 	$strGroup = "Paper";
 } elseif(isset($_GET["p"])) {

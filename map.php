@@ -17,6 +17,9 @@ db.requests.aggregate(
 // Query builder
 $arrQuery = array();
 
+$scope = "All records";
+$arrCriteria = array('_id'=>'Overall');
+
 if(isset($_GET["d"])) {
   $scope = "d";
   $reqD = urldecode($_GET["d"]);
@@ -25,6 +28,8 @@ if(isset($_GET["d"])) {
 } elseif (isset($_GET["a"])) {
   $scope = "a";
   $reqA = urldecode($_GET["a"]);
+  $reqA = str_replace('@mit.edu','',$reqA);
+  $arrCriteria = array('_id'=>$reqA);
   $arrMatch = array('$match' => array('author'=>$reqA) );
   array_push($arrQuery,$arrMatch);
 } else {
@@ -38,9 +43,6 @@ if(isset($_GET["filter"])) {
     array_push($arrFilter,array('_id'=>$term));
   }
   $arrCriteria = array('$or'=>$arrFilter);
-} else {
-  $scope = "All records";
-  $arrCriteria = array('_id'=>'Overall');
 }
 
 /*
