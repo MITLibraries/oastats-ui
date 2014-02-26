@@ -1,21 +1,8 @@
 <?php
-	$strBreadcrumb = "";
-
-	// collect possible query parameters
-	$reqD = "";
-	$reqA = "";
-	if(isset($_GET["d"])) {
-		$reqD = urldecode($_GET["d"]);
-		$strBreadcrumb = $reqD;
-	} elseif(isset($_GET["a"])) {
-		$reqA = urldecode($_GET["a"]);
-		$strBreadcrumb = $reqA;
-	} elseif(isset($_GET["p"])) {
-		$reqA = urldecode($reqUser);
-		$strBreadcrumb = $reqA;
-	}
-
-	require_once('includes/two_header.php'); 
+	$strBreadcrumb = "My Stats";
+	require_once('includes/header.php'); 
+	if(isset($_SESSION["user"])) {
+		$reqA = $_SESSION["user"];
 ?>
 <script>
 $(document).ready(function() {
@@ -37,11 +24,6 @@ $(document).ready(function() {
 		listbuilder.getFilter(this.value);
 	});
 
-	$('.listcontainer a.reset').click(function() {
-		listbuilder.resetFilter();
-		event.preventDefault();
-	});
-
 	$( "#tabs" ).tabs({
 		beforeLoad: function( event, ui ) {
 			ui.panel.html("Loading...");
@@ -56,11 +38,16 @@ $(document).ready(function() {
 <?php require_once('includes/form_filter.php'); ?>
 <div id="tabs">
 	<ul>
-		<li><a href="data.php?<?php echo $_SERVER["QUERY_STRING"]; ?>">Data</a></li>
-		<li><a href="time.php?<?php echo $_SERVER["QUERY_STRING"]; ?>">Timeline</a></li>
-		<li><a href="map.php?<?php echo $_SERVER["QUERY_STRING"]; ?>">Map</a></li>
+		<li><a href="data.php?a=<?php echo $reqA; ?>&amp;<?php echo $_SERVER["QUERY_STRING"]; ?>">Data</a></li>
+		<li><a href="time.php?a=<?php echo $reqA; ?>&amp;<?php echo $_SERVER["QUERY_STRING"]; ?>">Timeline</a></li>
+		<li><a href="map.php?a=<?php echo $reqA; ?>&amp;<?php echo $_SERVER["QUERY_STRING"]; ?>">Map</a></li>
 	</ul>
 </div>
 <?php
-	require_once('includes/two_footer.php'); 
+	} else {
+?>
+<p>Please <a href="secure/?return=author.php">login</a> to see your author statistics.</p>
+<?php
+	}
+	require_once('includes/footer.php'); 
 ?>

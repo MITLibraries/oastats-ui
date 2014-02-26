@@ -6,17 +6,17 @@
 ?>
 				<div id="navigation">
 					<ul>
-						<li><a href="two.php">Two Home</a></li>
-						<li><a href="two-about.php">About</a></li>
+						<li><a href="index.php">Home</a></li>
+						<li><a href="about.php">About</a></li>
 <?php
 	if(isset($_SESSION["user"])) {
 ?>
-						<li><a href="two-author.php">My Stats</a></li>
-						<li class="login"><a href="/Shibboleth.sso/Logout?return=/oastats/two-destroyer.php">Logout</a></li>
+						<li><a href="author.php">My Stats</a></li>
+						<li class="login"><a href="/Shibboleth.sso/Logout?return=/oastats/destroyer.php">Logout</a></li>
 <?php		
 	} else {
 ?>
-						<li class="login"><a href="secure/">Login</a></li>
+						<li class="login"><a href="secure/?return=author.php">Login</a></li>
 <?php		
 	}
 ?>						
