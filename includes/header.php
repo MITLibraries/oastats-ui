@@ -30,14 +30,4 @@ ini_set('display_startup_errors', TRUE);
 					<h1>Open Access Statistics</h1>
 				</div>
 				<?php require_once('includes/include_login.php'); ?>
-				<div id="breadcrumb">
-					<p>
-					<span class="semantic">You are here: </span>
-					<span class="level home"><a href="/oastats/">Home</a></span>
-						<?php if($strBreadcrumb!="") { ?>
-							<span class="semantic">in subsection </span>
-							<span class="level"><?php echo $strBreadcrumb; ?></span>
-						<?php }; ?>
-					</p>
-				</div>
 				<section class="main">

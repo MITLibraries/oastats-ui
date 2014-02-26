@@ -1,5 +1,4 @@
 <?php
-	$strBreadcrumb = "";
 
 	// collect possible query parameters
 	$reqD = "";

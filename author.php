@@ -1,5 +1,4 @@
 <?php
-	$strBreadcrumb = "My Stats";
 	require_once('includes/header.php'); 
 	if(isset($_SESSION["user"])) {
 		$reqA = $_SESSION["user"];
