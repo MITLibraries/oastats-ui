@@ -13,20 +13,6 @@
 		<li><a href="map.php?a=<?php echo $reqA; ?>&amp;<?php echo $_SERVER["QUERY_STRING"]; ?>">Map</a></li>
 	</ul>
 </div>
-<script>
-$(document).ready(function() {
-
-	$( "#tabs" ).tabs({
-		beforeLoad: function( event, ui ) {
-			ui.panel.html("Loading...");
-			ui.jqXHR.error(function() {
-				ui.panel.html(
-				"Sorry, the contents of this tab could not be loaded right now." );
-			});
-		}
-	});
-});	
-</script>		
 <?php
 	} else {
 ?>
