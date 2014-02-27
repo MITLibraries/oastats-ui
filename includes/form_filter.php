@@ -23,7 +23,10 @@ $arrProjection = array(
 	'_id'=>1,
 );
 
-$cursor = $summaries->find($arrCriteria,$arrProjection);
+$arrSort = array(
+	'_id'=>1,
+);
+$cursor = $summaries->find($arrCriteria,$arrProjection)->sort($arrSort);
 
 ?>
 	<h2>Filter</h2>
