@@ -11,7 +11,7 @@
 	if(isset($_SESSION["user"])) {
 ?>
 						<li><a href="author.php">My Stats</a></li>
-						<li class="login"><a href="/Shibboleth.sso/Logout?return=/oastats/destroyer.php">Logout</a></li>
+						<li class="login"><a href="/Shibboleth.sso/Logout?return=/destroyer.php">Logout</a></li>
 <?php		
 	} else {
 ?>
