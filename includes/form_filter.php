@@ -52,4 +52,8 @@ $cursor = $summaries->find($arrCriteria,$arrProjection)->sort($arrSort);
 	<input type="submit">
 	</form>
 	<h2>Export</h2>
+	<!-- Export options are placed here by the active tab -->
+	<ul id="exports">
+		<li>Export</li>
+	</ul>
 </div>

@@ -9,6 +9,10 @@
 			"bInfo": false,
 			"sPaginationType": "full_numbers"
 		});
+
+		// Set export options
+		$("#exports").empty();
+		$("#exports").append("<li>CSV</li>").append("<li>PDF</li>");
 	});
 </script>
 <?php
@@ -69,11 +73,6 @@ $arrProjection = array(
 $cursor = $summaries->find($arrCriteria,$arrProjection);
 
 ?>
-<div class="export">
-	<a>CSV</a>
-	<a>PDF</a>
-</div>
-
 <table class="data">
 	<thead>
 		<tr>

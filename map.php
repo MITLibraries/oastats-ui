@@ -131,12 +131,6 @@ foreach($dataset as $key => $val) {
 }
 
 ?>
-<div class="export">
-  <a>CSV</a>
-  <a>PDF</a>
-  <a>PNG</a>
-</div>
-
 <div id="map" style="position: relative; width: 100%;"></div>
 <script>
 
@@ -178,6 +172,10 @@ foreach($dataset as $key => $val) {
       "bInfo": false,
       "sPaginationType": "full_numbers"
     });
+
+    // Set export options
+    $("#exports").empty();
+    $("#exports").append("<li>CSV</li>").append("<li>PDF</li>").append("<li>PNG</li>");    
   });
 
 </script>

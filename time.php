@@ -1,9 +1,4 @@
 <link rel="stylesheet" href="styles/time.css">
-<div class="export">
-  <a>CSV</a>
-  <a>PDF</a>
-  <a>PNG</a>
-</div>
 <div class="vis new" id="time">
   <div id="time-tooltip" class="tooltip"></div>
 </div>
@@ -307,6 +302,9 @@ $(document).ready(function() {
     graphNew('time', 9, 'Cumulative Bitstream Downloads');
   });
 
+  // Set export options
+  $("#exports").empty();
+  $("#exports").append("<li>PDF</li>").append("<li>PNG</li>");
 });
 
 </script>

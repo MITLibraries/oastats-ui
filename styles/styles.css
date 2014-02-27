@@ -123,6 +123,9 @@ section.main {
 	-ms-flex: 1;              /* IE 10 */
 	flex: 1;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
 }
+#oafilter #exports li {
+	margin: 0.5rem 0;
+}
 
 #tabs {
 	-webkit-box-flex: 4;      /* OLD - iOS 6-, Safari 3.1-6 */
