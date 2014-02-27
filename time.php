@@ -227,9 +227,6 @@ $(document).ready(function() {
           if(multi) {
             circle.attr('opacity', 0);
           }
-          else {
-            circle.attr('r', 4);
-          }
         })
         .on('mousemove', function(e) {
           var mouseX = e.pageX - $('svg').offset().left;
