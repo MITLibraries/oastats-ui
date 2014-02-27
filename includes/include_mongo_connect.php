@@ -1,7 +1,19 @@
 <?php
 	try {
 		// connect to Mongo
-		$m = new Mongo('mongodb://libdb-dev.mit.edu:27017');
+		switch ($_SERVER["SERVER_NAME"]) {
+			case "oastats-dev.mit.edu":
+				$m = new Mongo('mongodb://libdb-dev.mit.edu:27017');
+				break;
+			case "oastats-test.mit.edu":
+				$m = new Mongo('mongodb://libdb-test.mit.edu:27017');
+				break;
+			case "oastats.mit.edu":
+				$m = new Mongo('mongodb://libdb-test.mit.edu:27017');
+				break;
+			default:			
+				$m = new Mongo();
+		}
 		// $m = new Mongo();
 		$db = $m->oatest;
 		$collection = $db->request;

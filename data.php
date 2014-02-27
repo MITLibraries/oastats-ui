@@ -28,8 +28,9 @@ if(isset($_GET["d"])) {
 	$strGroup = "Author";
 } elseif(isset($_GET["a"])) {
 	$reqA = $_GET["a"];
+	$reqA = str_replace('@mit.edu','',$reqA);
 	$strFilterTerm = '_id';
-	$arrCriteria = array('type' => 'paper');
+	$arrCriteria = array('type' => 'paper','parents'=>$reqA);
 	$nextType = "";
 	$strGroup = "Paper";
 } elseif(isset($_GET["p"])) {
@@ -79,6 +80,7 @@ $cursor = $summaries->find($arrCriteria,$arrProjection);
 			<th scope="col"><?php echo $strGroup; ?></th>
 			<?php if(!isset($reqA)) { ?><th scope="col">Items</th><?php } ?>
 			<th scope="col">Downloads</th>
+			<th scope="col">DSpace@MIT</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -93,6 +95,13 @@ foreach($cursor as $document) {
 		<?php } ?>
 		<?php if(!isset($reqA)) { ?><td><?php echo number_format($document["size"]); ?></td><?php } ?>
 		<td><?php echo number_format($document["downloads"]); ?></td>
+		<?php if(isset($_GET["a"])) {
+			$strLink = '<a href="'.$document["_id"].'" title="View '.$document["_id"].' in DSpace@MIT">View<span class="semantic"> '.$document["_id"].' in DSpace@MIT</span></a>';
+		} else {
+			$strLink = '<a href="http://dspace.mit.edu/advanced-search?num_search_field=1&results_per_page=10&scope=1721.1%2F49432&field1=department&query1='.urlencode($document["_id"]).'&rpp=10&sort_by=0&order=DESC" title="View papers from '.$document["_id"].' in DSpace@MIT">View papers<span class="semantic"> from '.$document["_id"].' in DSpace@MIT</span></a>';
+		}
+		?>
+		<td><?php echo $strLink; ?></td>
 	</tr>
 <?php
 }

@@ -21,6 +21,15 @@ db.summaries.find({'_id':'Overall'},{'_id':1,'dates':1})
 
 // Get querystring
 // This includes determining what level of data is being queried, and any filters being applied
+$arrCriteria = array('_id'=>'Overall');
+
+if(isset($_GET["a"])) {
+  // get and clean Touchstone username
+  $reqA = $_GET["a"];
+  $reqA = str_replace('@mit.edu','',$reqA);
+  $arrCriteria = array('_id'=>$reqA);
+}
+
 if(isset($_GET["filter"])) {
   $reqFilter = $_GET["filter"];
   $arrFilter = array();
@@ -29,8 +38,6 @@ if(isset($_GET["filter"])) {
     array_push($arrFilter,array('_id'=>$term));
   }
   $arrCriteria = array( '$or' => $arrFilter);
-} else {
-  $arrCriteria = array('_id'=>'Overall');
 }
 
 $arrProjection = array(
