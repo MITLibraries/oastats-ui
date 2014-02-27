@@ -26,6 +26,7 @@ $arrProjection = array(
 $cursor = $summaries->find($arrCriteria,$arrProjection);
 
 ?>
+	<h2>Filter</h2>
 	<form method="get">
 		<?php
 		// store the current depth in the filter form
@@ -36,7 +37,7 @@ $cursor = $summaries->find($arrCriteria,$arrProjection);
 		}
 		?>
 		<div class="filter">
-			<label class="checkbox" for="all"><input type="checkbox" name="filter[]" id="all" value="all">Show all <?php echo $strInstructions; ?></label>
+			<label class="checkbox" for="all"><input type="checkbox" name="filter[]" id="all" value="all">All <?php echo $strInstructions; ?></label>
 		<?php
 			foreach($cursor as $document) {
 		?>
@@ -47,4 +48,5 @@ $cursor = $summaries->find($arrCriteria,$arrProjection);
 		</div>
 	<input type="submit">
 	</form>
+	<h2>Export</h2>
 </div>

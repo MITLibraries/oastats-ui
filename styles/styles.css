@@ -11,6 +11,10 @@ h1 {
 	color: #fff;
 	text-shadow: 2px 2px 2px #000;
 }
+h2 {
+	font-weight: bold;
+	font-size: 16px;
+}
 dt {
 	font-weight: bold;
 }
@@ -81,9 +85,20 @@ section.main {
 	-ms-flex: 1;              /* IE 10 */
 	flex: 1;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
 	margin-right: 1rem;
+	background-color: #ccc;
+	padding: 0.25rem;
+}
+#oafilter h2 {
+	border-bottom: 1px solid #999;
+	margin-top: 0.25rem;
+}
+#oafilter form {
+	margin-bottom: 1rem;
 }
 #oafilter .filter {
-	overflow-y: auto;
+	max-height: 20rem;
+	overflow-y: auto;	
+	margin: 0.5rem 0;
 }
 #oafilter .filter .checkbox {
 	display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
@@ -135,6 +150,8 @@ section.main {
 	text-decoration: none;
 	border: 1px solid #eaeaea;
 	border-bottom: none;
+	font-size: 16px;
+	font-weight: bold;
 }
 #tabs ul li a:hover,
 #tabs ul li a:focus {
@@ -187,4 +204,46 @@ section.main {
 	padding: 0.5em;
 	margin-bottom: 1em;
 }
-
+#colophon {
+	margin-top: 1rem;
+	color: #ccc;
+	display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+	display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+	display: -ms-flexbox;      /* TWEENER - IE 10 */
+	display: -webkit-flex;     /* NEW - Chrome */
+	display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
+	flex-flow: row nowrap;
+	-ms-flex-flow: row nowrap;
+}
+#colophon .block {
+	-webkit-box-flex: 1;      /* OLD - iOS 6-, Safari 3.1-6 */
+	-moz-box-flex: 1;         /* OLD - Firefox 19- */
+	width: 20%;               /* For old syntax, otherwise collapses. */
+	-webkit-flex: 1;          /* Chrome */
+	-ms-flex: 1;              /* IE 10 */
+	flex: 1;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
+}
+#colophon a {
+	text-decoration: none;
+	color: #ccc;
+}
+#colophon a:hover,
+#colophon a:focus {
+	text-decoration: underline;
+}
+#colophon .left {
+	color: #ccc;
+}
+#colophon .center {
+	-webkit-box-flex: 3;      /* OLD - iOS 6-, Safari 3.1-6 */
+	-moz-box-flex: 3;         /* OLD - Firefox 19- */
+	width: 60%;               /* For old syntax, otherwise collapses. */
+	-webkit-flex: 3;          /* Chrome */
+	-ms-flex: 3;              /* IE 10 */
+	flex: 3;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
+	text-align: center;
+}
+#colophon .right {
+	text-align: right;
+	float: right;
+}
