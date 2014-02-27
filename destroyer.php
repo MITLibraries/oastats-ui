@@ -3,5 +3,7 @@
 	
 	unset($_SESSION["user"]);
 
-	header('Location: https://libraries-test.mit.edu/oastats/');
+	$strBaseURL = 'https://'.$_SERVER["SERVER_NAME"].'/';
+
+	header('Location: '.$strBaseURL);
 ?>
