@@ -40,7 +40,7 @@ $cursor = $summaries->find($arrCriteria,$arrProjection);
 		<?php
 			foreach($cursor as $document) {
 		?>
-			<label class="checkbox" for="<?php echo $document['_id']; ?>"><input type="checkbox" name="filter[]" id="<?php echo $document['_id']; ?>" value="<?php echo $document['_id']; ?>"<?php if(in_array($document['_id'],$reqFilter)) { echo 'checked="checked"'; } ?>><?php echo $document['_id']; ?></label>
+			<label class="checkbox" for="<?php echo urlencode($document['_id']); ?>"><input type="checkbox" name="filter[]" id="<?php echo urlencode($document['_id']); ?>" value="<?php echo $document['_id']; ?>"<?php if(in_array($document['_id'],$reqFilter)) { echo 'checked="checked"'; } ?>><span><?php echo $document['_id']; ?></span></label>
 		<?php
 			}
 		?>
