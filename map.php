@@ -137,8 +137,14 @@ foreach($dataset as $key => $val) {
   <a>PNG</a>
 </div>
 
-<div id="map" style="position: relative; width: 910px; height: 400px;"></div>
+<div id="map" style="position: relative; width: 100%;"></div>
 <script>
+
+  var width = $("#map").width();
+  var height = width * 9 / 16;
+  console.log(width+" x "+height);
+
+  $("#map").height(height);
 
   var mapdata = <?php echo json_encode($dataset); ?>;
 
