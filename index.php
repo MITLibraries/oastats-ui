@@ -1,8 +1,6 @@
 <?php
 
 	// collect possible query parameters
-	$reqD = "";
-	$reqA = "";
 	if(isset($_GET["d"])) {
 		$reqD = urldecode($_GET["d"]);
 		$strBreadcrumb = $reqD;
