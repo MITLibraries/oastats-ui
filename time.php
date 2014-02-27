@@ -11,7 +11,8 @@
 <script>
 $(document).ready(function() {
 
-  var width = 910, height = 600;
+  var width = $("#time").width();
+  var height = width * 3 / 4;
 
   var color = ["#1792e4", "#ff4248", "#51b23b", "#ff6e00", "#9574D4", "#008751", "#ac51ad", "#044187", "#ff3467"];
   var colorLight = ["#97d2ff", "#ff9298", "#a1f27b", "#ffae50", "#9574D4", "#008751", "#ac51ad", "#044187", "#ff3467"];
@@ -197,16 +198,6 @@ $(document).ready(function() {
         .attr('fill', 'none')
         .attr('stroke-width', '1.5px');
 
-      if(!multi) {
-        var lineArea = svg.append('g').selectAll('path')
-          .data(data)
-          .enter().append('path')
-          .attr('class', 'area')
-          .attr('d', function(d) { return area(d); })
-          .attr('fill', function(d, i) { return color[i]; })
-          .style('opacity', 0.15);
-      }
-
       if(multi) {
         var circle = svg.append('g').selectAll('g')
           .data(data)
@@ -217,19 +208,6 @@ $(document).ready(function() {
           .attr('r', 4)
           .attr('fill', function(d, i) {
             return color[i];
-          });
-      }
-      else {
-        var circle = svg.append('g').selectAll('g')
-          .data(data)
-          .enter().append('g').selectAll('circle')
-          .data(function(d) { return d; })
-          .enter().append('circle')
-          .attr('cx', function(d,i) { return x(dates[i]); })
-          .attr('cy', function(d) { return y(d); })
-          .attr('r', 4)
-          .attr('fill', function(d, i) {
-            return color[findSeries(data, d, i)];
           });
       }
 
@@ -284,13 +262,6 @@ $(document).ready(function() {
               circle.transition().duration(50)
                 .attr('cx', xVal)
                 .attr('cy', function(d) { return y(d[curIndex]); });
-            }
-            else {
-              circle.transition().duration(50)
-                .attr('r', function(d, i) {
-                  if(i === index) return 6;
-                  return 4;
-                });
             }
           }
         });
