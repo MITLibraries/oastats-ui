@@ -174,11 +174,25 @@ section.main {
 	top: -999px;
 }
 /* DataTables overrides */
+#page .dataTable td {
+	padding: 5px 10px;
+}
 #page .dataTables_paginate {
 	float: none;
 	text-align: center;
 	margin-top: 1em;
 }
+#page .paging_full_numbers a.paginate_button,
+#page .paging_full_numbers a.paginate_active {
+	-webkit-border-radius: 0px;
+	-moz-border-radius: 0px;
+	border-radius: 0px;
+}
+#page table.dataTable tr.odd { background-color: #e6e6e6; }
+#page table.dataTable tr.even { background-color: white; }
+#page table.dataTable tr.odd td.sorting_1 { background-color: #d8d8d8; }
+#page table.dataTable tr.even td.sorting_1 { background-color: #ececec; }
+
 /* Export controls */
 .export {
 	float: right;
@@ -207,6 +221,7 @@ section.main {
 	padding: 0.5em;
 	margin-bottom: 1em;
 }
+/* Colophon */
 #colophon {
 	margin-top: 1rem;
 	color: #ccc;

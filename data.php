@@ -7,7 +7,8 @@
 			"bFilter": false,
 			"bLengthChange": false,
 			"bInfo": false,
-			"sPaginationType": "full_numbers"
+			"sPaginationType": "full_numbers",
+			"iDisplayLength": 25
 		});
 
 		// Set export options
@@ -79,28 +80,27 @@ $cursor = $summaries->find($arrCriteria,$arrProjection);
 			<th scope="col"><?php echo $strGroup; ?></th>
 			<?php if(!isset($reqA)) { ?><th scope="col">Items</th><?php } ?>
 			<th scope="col">Downloads</th>
-			<th scope="col">DSpace@MIT</th>
 		</tr>
 	</thead>
 	<tbody>
 <?php
 foreach($cursor as $document) {
+	if(isset($_GET["a"])) {
+		$strEquivalent = 'View '.$document["_id"].' in DSpace@MIT';
+		$strLink = '<a href="'.$document["_id"].'"><img src="/images/icon-link.png" alt="'.$strEquivalent.'" title="'.$strEquivalent.'"></a>';
+	} else {
+		$strEquivalent = 'View papers from '.$document["_id"].' in DSpace@MIT';
+		$strLink = '<a href="http://dspace.mit.edu/advanced-search?num_search_field=1&results_per_page=10&scope=1721.1%2F49432&field1=department&query1='.urlencode($document["_id"]).'&rpp=10&sort_by=0&order=DESC"><img src="/images/icon-link.png" alt="'.$strEquivalent.'" title="'.$strEquivalent.'"></a>';
+	}
 ?>
 	<tr>
 		<?php if(isset($reqUser) && $reqUser == "admin") { ?>
 		<td><a href="?user=admin&amp;<?php echo $nextType; ?>=<?php echo urlencode($document["_id"]); ?>"><?php echo $document["_id"]; ?></a></td>
 		<?php } else { ?>
-		<td><?php echo $document["_id"]; ?></td>
+		<td><?php echo $strLink." ".$document["_id"]; ?></td>
 		<?php } ?>
 		<?php if(!isset($reqA)) { ?><td><?php echo number_format($document["size"]); ?></td><?php } ?>
 		<td><?php echo number_format($document["downloads"]); ?></td>
-		<?php if(isset($_GET["a"])) {
-			$strLink = '<a href="'.$document["_id"].'" title="View '.$document["_id"].' in DSpace@MIT">View<span class="semantic"> '.$document["_id"].' in DSpace@MIT</span></a>';
-		} else {
-			$strLink = '<a href="http://dspace.mit.edu/advanced-search?num_search_field=1&results_per_page=10&scope=1721.1%2F49432&field1=department&query1='.urlencode($document["_id"]).'&rpp=10&sort_by=0&order=DESC" title="View papers from '.$document["_id"].' in DSpace@MIT">View papers<span class="semantic"> from '.$document["_id"].' in DSpace@MIT</span></a>';
-		}
-		?>
-		<td><?php echo $strLink; ?></td>
 	</tr>
 <?php
 }
