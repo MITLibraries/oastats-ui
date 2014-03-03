@@ -18,8 +18,9 @@ $reqA = "";
 		<title>Open Access Statistics</title>
 		<link rel="stylesheet" href="styles/reset.css">
 		<link rel="stylesheet" href="styles/styles.css">
-		<script src="https://code.jquery.com/jquery-1.9.1.js"></script>
+		<script src="https://code.jquery.com/jquery-1.8.3.js"></script>
 		<script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+		<script src="scripts/jquery.ba-bbq.min.js" charset="utf-8"></script>
 		<script src="scripts/d3.v3.min.js" charset="utf-8"></script>
 		<script src="scripts/d3.geo.projection.v0.min.js" charset="utf-8"></script>
 		<script src="scripts/topojson.v1.min.js" charset="utf-8"></script>

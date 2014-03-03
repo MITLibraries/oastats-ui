@@ -6,7 +6,7 @@
 		
 		require_once('includes/form_filter.php'); 
 ?>
-<div id="tabs">
+<div id="tabs" class="tabs">
 	<ul>
 		<li><a href="data.php?a=<?php echo $reqA; ?>&amp;<?php echo $_SERVER["QUERY_STRING"]; ?>">Data</a></li>
 		<li><a href="time.php?a=<?php echo $reqA; ?>&amp;<?php echo $_SERVER["QUERY_STRING"]; ?>">Timeline</a></li>

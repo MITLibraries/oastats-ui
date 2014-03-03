@@ -1,4 +1,6 @@
 <link rel="stylesheet" href="styles/map.css">
+<link rel="stylesheet" href="styles/jquery.dataTables.css">
+<script src="scripts/jquery.dataTables.min.js" charset="utf-8"></script>
 <?php
 
 // connect to Mongo
@@ -100,7 +102,7 @@ $countries = json_decode($countries,true);
 $datatable = '<table class="mapdata"><thead><tr><th scope="col">Country</th><th scope="col">Downloads</th></tr></thead><tbody>';
 $dataset = array();
 $lo = 999999999999;
-$hi = 0;
+$hi = 1;
 
 // we use countries.json as the authoritative list of countries, because there's no guarantee that all the countries will come back from the Mongo store
 foreach($countries as $country) {
@@ -132,18 +134,19 @@ foreach($dataset as $key => $val) {
 
 ?>
 <div id="map" style="position: relative; width: 100%;"></div>
+<?php 
+  echo $datatable; 
+?>
 <script>
 
   var width = $("#map").width();
   var height = width * 9 / 16;
-  console.log(width+" x "+height);
 
   $("#map").height(height);
 
   var mapdata = <?php echo json_encode($dataset); ?>;
 
   $.getJSON( "data/countries.json", function( data ) {
-    console.log('loaded countries');
   });
 
   var map = new Datamap({
@@ -179,7 +182,4 @@ foreach($dataset as $key => $val) {
   });
 
 </script>
-<?php 
-  echo $datatable; 
-?>
 <?php require_once('includes/include_mongo_disconnect.php'); ?>
