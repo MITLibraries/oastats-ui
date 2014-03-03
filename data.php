@@ -3,12 +3,30 @@
 <script src="scripts/jquery.dataTables.min.js" charset="utf-8"></script>
 <script>
 	$(document).ready(function() {
-		$( "table.data" ).dataTable({
+
+		var dt = $( "table.data" ).dataTable({
 			"bFilter": false,
 			"bLengthChange": false,
 			"bInfo": false,
 			"sPaginationType": "full_numbers",
 			"iDisplayLength": 25
+		});
+
+		var toggle = $(".paging_full_numbers").append('<a class="showall paginate_button">Show All</a>');
+
+		$(".showall").click(function() {
+			console.log("clicked");
+			var dtSettings = dt.fnSettings();
+			var label = $(this).html();
+			if(label == "Show All") {
+				dtSettings._iDisplayLength = -1;
+				$(this).text("Show 25");
+			} else {
+				dtSettings._iDisplayLength = 25;
+				$(this).text("Show All");
+			}
+			dt.fnDraw();
+			console.log("changed");
 		});
 
 		// Set export options
@@ -106,5 +124,4 @@ foreach($cursor as $document) {
 }
 ?>
 </table>
-
 <?php require_once('includes/include_mongo_disconnect.php'); ?>
