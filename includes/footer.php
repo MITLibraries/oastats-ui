@@ -8,9 +8,16 @@
 					Licensed under the <a href="http://creativecommons.org/licenses/by-nc/2.0/" target="_blank">Creative Commons Attribution Non-Commercial License</a> unless otherwise noted.
 				</div>
 				<div class="right block">
-					<a href="http://libraries.mit.edu/scholarly/" id="homeFooter">Scholarly Communications</a> |
-					<a href="http://libraries.mit.edu/faculty" id="homeFooter">Faculty</a>
+					<a href="http://libraries.mit.edu/scholarly/mit-open-access/open-access-at-mit/mit-open-access-policy/" id="homeFooter">MIT Faculty Open Access Policy</a>
 				</div>
+			</div>
+			<div style="background-color: #fff;padding:1rem;">
+				<h2>Debugging information goes here</h2>
+<?php
+	foreach($_SESSION as $key => $val) {
+		echo "<p>".$key." = ".$val."</p>";
+	}
+?>				
 			</div>
 		</div>
 		<?php require_once('includes/include_mongo_disconnect.php'); ?>
