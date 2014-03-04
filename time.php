@@ -8,8 +8,8 @@ $(document).ready(function() {
   var width = $("#time").width();
   var height = width * 3 / 4;
 
-  var color = ["#1792e4", "#ff4248", "#51b23b", "#ff6e00", "#9574D4", "#008751", "#ac51ad", "#044187", "#ff3467"];
-  var colorLight = ["#97d2ff", "#ff9298", "#a1f27b", "#ffae50", "#9574D4", "#008751", "#ac51ad", "#044187", "#ff3467"];
+  var color = ["#1792e4", "#ff4248", "#51b23b", "#ff6e00", "#9574D4", "#008751", "#ac51ad", "#044187", "#ff3467", "#e7a609"];
+  var colorLight = ["#97d2ff", "#ff9298", "#a1f27b", "#ffae50", "#9574D4", "#008751", "#ac51ad", "#044187", "#ff3467", "#e7a609"];
   var timeFormat = d3.time.format('%b %d, %Y');
 
   var dataRaw = new Array;
@@ -268,7 +268,7 @@ $(document).ready(function() {
 
 
   var showTooLong = function() {
-    $(".export").before('<div class="warning"><strong>Please note:</strong> You have selected more filter items than this chart can display. Only the first nine have been displayed, although the full set is available using the export tools.</div>');
+    $(".vis").before('<div class="warning"><strong>Please note:</strong> You have selected more filter items than this chart can display. Only the first ten have been displayed, although the full set is available using the export tools.</div>');
   };
 
   $.getJSON('data/json-time-running.php?<?php echo $_SERVER["QUERY_STRING"];?>',function(data) {
@@ -285,7 +285,7 @@ $(document).ready(function() {
         $.each(val,function(key, val) {
           dataNamesRaw.push(val);
         });
-        if(dataNamesRaw.length > 9) {
+        if(dataNamesRaw.length > 10) {
           showTooLong();
         }
       } else if(key=="dataRaw") {
@@ -298,7 +298,7 @@ $(document).ready(function() {
     });
   })
   .done(function() {
-    graphNew('time', 9, 'Cumulative Bitstream Downloads');
+    graphNew('time', 10, 'Cumulative Bitstream Downloads');
   });
 
   // Set export options
