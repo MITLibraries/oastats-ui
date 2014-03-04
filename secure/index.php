@@ -12,6 +12,11 @@
 	// Check for server variable, and update session variable if needed
 	if(isset($_SERVER["REMOTE_USER"])) {
 		$_SESSION["user"] = $_SERVER["REMOTE_USER"];
+
+		// look up whether this user is an admin
+		if($_SERVER["REMOTE_USER"]=='mjbernha@mit.edu') {
+			$_SESSION["admin"] = true;
+		}
 	} 
 
 	header('Location: '.$strURL);
