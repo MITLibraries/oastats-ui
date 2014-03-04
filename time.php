@@ -303,7 +303,8 @@ $(document).ready(function() {
 
   // Set export options
   $("#exports").empty();
-  $("#exports").append("<li>PDF</li>").append("<li>PNG</li>");
+  $("#exports").append('<li><a data-format="pdf">PDF</a></li>').append('<li><a data-format="png">PNG</a></li>');
 });
 
 </script>
+<p>Data called from data/json-time-running.php?<?php echo $_SERVER["QUERY_STRING"];?></p>

@@ -3,6 +3,10 @@
 <script src="scripts/jquery.dataTables.min.js" charset="utf-8"></script>
 <?php
 
+require_once('includes/salt.php'); 
+
+session_start();
+
 // connect to Mongo
 require_once('includes/include_mongo_connect.php');
 
@@ -32,6 +36,7 @@ if(isset($_GET["d"])) {
   $reqA = urldecode($_GET["a"]);
   $reqA = str_replace('@mit.edu','',$reqA);
   $arrCriteria = array('_id'=>$reqA);
+  $arrCriteria = array('type' => 'author','_id.mitid'=>$salt.$_SESSION["hash"]);
   $arrMatch = array('$match' => array('author'=>$reqA) );
   array_push($arrQuery,$arrMatch);
 } else {
@@ -178,7 +183,7 @@ foreach($dataset as $key => $val) {
 
     // Set export options
     $("#exports").empty();
-    $("#exports").append("<li>CSV</li>").append("<li>PDF</li>").append("<li>PNG</li>");    
+    $("#exports").append('<li><a data-format="csv">CSV</a></li>').append('<li><a data-format="pdf">PDF</a></li>').append('<li><a data-format="png">PNG</a></li>');    
   });
 
 </script>

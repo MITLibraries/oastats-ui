@@ -1,3 +1,10 @@
+<?php 
+
+require_once('includes/salt.php'); 
+
+session_start();
+
+?>
 <link rel="stylesheet" href="styles/data.css">
 <link rel="stylesheet" href="styles/jquery.dataTables.css">
 <script src="scripts/jquery.dataTables.min.js" charset="utf-8"></script>
@@ -31,7 +38,8 @@
 
 		// Set export options
 		$("#exports").empty();
-		$("#exports").append("<li>CSV</li>").append("<li>PDF</li>");
+		$("#exports").append('<li><a data-format="csv">CSV</a></li>')
+			.append('<li><a data-format="pdf">PDF</a></li>');
 	});
 </script>
 <?php
@@ -53,7 +61,7 @@ if(isset($_GET["d"])) {
 	$reqA = $_GET["a"];
 	$reqA = str_replace('@mit.edu','',$reqA);
 	$strFilterTerm = '_id';
-	$arrCriteria = array('type' => 'paper','parents'=>$reqA);
+	$arrCriteria = array('type' => 'author','_id.mitid'=>$salt.$_SESSION["hash"]);
 	$nextType = "";
 	$strGroup = "Paper";
 } elseif(isset($_GET["p"])) {

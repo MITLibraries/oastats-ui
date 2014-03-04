@@ -1,7 +1,23 @@
-<?php
+<?php 
+
+date_default_timezone_set('America/New_York');
+
+/*
+error_reporting(E_ALL);
+ini_set('display_errors', TRUE);
+ini_set('display_startup_errors', TRUE);
+*/
+
+require_once('../includes/salt.php'); 
+
+session_start();
 
 // connect to Mongo
 require_once('../includes/include_mongo_connect.php');
+
+if(isset($_GET["debug"])){
+  $boolDebug = true;
+}
 
 /*
 The end state of the data is this:
@@ -28,6 +44,7 @@ if(isset($_GET["a"])) {
   $reqA = $_GET["a"];
   $reqA = str_replace('@mit.edu','',$reqA);
   $arrCriteria = array('_id'=>$reqA);
+  $arrCriteria = array('type' => 'author','_id.mitid'=>$salt.$_SESSION["hash"]);
 }
 
 if(isset($_GET["filter"])) {
@@ -45,7 +62,14 @@ $arrProjection = array(
   'dates'=>1
 );
 
+if($boolDebug){
+  echo '<pre>';
+  print_r($arrCriteria);
+  echo '</pre>';  
+}
+
 $cursor = $summaries->find($arrCriteria,$arrProjection);
+
 /* 
 Sample returned record
 {
@@ -127,6 +151,7 @@ function transpose($array) {
 $arrDataRaw = transpose($arrDataRaw);
 
 // build final data structure
+if($boolDebug){ echo '<hr>'; }
 
 $arrOutput = array("dates" => $arrDates,"dataNamesRaw" => $arrDataNamesRaw,"dataRaw" => $arrDataRaw);
 echo json_encode($arrOutput);
