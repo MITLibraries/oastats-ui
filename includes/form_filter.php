@@ -1,4 +1,19 @@
 <div id="oafilter">
+<form method="get">
+<?php
+// If the user is an admin, show the impersonate control
+if(isset($_SESSION["admin"]) && $_SERVER["SCRIPT_NAME"] == "/author.php") {
+	if($_SESSION["admin"] == true) {
+		?>
+		<h2>Administration</h2>
+		<label for="impersonate">
+		Which user would you like to see?
+		<input type="text" name="impersonate" id="impersonate" value="<?php echo $reqA; ?>">
+		</label>
+		<?php		
+	}
+}
+?>
 <?php
 // get filter values
 if(isset($_GET["filter"])){
@@ -30,7 +45,6 @@ $cursor = $summaries->find($arrCriteria,$arrProjection)->sort($arrSort);
 
 ?>
 	<h2>Filter</h2>
-	<form method="get">
 		<?php
 		// store the current depth in the filter form
 		if($reqD!="") {
