@@ -2,7 +2,6 @@
 <div class="vis new" id="time">
   <div id="time-tooltip" class="tooltip"></div>
 </div>
-<script src="scripts/underscore.js"></script>
 <script>
 $(document).ready(function() {
 
