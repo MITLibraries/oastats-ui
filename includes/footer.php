@@ -14,48 +14,51 @@
 			</div>
 		</div>
 		<?php require_once('includes/include_mongo_disconnect.php'); ?>
-	</body>
-	<script>
-	$(document).ready(function() {
+		<script>
+		$(document).ready(function() {
 
-		var tabs = $('.tabs'),
-		tab_a_selector = 'ul.ui-tabs-nav a';
-		 
-		tabs.tabs({ event: 'change' });
-		 
-		tabs.find( tab_a_selector ).click(function(){
-			var state = {},
-			id = $(this).closest( '.tabs' ).attr( 'id' ),
-			idx = $(this).parent().prevAll().length;
-			state[ id ] = idx;
-			$.bbq.pushState( state );
-		});
-		 
-		$(window).bind( 'hashchange', function(e) {
-			tabs.each(function(){
-				var idx = $.bbq.getState( this.id, true ) || 0;
-				$(this).find( tab_a_selector ).eq( idx ).triggerHandler( 'change' );
+			var tabs = $('.tabs'),
+			tab_a_selector = 'ul.ui-tabs-nav a';
+			 
+			tabs.tabs({ event: 'change' });
+			 
+			tabs.find( tab_a_selector ).click(function(){
+				var state = {},
+				id = $(this).closest( '.tabs' ).attr( 'id' ),
+				idx = $(this).parent().prevAll().length;
+				state[ id ] = idx;
+				$.bbq.pushState( state );
 			});
-		})
-		 
-		$(window).trigger( 'hashchange' );
-
-		$("#oafilter input").click(function() {
-			// Which option was clicked on?
-			var item = $(this).val();
-			if(item=="all") {
-				// Clicked on "all"
-				$("#oafilter input[value!='all']").each(function() {
-					console.log($(this).val());
-					$(this).attr('checked', false);
+			 
+			$(window).bind( 'hashchange', function(e) {
+				tabs.each(function(){
+					var idx = $.bbq.getState( this.id, true ) || 0;
+					$(this).find( tab_a_selector ).eq( idx ).triggerHandler( 'change' );
 				});
-			} else {
-				// Clicked on something else - make sure "all" isn't checked
-				$("#oafilter #all").attr('checked', false);
-				console.log('b');
-			}
-		});
+			})
+			 
+			$(window).trigger( 'hashchange' );
 
-	});	
-	</script>
+			$("#oafilter input").click(function() {
+				// Which option was clicked on?
+				var item = $(this).val();
+				if(item=="all") {
+					// Clicked on "all"
+					$("#oafilter input[value!='all']").each(function() {
+						console.log($(this).val());
+						$(this).attr('checked', false);
+					});
+				} else {
+					// Clicked on something else - make sure "all" isn't checked
+					$("#oafilter #all").attr('checked', false);
+					console.log('b');
+				}
+			});
+
+			$("#exports li a").click(function() {
+				alert('click');
+			});
+		});	
+		</script>
+	</body>
 </html>			
