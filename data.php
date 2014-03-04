@@ -96,7 +96,7 @@ $cursor = $summaries->find($arrCriteria,$arrProjection);
 	<thead>
 		<tr>
 			<th scope="col"><?php echo $strGroup; ?></th>
-			<?php if(!isset($reqA)) { ?><th scope="col">Items</th><?php } ?>
+			<?php if(!isset($reqA)) { ?><th scope="col">Articles</th><?php } ?>
 			<th scope="col">Downloads</th>
 		</tr>
 	</thead>
@@ -117,8 +117,8 @@ foreach($cursor as $document) {
 		<?php } else { ?>
 		<td><?php echo $strLink." ".$document["_id"]; ?></td>
 		<?php } ?>
-		<?php if(!isset($reqA)) { ?><td><?php echo number_format($document["size"]); ?></td><?php } ?>
-		<td><?php echo number_format($document["downloads"]); ?></td>
+		<?php if(!isset($reqA)) { ?><td><?php echo $document["size"]; ?></td><?php } ?>
+		<td><?php echo $document["downloads"]; ?></td>
 	</tr>
 <?php
 }
