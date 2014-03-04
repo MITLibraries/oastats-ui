@@ -24,12 +24,12 @@ svg line {
 }
 
 .vis text.title {
-  font-size: 18px;
-  font-weight: bold;
+  font-size: 15px;
+  font-weight: normal;
 }
 
 .vis .axis {
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .vis line {
@@ -49,7 +49,7 @@ svg line {
 }
 
 .vis.new .tooltip {
-  font-size: 12px;
+  font-size: 13px;
 }
 .vis.new .tooltip.single {
   border: 2px solid #555;
@@ -61,7 +61,7 @@ svg line {
 }
 
 .vis .tooltip .tooltip-title {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: bold;
   padding-bottom: 5px;
 }
@@ -70,7 +70,7 @@ svg line {
   overflow: auto;
   width: 100%;
   margin-bottom: 2px;
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .vis .tooltip .tooltip-section .tooltip-swatch {
