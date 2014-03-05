@@ -131,7 +131,7 @@ $datatable .= '</tbody></table>';
 
 // parse dataset, sorting records into quintiles
 foreach($dataset as $key => $val) {
-  $intQuintile = intval(($val['downloads'] / $hi)*4)+1;
+  $intQuintile = intval((log($val['downloads']) / log($hi))*4)+1;
   if($intQuintile>5) {$intQuintile=5;}
   $val['fillKey'] = "q".$intQuintile;
   $dataset[$key] = $val;
@@ -171,6 +171,19 @@ foreach($dataset as $key => $val) {
       q5: "rgb(8,48,107)",
     },
     data: mapdata
+  });
+
+  map.legend({
+    defaultFillName: "No data",
+    q0: "one",
+    labels: {
+      q0: "one",
+      q1: "two",
+      q2: "three",
+      q3: "four",
+      q4: "five",
+      q5: "six,"
+    },
   });
 
   $(document).ready(function() {

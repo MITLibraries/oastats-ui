@@ -81,3 +81,14 @@ g.focus path {
 table.mapdata {
   margin-top: 1em;
 }
+.dataTables_wrapper {
+  margin-top: 2rem;
+}
+/* legend overrides */
+.datamaps-legend {
+  margin-top: -1.25rem;
+}
+.datamaps-legend dd {
+  border-radius: 0px;
+  margin-right: 1rem;
+}
