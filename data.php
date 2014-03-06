@@ -61,7 +61,7 @@ if(isset($_GET["d"])) {
 	$reqA = $_GET["a"];
 	$reqA = str_replace('@mit.edu','',$reqA);
 	$strFilterTerm = '_id';
-	$arrCriteria = array('type' => 'author','_id.mitid'=>$salt.$_SESSION["hash"]);
+	$arrCriteria = array('type' => 'handle','parents.mitid'=>$salt.$_SESSION["hash"]);
 	$nextType = "";
 	$strGroup = "Paper";
 } elseif(isset($_GET["p"])) {
@@ -131,5 +131,6 @@ foreach($cursor as $document) {
 <?php
 }
 ?>
+	</tbody>
 </table>
 <?php require_once('includes/include_mongo_disconnect.php'); ?>
