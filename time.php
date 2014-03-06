@@ -307,4 +307,4 @@ $(document).ready(function() {
 });
 
 </script>
-<p>Data called from data/json-time-running.php?<?php echo $_SERVER["QUERY_STRING"];?></p>
+<p>Data called from <a href="data/json-time-running.php?<?php echo $_SERVER["QUERY_STRING"];?>">data/json-time-running.php?<?php echo $_SERVER["QUERY_STRING"];?></a></p>
