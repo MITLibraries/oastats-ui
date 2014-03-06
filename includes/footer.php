@@ -13,7 +13,7 @@
 					<a href="http://dspace.mit.edu/handle/1721.1/49433">Open Access Articles</a>
 				</div>
 			</div>
-			<div style="background-color: #fff;padding:1rem;">
+			<div style="background-color: #fff; padding: 1rem; margin-top: 1rem;">
 				<h2>Debugging information goes here</h2>
 <?php
 	foreach($_SESSION as $key => $val) {
