@@ -2,12 +2,6 @@
 
 date_default_timezone_set('America/New_York');
 
-/*
-error_reporting(E_ALL);
-ini_set('display_errors', TRUE);
-ini_set('display_startup_errors', TRUE);
-*/
-
 require_once('../includes/salt.php'); 
 
 session_start();
@@ -15,7 +9,12 @@ session_start();
 // connect to Mongo
 require_once('../includes/include_mongo_connect.php');
 
+$boolDebug = false;
 if(isset($_GET["debug"])){
+  error_reporting(E_ALL);
+  ini_set('display_errors', TRUE);
+  ini_set('display_startup_errors', TRUE);
+
   $boolDebug = true;
 }
 
@@ -38,12 +37,13 @@ db.summaries.find({'_id':'Overall'},{'_id':1,'dates':1})
 // Get querystring
 // This includes determining what level of data is being queried, and any filters being applied
 $arrCriteria = array('_id'=>'Overall');
+$arrProjection = array(
+  '_id'=>1,
+  'dates'=>1
+);
 
 if(isset($_GET["a"])) {
-  // get and clean Touchstone username
-  $reqA = $_GET["a"];
-  $reqA = str_replace('@mit.edu','',$reqA);
-  $arrCriteria = array('_id'=>$reqA);
+  // if this is coming from an author view, pull that author
   $arrCriteria = array('type' => 'author','_id.mitid'=>$salt.$_SESSION["hash"]);
 }
 
@@ -57,16 +57,8 @@ if(isset($_GET["filter"])) {
   $arrCriteria = array( '$or' => $arrFilter);
 }
 
-$arrProjection = array(
-  '_id'=>1,
-  'dates'=>1
-);
-
-if($boolDebug){
-  echo '<pre>';
-  print_r($arrCriteria);
-  echo '</pre>';  
-}
+debugData('Criteria',$arrCriteria,$boolDebug);
+debugData('Projection',$arrProjection,$boolDebug);
 
 $cursor = $summaries->find($arrCriteria,$arrProjection);
 
@@ -82,8 +74,26 @@ Sample returned record
     {
       'date' : '2009-01-04',
       'downloads' : 2
+    }
+  ]
+}
+
+OR 
+
+{
+  '_id' : {
+    'mitid' : 'HASH',
+    'name' : 'Doe, John'
+  }
+  'dates' : [
+    {
+      'date' : '2009-01-01',
+      'downloads' : 2
     },
-    ...
+    {
+      'date' : '2009-01-04',
+      'downloads' : 2
+    }
   ]
 }
 */
@@ -105,14 +115,21 @@ The intermediate set of data is arrSubData, which has a shape of:
 */
 $arrSubData = array();
 foreach($cursor as $document) {
-  // echo '<h1>Record</h1>';
-  // var_dump($document);
+
+  debugData('Document',$document,$boolDebug);
+
   array_push($arrDataNamesRaw,$document["_id"]);
-  $intRunningDownloads = 0;
-  $temp = array();
+
   foreach($document["dates"] as $date) {
+
+    debugData('Date',$date,$boolDebug);
+
     // check if we've seen this date already
-    $arrSubData[$date["date"]][$document["_id"]] = $date["downloads"];
+    if(isset($_GET["a"]) && !isset($_GET["filter"])) {
+      $arrSubData[$date["date"]][$document["_id"]["mitid"]] = $date["downloads"];
+    } else {
+      $arrSubData[$date["date"]][$document["_id"]] = $date["downloads"];
+    }
   }
 }
 ksort($arrSubData);
@@ -142,6 +159,18 @@ foreach($arrSubData as $key=>$val) {
   }
   $i++;
 }
+
+debugData('dataRaw',$arrDataRaw,$boolDebug);
+
+function debugData($msg,$data,$boolDebug) {
+  if($boolDebug) {
+    echo '<h2>'.$msg.'</h2>';
+    echo '<pre>';
+    print_r($data);
+    echo '</pre>';
+  }
+}
+
 // now need to flip arrDataRaw
 // from http://stackoverflow.com/questions/797251/transposing-multidimensional-arrays-in-php
 function transpose($array) {
@@ -150,9 +179,9 @@ function transpose($array) {
 }
 $arrDataRaw = transpose($arrDataRaw);
 
-// build final data structure
-if($boolDebug){ echo '<hr>'; }
+debugData('<hr>','',$boolDebug);
 
+// build final data structure
 $arrOutput = array("dates" => $arrDates,"dataNamesRaw" => $arrDataNamesRaw,"dataRaw" => $arrDataRaw);
 echo json_encode($arrOutput);
 
