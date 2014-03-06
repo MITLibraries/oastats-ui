@@ -131,7 +131,12 @@ $datatable .= '</tbody></table>';
 
 // parse dataset, sorting records into quintiles
 foreach($dataset as $key => $val) {
-  $intQuintile = intval((log($val['downloads']) / log($hi))*4)+1;
+  if($val['downloads'] == 0) { 
+    $intVal = 1;
+  } else {
+    $intVal = $val['downloads'];
+  }
+  $intQuintile = intval((log($intVal) / log($hi))*4)+1;
   if($intQuintile>5) {$intQuintile=5;}
   $val['fillKey'] = "q".$intQuintile;
   $dataset[$key] = $val;
@@ -201,3 +206,6 @@ foreach($dataset as $key => $val) {
 
 </script>
 <?php require_once('includes/include_mongo_disconnect.php'); ?>
+<?php
+print_r($dataset);
+?>
