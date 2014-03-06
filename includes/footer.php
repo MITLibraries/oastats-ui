@@ -9,6 +9,8 @@
 				</div>
 				<div class="right block">
 					<a href="http://libraries.mit.edu/scholarly/mit-open-access/open-access-at-mit/mit-open-access-policy/" id="homeFooter">MIT Faculty Open Access Policy</a>
+					|
+					<a href="http://dspace.mit.edu/handle/1721.1/49433">Open Access Articles</a>
 				</div>
 			</div>
 			<div style="background-color: #fff;padding:1rem;">
@@ -65,6 +67,7 @@
 			$("#exports li a").click(function() {
 				alert('click');
 			});
+
 		});	
 		</script>
 	</body>

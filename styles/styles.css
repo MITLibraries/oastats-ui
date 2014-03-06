@@ -221,6 +221,15 @@ section.main {
 	padding: 0.5em;
 	margin-bottom: 1em;
 }
+#content {
+	max-width: 700px;
+}
+#content h2 {
+	margin-bottom: 1rem;
+}
+#content p {
+	margin-bottom: 1rem;
+}
 /* Colophon */
 #colophon {
 	margin-top: 1rem;

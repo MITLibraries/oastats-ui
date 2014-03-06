@@ -7,7 +7,8 @@
 				<div id="navigation">
 					<ul>
 						<li><a href="index.php">Home</a></li>
-						<li><a href="http://dspace.mit.edu/handle/1721.1/49433">Open Access Articles</a></li>
+						<li><a href="faq.php"><abbr title="Frequently Asked Questions">FAQ</abbr></a></li>
+						<li><a href="public.php">Public Stats</a></li>
 <?php
 	if(isset($_SESSION["user"])) {
 ?>
