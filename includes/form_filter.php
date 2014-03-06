@@ -28,7 +28,7 @@ if($reqD!="") {
 } elseif($reqA!="") {
 	$reqA = str_replace('@mit.edu','',$reqA);
 	$strInstructions = "Papers:";
-	$arrCriteria = array('type' => 'paper','parents'=>$reqA);
+	$arrCriteria = array('type' => 'handle','parents.mitid'=>$salt.$_SESSION["hash"]);
 } else {
 	$strInstructions = "Departments, Labs or Centers:";
 	$arrCriteria = array('type' => 'dlc');
