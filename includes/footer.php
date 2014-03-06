@@ -64,8 +64,29 @@
 				}
 			});
 
-			$("#exports li a").click(function() {
-				alert('click');
+			var exports = $("#exports");
+			exports.on("click","li a",function() {
+				var tool = $(this).attr("data-format");
+				var tab = $(".ui-tabs-active").text();
+				switch(tool) {
+					case "csv":
+						var uri = 'exports/csv.php';
+						if(location.search){
+							uri += location.search+'&tab='+tab;
+						} else {
+							uri += '?tab='+tab;
+						}
+						window.open(uri);
+						break;
+					case "png":
+						alert('png coming soon...');
+						break;
+					case "pdf":
+						alert('pdf coming soon...');
+						break;
+					default:
+						alert('what?');
+				}
 			});
 
 		});	
