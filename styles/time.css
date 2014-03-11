@@ -68,9 +68,11 @@ svg line {
 
 .vis .tooltip .tooltip-section {
   overflow: auto;
+  overflow-y: hidden;
   width: 100%;
-  margin-bottom: 2px;
+  margin-bottom: 6px;
   font-size: 13px;
+  max-height: 50px;
 }
 
 .vis .tooltip .tooltip-section .tooltip-swatch {
