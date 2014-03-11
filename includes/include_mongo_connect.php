@@ -22,9 +22,9 @@
 				break;
 			default:			
 				$m = new Mongo();
-				$db = $m->oastats;
-				$collection = $db->requests;
-				$summaries = $db->summaries;
+				$db = $m->oatest;
+				$collection = $db->request;
+				$summaries = $db->summary;
 		}
 	} catch (Exception $e) {
 		die('Error: ' . $e->getMessage());
