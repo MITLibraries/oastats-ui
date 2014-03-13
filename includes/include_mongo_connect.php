@@ -9,10 +9,10 @@
 				$summaries = $db->summary;
 				break;
 			case "oastats-test.mit.edu":
-				$m = new Mongo('mongodb://libdb-test.mit.edu:27017');
-				$db = $m->oatest;
-				$collection = $db->request;
-				$summaries = $db->summaries;
+				$m = new Mongo('mongodb://libdb-dev.mit.edu:27017');
+				$db = $m->oastats;
+				$collection = $db->requests;
+				$summaries = $db->summary;
 				break;
 			case "oastats.mit.edu":
 				$m = new Mongo('mongodb://libdb-test.mit.edu:27017');
@@ -20,7 +20,7 @@
 				$collection = $db->request;
 				$summaries = $db->summaries;
 				break;
-			default:			
+			default:
 				$m = new Mongo();
 				$db = $m->oatest;
 				$collection = $db->request;
