@@ -52,5 +52,5 @@ $reqA = "";
 				<div id="masthead">
 					<h1>Open Access Statistics</h1>
 				</div>
-				<?php require_once('includes/include_login.php'); ?>
+				<?php require_once('includes/navigation.php'); ?>
 				<section class="main">
