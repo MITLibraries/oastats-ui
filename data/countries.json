@@ -7337,5 +7337,17 @@
 		"latlng": [-20, 30],
 		"demonym": "Zimbabwean",
 		"borders": ["BWA", "MOZ", "ZAF", "ZMB"]
+	},
+	{
+		"name": "Northern Cyprus",
+		"cca3": "NCY"
+	},
+	{
+		"name": "Kosovo",
+		"cca3": "KOS"
+	},
+	{
+		"name": "Somaliland",
+		"cca3": "SMD"
 	}
 ]
