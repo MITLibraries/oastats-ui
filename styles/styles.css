@@ -123,8 +123,12 @@ section.main {
 	-ms-flex: 1;              /* IE 10 */
 	flex: 1;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
 }
+/* Export controls */
 #oafilter #exports li {
 	margin: 0.5rem 0;
+}
+#oafilter #exports li a {
+	cursor: pointer;
 }
 
 #tabs {
@@ -193,27 +197,6 @@ section.main {
 #page table.dataTable tr.odd td.sorting_1 { background-color: #d8d8d8; }
 #page table.dataTable tr.even td.sorting_1 { background-color: #ececec; }
 
-/* Export controls */
-.export {
-	float: right;
-	margin-bottom: 1em;
-}
-.export a {
-	background-color: #ddd;
-	border: 1px solid #aaa;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
-	padding: 2px 5px;
-	margin: 0 3px;
-	cursor: pointer;
-	color: #333 !important;
-}
-.export a:hover,
-.export a:focus {
-	background-color: #ccc;
-	text-decoration: none;
-}
 /* general styles */
 .warning {
 	background-color: #5B0C06;
