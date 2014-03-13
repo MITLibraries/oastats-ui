@@ -123,11 +123,23 @@ foreach($countries as $country) {
   }
   $datatable .= '<tr><td>'.$country["name"].'</td><td>'.$downloads.'</td></tr>';
   $dataItem = array();
-  $dataItem['fillKey'] = "q0";
+  // $dataItem['fillKey'] = "q0";
   $dataItem['downloads'] = (int) $downloads;
   $dataset[$code] = $dataItem;
 }
 $datatable .= '</tbody></table>';
+
+if($lo==0){$lo=1;}
+// net to set custom quintile labels
+$intBins = 5;
+$arrBinLabels = array();
+$dblLogRange = log($hi) - log($lo);
+$dblQuintSize = $dblLogRange / $intBins;
+for($i=0;$i<$intBins;$i++) {
+  $dblQuintMin = intval(exp(log($lo) + ($i * $dblQuintSize)));
+  $dblQuintMax = intval(exp(log($lo) + (($i + 1) * $dblQuintSize)));
+  array_push($arrBinLabels,$dblQuintMin.' - '.$dblQuintMax);
+}
 
 // parse dataset, sorting records into quintiles
 foreach($dataset as $key => $val) {
@@ -136,9 +148,12 @@ foreach($dataset as $key => $val) {
   } else {
     $intVal = $val['downloads'];
   }
-  $intQuintile = intval((log($intVal) / log($hi))*4)+1;
-  if($intQuintile>5) {$intQuintile=5;}
-  $val['fillKey'] = "q".$intQuintile;
+  // $intQuintile = intval( ( log($intVal) / log($hi) ) * 4 );
+  $intQuintile = intval( ( log($intVal - $lo) / log($hi - $lo) ) * $intBins );
+  if($intQuintile == $intBins) { $intQuintile--; }
+
+  // $val['fillKey'] = "q".$intQuintile;
+  $val['fillKey'] = $arrBinLabels[$intQuintile];
   $dataset[$key] = $val;
 }
 
@@ -168,12 +183,11 @@ foreach($dataset as $key => $val) {
     },
     fills: {
       defaultFill: "#cccccc",
-      q0: "rgb(242,242,242)",
-      q1: "rgb(173,186,206)",
-      q2: "rgb(132,152,181)",
-      q3: "rgb(90,117,156)",
-      q4: "rgb(49,83,132)",
-      q5: "rgb(8,48,107)",
+      "<?php echo $arrBinLabels[0]; ?>": "rgb(173,186,206)",
+      "<?php echo $arrBinLabels[1]; ?>": "rgb(132,152,181)",
+      "<?php echo $arrBinLabels[2]; ?>": "rgb(90,117,156)",
+      "<?php echo $arrBinLabels[3]; ?>": "rgb(49,83,132)",
+      "<?php echo $arrBinLabels[4]; ?>": "rgb(8,48,107)",
     },
     data: mapdata
   });
@@ -192,11 +206,29 @@ foreach($dataset as $key => $val) {
   });
 
   $(document).ready(function() {
-    $( "table.mapdata" ).dataTable({
+    var dt = $( "table.mapdata" ).dataTable({
       "bFilter": false,
       "bLengthChange": false,
       "bInfo": false,
-      "sPaginationType": "full_numbers"
+      "sPaginationType": "full_numbers",
+      "iDisplayLength": 25
+    });
+
+    var toggle = $(".paging_full_numbers").append('<a class="showall paginate_button">Show All</a>');
+
+    $(".showall").click(function() {
+      console.log("clicked");
+      var dtSettings = dt.fnSettings();
+      var label = $(this).html();
+      if(label == "Show All") {
+        dtSettings._iDisplayLength = -1;
+        $(this).text("Show 25");
+      } else {
+        dtSettings._iDisplayLength = 25;
+        $(this).text("Show All");
+      }
+      dt.fnDraw();
+      console.log("changed");
     });
 
     // Set export options
@@ -207,5 +239,5 @@ foreach($dataset as $key => $val) {
 </script>
 <?php require_once('includes/include_mongo_disconnect.php'); ?>
 <?php
-print_r($dataset);
+// print_r($dataset);
 ?>
