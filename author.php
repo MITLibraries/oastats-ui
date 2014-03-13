@@ -34,7 +34,7 @@
 			$reqA = strtoupper($reqA);
 			$reqA = str_replace('@MIT.EDU', '', $reqA);
 			// search warehouse for ID and Kerberos name, if not found result will be set to false
-			$sql = "select MIT_ID from library_employee where krb_name_uppercase = '$reqA'";
+			$sql = "select FULL_NAME, MIT_ID from library_employee where krb_name_uppercase = '$reqA'";
 			$statement = oci_parse($warehouse, $sql);
 			oci_execute($statement, OCI_DEFAULT);
 			$results = oci_fetch_assoc($statement);
@@ -44,8 +44,10 @@
 
 			if(!$results["MIT_ID"]) {
 				$intID = 0;
+				$_SESSION["fullname"] = "";
 			} else {
 				$intID = $results["MIT_ID"];
+				$_SESSION["fullname"] = $results["FULL_NAME"];
 			}
 
 			$strHash = md5($salt.$intID);
