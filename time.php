@@ -1,20 +1,15 @@
 <link rel="stylesheet" href="styles/time.css">
-<div class="export">
-  <a>CSV</a>
-  <a>PDF</a>
-  <a>PNG</a>
-</div>
 <div class="vis new" id="time">
   <div id="time-tooltip" class="tooltip"></div>
 </div>
-<script src="scripts/underscore.js"></script>
 <script>
 $(document).ready(function() {
 
-  var width = 910, height = 600;
+  var width = $("#time").width();
+  var height = width * 3 / 4;
 
-  var color = ["#1792e4", "#ff4248", "#51b23b", "#ff6e00", "#9574D4", "#008751", "#ac51ad", "#044187", "#ff3467"];
-  var colorLight = ["#97d2ff", "#ff9298", "#a1f27b", "#ffae50", "#9574D4", "#008751", "#ac51ad", "#044187", "#ff3467"];
+  var color = ["#1792e4", "#ff4248", "#51b23b", "#ff6e00", "#9574D4", "#008751", "#ac51ad", "#044187", "#ff3467", "#e7a609"];
+  var colorLight = ["#97d2ff", "#ff9298", "#a1f27b", "#ffae50", "#9574D4", "#008751", "#ac51ad", "#044187", "#ff3467", "#e7a609"];
   var timeFormat = d3.time.format('%b %d, %Y');
 
   var dataRaw = new Array;
@@ -197,16 +192,6 @@ $(document).ready(function() {
         .attr('fill', 'none')
         .attr('stroke-width', '1.5px');
 
-      if(!multi) {
-        var lineArea = svg.append('g').selectAll('path')
-          .data(data)
-          .enter().append('path')
-          .attr('class', 'area')
-          .attr('d', function(d) { return area(d); })
-          .attr('fill', function(d, i) { return color[i]; })
-          .style('opacity', 0.15);
-      }
-
       if(multi) {
         var circle = svg.append('g').selectAll('g')
           .data(data)
@@ -217,19 +202,6 @@ $(document).ready(function() {
           .attr('r', 4)
           .attr('fill', function(d, i) {
             return color[i];
-          });
-      }
-      else {
-        var circle = svg.append('g').selectAll('g')
-          .data(data)
-          .enter().append('g').selectAll('circle')
-          .data(function(d) { return d; })
-          .enter().append('circle')
-          .attr('cx', function(d,i) { return x(dates[i]); })
-          .attr('cy', function(d) { return y(d); })
-          .attr('r', 4)
-          .attr('fill', function(d, i) {
-            return color[findSeries(data, d, i)];
           });
       }
 
@@ -248,9 +220,6 @@ $(document).ready(function() {
           resetTooltip();
           if(multi) {
             circle.attr('opacity', 0);
-          }
-          else {
-            circle.attr('r', 4);
           }
         })
         .on('mousemove', function(e) {
@@ -285,13 +254,6 @@ $(document).ready(function() {
                 .attr('cx', xVal)
                 .attr('cy', function(d) { return y(d[curIndex]); });
             }
-            else {
-              circle.transition().duration(50)
-                .attr('r', function(d, i) {
-                  if(i === index) return 6;
-                  return 4;
-                });
-            }
           }
         });
 
@@ -306,7 +268,7 @@ $(document).ready(function() {
 
 
   var showTooLong = function() {
-    $(".export").before('<div class="warning"><strong>Please note:</strong> You have selected more filter items than this chart can display. Only the first nine have been displayed, although the full set is available using the export tools.</div>');
+    $(".vis").before('<div class="warning"><strong>Please note:</strong> You have selected more filter items than this chart can display. Only the first ten have been displayed, although the full set is available using the export tools.</div>');
   };
 
   $.getJSON('data/json-time-running.php?<?php echo $_SERVER["QUERY_STRING"];?>',function(data) {
@@ -323,7 +285,7 @@ $(document).ready(function() {
         $.each(val,function(key, val) {
           dataNamesRaw.push(val);
         });
-        if(dataNamesRaw.length > 9) {
+        if(dataNamesRaw.length > 10) {
           showTooLong();
         }
       } else if(key=="dataRaw") {
@@ -336,9 +298,13 @@ $(document).ready(function() {
     });
   })
   .done(function() {
-    graphNew('time', 9, 'Cumulative Bitstream Downloads');
+    graphNew('time', 10, 'Cumulative Bitstream Downloads');
   });
 
+  // Set export options
+  $("#exports").empty();
+  $("#exports").append('<li><a data-format="pdf">PDF</a></li>').append('<li><a data-format="png">PNG</a></li>');
 });
 
 </script>
+<p>Data called from <a href="data/json-time-running.php?<?php echo $_SERVER["QUERY_STRING"];?>">data/json-time-running.php?<?php echo $_SERVER["QUERY_STRING"];?></a></p>

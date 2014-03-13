@@ -13,8 +13,6 @@ svg line {
   clear: both;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   background-color: #fff;
-  border: 1px solid;
-  width: 910px;
   position: relative;
   margin-bottom: 20px;
   -webkit-font-smoothing: antialiased;
@@ -26,12 +24,12 @@ svg line {
 }
 
 .vis text.title {
-  font-size: 18px;
-  font-weight: bold;
+  font-size: 15px;
+  font-weight: normal;
 }
 
 .vis .axis {
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .vis line {
@@ -51,7 +49,7 @@ svg line {
 }
 
 .vis.new .tooltip {
-  font-size: 12px;
+  font-size: 13px;
 }
 .vis.new .tooltip.single {
   border: 2px solid #555;
@@ -63,16 +61,18 @@ svg line {
 }
 
 .vis .tooltip .tooltip-title {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: bold;
   padding-bottom: 5px;
 }
 
 .vis .tooltip .tooltip-section {
   overflow: auto;
+  overflow-y: hidden;
   width: 100%;
-  margin-bottom: 2px;
-  font-size: 11px;
+  margin-bottom: 6px;
+  font-size: 13px;
+  max-height: 50px;
 }
 
 .vis .tooltip .tooltip-section .tooltip-swatch {

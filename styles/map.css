@@ -1,7 +1,6 @@
 #map {
   min-height: 10em; 
   background-color: #fff;
-  border: 1px solid black;
   clear: both;
 
 
@@ -73,7 +72,23 @@ g.focus path {
   stroke: #671E1E !important;
   opacity: 1.0 !important;
 }
-
+.datamaps-hoverover .hoverinfo {
+  font-size: 13px;
+}
+.hoverinfo strong {
+  font-weight: normal;
+}
 table.mapdata {
   margin-top: 1em;
+}
+.dataTables_wrapper {
+  margin-top: 2rem;
+}
+/* legend overrides */
+.datamaps-legend {
+  margin-top: -1.25rem;
+}
+.datamaps-legend dd {
+  border-radius: 0px;
+  margin-right: 1rem;
 }

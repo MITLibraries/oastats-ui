@@ -1,5 +1,11 @@
 <link rel="stylesheet" href="styles/map.css">
+<link rel="stylesheet" href="styles/jquery.dataTables.css">
+<script src="scripts/jquery.dataTables.min.js" charset="utf-8"></script>
 <?php
+
+require_once('includes/salt.php'); 
+
+session_start();
 
 // connect to Mongo
 require_once('includes/include_mongo_connect.php');
@@ -30,6 +36,7 @@ if(isset($_GET["d"])) {
   $reqA = urldecode($_GET["a"]);
   $reqA = str_replace('@mit.edu','',$reqA);
   $arrCriteria = array('_id'=>$reqA);
+  $arrCriteria = array('type' => 'author','_id.mitid'=>$salt.$_SESSION["hash"]);
   $arrMatch = array('$match' => array('author'=>$reqA) );
   array_push($arrQuery,$arrMatch);
 } else {
@@ -100,7 +107,7 @@ $countries = json_decode($countries,true);
 $datatable = '<table class="mapdata"><thead><tr><th scope="col">Country</th><th scope="col">Downloads</th></tr></thead><tbody>';
 $dataset = array();
 $lo = 999999999999;
-$hi = 0;
+$hi = 1;
 
 // we use countries.json as the authoritative list of countries, because there's no guarantee that all the countries will come back from the Mongo store
 foreach($countries as $country) {
@@ -116,34 +123,55 @@ foreach($countries as $country) {
   }
   $datatable .= '<tr><td>'.$country["name"].'</td><td>'.$downloads.'</td></tr>';
   $dataItem = array();
-  $dataItem['fillKey'] = "q0";
+  // $dataItem['fillKey'] = "q0";
   $dataItem['downloads'] = (int) $downloads;
   $dataset[$code] = $dataItem;
 }
 $datatable .= '</tbody></table>';
 
+if($lo==0){$lo=1;}
+// net to set custom quintile labels
+$intBins = 5;
+$arrBinLabels = array();
+$dblLogRange = log($hi) - log($lo);
+$dblQuintSize = $dblLogRange / $intBins;
+for($i=0;$i<$intBins;$i++) {
+  $dblQuintMin = intval(exp(log($lo) + ($i * $dblQuintSize)));
+  $dblQuintMax = intval(exp(log($lo) + (($i + 1) * $dblQuintSize)));
+  array_push($arrBinLabels,$dblQuintMin.' - '.$dblQuintMax);
+}
+
 // parse dataset, sorting records into quintiles
 foreach($dataset as $key => $val) {
-  $intQuintile = intval(($val['downloads'] / $hi)*4)+1;
-  if($intQuintile>5) {$intQuintile=5;}
-  $val['fillKey'] = "q".$intQuintile;
+  if($val['downloads'] == 0) { 
+    $intVal = 1;
+  } else {
+    $intVal = $val['downloads'];
+  }
+  // $intQuintile = intval( ( log($intVal) / log($hi) ) * 4 );
+  $intQuintile = intval( ( log($intVal - $lo) / log($hi - $lo) ) * $intBins );
+  if($intQuintile == $intBins) { $intQuintile--; }
+
+  // $val['fillKey'] = "q".$intQuintile;
+  $val['fillKey'] = $arrBinLabels[$intQuintile];
   $dataset[$key] = $val;
 }
 
 ?>
-<div class="export">
-  <a>CSV</a>
-  <a>PDF</a>
-  <a>PNG</a>
-</div>
-
-<div id="map" style="position: relative; width: 910px; height: 400px;"></div>
+<div id="map" style="position: relative; width: 100%;"></div>
+<?php 
+  echo $datatable; 
+?>
 <script>
+
+  var width = $("#map").width();
+  var height = width * 9 / 16;
+
+  $("#map").height(height);
 
   var mapdata = <?php echo json_encode($dataset); ?>;
 
   $.getJSON( "data/countries.json", function( data ) {
-    console.log('loaded countries');
   });
 
   var map = new Datamap({
@@ -155,27 +183,61 @@ foreach($dataset as $key => $val) {
     },
     fills: {
       defaultFill: "#cccccc",
-      q0: "rgb(242,242,242)",
-      q1: "rgb(173,186,206)",
-      q2: "rgb(132,152,181)",
-      q3: "rgb(90,117,156)",
-      q4: "rgb(49,83,132)",
-      q5: "rgb(8,48,107)",
+      "<?php echo $arrBinLabels[0]; ?>": "rgb(173,186,206)",
+      "<?php echo $arrBinLabels[1]; ?>": "rgb(132,152,181)",
+      "<?php echo $arrBinLabels[2]; ?>": "rgb(90,117,156)",
+      "<?php echo $arrBinLabels[3]; ?>": "rgb(49,83,132)",
+      "<?php echo $arrBinLabels[4]; ?>": "rgb(8,48,107)",
     },
     data: mapdata
   });
 
+  map.legend({
+    defaultFillName: "No data",
+    q0: "one",
+    labels: {
+      q0: "one",
+      q1: "two",
+      q2: "three",
+      q3: "four",
+      q4: "five",
+      q5: "six,"
+    },
+  });
+
   $(document).ready(function() {
-    $( "table.mapdata" ).dataTable({
+    var dt = $( "table.mapdata" ).dataTable({
       "bFilter": false,
       "bLengthChange": false,
       "bInfo": false,
-      "sPaginationType": "full_numbers"
+      "sPaginationType": "full_numbers",
+      "iDisplayLength": 25
     });
+
+    var toggle = $(".paging_full_numbers").append('<a class="showall paginate_button">Show All</a>');
+
+    $(".showall").click(function() {
+      console.log("clicked");
+      var dtSettings = dt.fnSettings();
+      var label = $(this).html();
+      if(label == "Show All") {
+        dtSettings._iDisplayLength = -1;
+        $(this).text("Show 25");
+      } else {
+        dtSettings._iDisplayLength = 25;
+        $(this).text("Show All");
+      }
+      dt.fnDraw();
+      console.log("changed");
+    });
+
+    // Set export options
+    $("#exports").empty();
+    $("#exports").append('<li><a data-format="csv">CSV</a></li>').append('<li><a data-format="pdf">PDF</a></li>').append('<li><a data-format="png">PNG</a></li>');    
   });
 
 </script>
-<?php 
-  echo $datatable; 
-?>
 <?php require_once('includes/include_mongo_disconnect.php'); ?>
+<?php
+// print_r($dataset);
+?>
