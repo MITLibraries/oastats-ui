@@ -257,3 +257,8 @@ section.main {
 	text-align: right;
 	float: right;
 }
+#administration {
+	background-color: #fff;
+	padding: 1rem;
+	margin-top: 1rem;
+}

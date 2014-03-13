@@ -13,14 +13,40 @@
 					<a href="http://dspace.mit.edu/handle/1721.1/49433">Open Access Articles</a>
 				</div>
 			</div>
+<?php
+// If the user is an admin, show the impersonate control
+if(isset($_SESSION["admin"]) && $_SERVER["SCRIPT_NAME"] == "/author.php") {
+	if($_SESSION["admin"] == true) {
+		?>
+			<div id="administration">
+				<h2>Administration</h2>
+				<p>You are currently using his application as: <strong><?php echo $_SESSION["fullname"];?></strong>.</p>
+				<form>
+					<label for="impersonate">
+					Specify the Touchstone username of the user whom you want to impersonate - leave blank to resume your real identity.
+					<input type="text" name="impersonate" id="impersonate" value="<?php echo $reqA; ?>">
+					</label>
+					<input type="submit" value="Switch User">
+				</form>
+			</div>
+		<?php		
+	}
+}
+?>
+<?php
+// need to make this section conditional
+?>			
 			<div style="background-color: #fff; padding: 1rem; margin-top: 1rem;">
-				<h2>Debugging information goes here</h2>
+				<h2>Debugging</h2>
 <?php
 	foreach($_SESSION as $key => $val) {
 		echo "<p>".$key." = ".$val."</p>";
 	}
 ?>				
 			</div>
+<?php
+// end conditional debugging
+?>
 		</div>
 		<?php require_once('includes/include_mongo_disconnect.php'); ?>
 		<script>
