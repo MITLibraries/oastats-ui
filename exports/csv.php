@@ -13,7 +13,7 @@ session_start();
 // connect to Mongo
 require_once('../includes/include_mongo_connect.php');
 
-// collect possible query parameters
+// build query criteria
 if(isset($_GET["user"])) {
 	$reqUser = urldecode($_GET["user"]);
 }
@@ -28,12 +28,6 @@ if(isset($_GET["d"])) {
 	$reqA = str_replace('@mit.edu','',$reqA);
 	$strFilterTerm = '_id';
 	$arrCriteria = array('type' => 'handle','parents.mitid'=>$salt.$_SESSION["hash"]);
-	$nextType = "";
-	$strGroup = "Paper";
-} elseif(isset($_GET["p"])) {
-	$reqA = $_GET["user"];
-	$strFilterTerm = 'handle';
-	$arrCriteria = array('type' => 'paper');
 	$nextType = "";
 	$strGroup = "Paper";
 } else {
@@ -63,14 +57,16 @@ $arrProjection = array(
 	'downloads'=>1
 );
 
+// execute query into cursor
 $cursor = $summaries->find($arrCriteria,$arrProjection);
 
-// Field labels
+// Field labels in the first row
 $arrLabels = array($strGroup);
 if(!isset($reqA)) { array_push($arrLabels,"Articles"); }
 array_push($arrLabels,"Downloads");
 fputcsv($export,$arrLabels);
 
+// Field values
 foreach($cursor as $document) {
 
 	$arrLine = array($document["_id"]);
