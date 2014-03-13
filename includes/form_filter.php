@@ -15,6 +15,12 @@ if(isset($_SESSION["admin"]) && $_SERVER["SCRIPT_NAME"] == "/author.php") {
 }
 ?>
 <?php
+
+// default projection
+$arrProjection = array(
+	'_id'=>1,
+);
+
 // get filter values
 if(isset($_GET["filter"])){
 	$reqFilter = $_GET["filter"];
@@ -29,14 +35,14 @@ if($reqD!="") {
 	$reqA = str_replace('@mit.edu','',$reqA);
 	$strInstructions = "Papers:";
 	$arrCriteria = array('type' => 'handle','parents.mitid'=>$salt.$_SESSION["hash"]);
+	$arrProjection = array(
+		'_id'=>1,
+		'title'=>1
+	);
 } else {
 	$strInstructions = "Departments, Labs or Centers:";
 	$arrCriteria = array('type' => 'dlc');
 }
-
-$arrProjection = array(
-	'_id'=>1,
-);
 
 $arrSort = array(
 	'_id'=>1,
@@ -57,8 +63,13 @@ $cursor = $summaries->find($arrCriteria,$arrProjection)->sort($arrSort);
 			<label class="checkbox" for="all"><input type="checkbox" name="filter[]" id="all" value="all">All <?php echo $strInstructions; ?></label>
 		<?php
 			foreach($cursor as $document) {
+				if($reqA!=""){
+					$strTitle = $document["title"];
+				} else {
+					$strTitle = $document["_id"];
+				}
 		?>
-			<label class="checkbox" for="<?php echo urlencode($document['_id']); ?>"><input type="checkbox" name="filter[]" id="<?php echo urlencode($document['_id']); ?>" value="<?php echo $document['_id']; ?>"<?php if(in_array($document['_id'],$reqFilter)) { echo 'checked="checked"'; } ?>><span><?php echo $document['_id']; ?></span></label>
+			<label class="checkbox" for="<?php echo urlencode($document['_id']); ?>"><input type="checkbox" name="filter[]" id="<?php echo urlencode($document['_id']); ?>" value="<?php echo $document['_id']; ?>"<?php if(in_array($document['_id'],$reqFilter)) { echo 'checked="checked"'; } ?>><span><?php echo $strTitle; ?></span></label>
 		<?php
 			}
 		?>

@@ -45,6 +45,11 @@ $arrProjection = array(
 if(isset($_GET["a"])) {
   // if this is coming from an author view, pull that author
   $arrCriteria = array('type' => 'author','_id.mitid'=>$salt.$_SESSION["hash"]);
+  $arrProjection = array(
+    '_id'=>1,
+    'title'=>1,
+    'dates'=>1
+  );
 }
 
 if(isset($_GET["filter"])) {
@@ -118,7 +123,11 @@ foreach($cursor as $document) {
 
   debugData('Document',$document,$boolDebug);
 
-  array_push($arrDataNamesRaw,$document["_id"]);
+  if(isset($_GET["a"])) {
+    array_push($arrDataNamesRaw,$document["title"]);
+  } else {
+    array_push($arrDataNamesRaw,$document["_id"]);
+  }
 
   foreach($document["dates"] as $date) {
 
@@ -127,12 +136,18 @@ foreach($cursor as $document) {
     // check if we've seen this date already
     if(isset($_GET["a"]) && !isset($_GET["filter"])) {
       $arrSubData[$date["date"]][$document["_id"]["mitid"]] = $date["downloads"];
+    } elseif(isset($_GET["a"])) {
+      $arrSubData[$date["date"]][$document["title"]] = $date["downloads"];
     } else {
       $arrSubData[$date["date"]][$document["_id"]] = $date["downloads"];
     }
   }
 }
 ksort($arrSubData);
+
+debugData('dataNamesRaw',$arrDataNamesRaw,$boolDebug);
+debugData('SubData',$arrSubData,$boolDebug);
+
 /* 
 Build final data
 This builds the final data format
