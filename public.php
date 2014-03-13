@@ -1,5 +1,7 @@
 <?php
 
+	require_once('includes/initialize.php'); 
+
 	// collect possible query parameters
 	if(isset($_GET["d"])) {
 		$reqD = urldecode($_GET["d"]);

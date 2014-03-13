@@ -1,12 +1,11 @@
 <?php
-	session_start();
-	
-	unset($_SESSION["user"]);
-	unset($_SESSION["admin"]);
-	unset($_SESSION["impersonate"]);
-	unset($_SESSION["hash"]);
 
-	$strBaseURL = 'https://'.$_SERVER["SERVER_NAME"].'/';
+	include_once("/includes/initialize.php");
+
+	destroySession();
+
+	$strBaseURL = buildReturnURL();
 
 	header('Location: '.$strBaseURL);
+
 ?>
