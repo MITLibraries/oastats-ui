@@ -7,9 +7,6 @@
 	} elseif(isset($_GET["a"])) {
 		$reqA = urldecode($_GET["a"]);
 		$strBreadcrumb = $reqA;
-	} elseif(isset($_GET["p"])) {
-		$reqA = urldecode($reqUser);
-		$strBreadcrumb = $reqA;
 	}
 
 	require_once('includes/header.php'); 
