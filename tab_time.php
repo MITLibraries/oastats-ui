@@ -303,7 +303,7 @@ $(document).ready(function() {
 
   // Set export options
   $("#exports").empty();
-  $("#exports").append('<li><a data-format="pdf">PDF</a></li>').append('<li><a data-format="png">PNG</a></li>');
+  $("#exports").append('<li><a data-format="csv">CSV</a></li>').append('<li><a data-format="pdf">PDF</a></li>').append('<li><a data-format="png">PNG</a></li>');
 });
 
 </script>
