@@ -32,9 +32,8 @@ if(isset($_SESSION["admin"]) && $_SERVER["SCRIPT_NAME"] == "/author.php") {
 		<?php		
 	}
 }
-?>
-<?php
-// need to make this section conditional
+
+if(isset($_SESSION["admin"])) {
 ?>			
 			<div style="background-color: #fff; padding: 1rem; margin-top: 1rem;">
 				<h2>Debugging</h2>
@@ -45,7 +44,7 @@ if(isset($_SESSION["admin"]) && $_SERVER["SCRIPT_NAME"] == "/author.php") {
 ?>				
 			</div>
 <?php
-// end conditional debugging
+}
 ?>
 		</div>
 		<?php require_once('includes/include_mongo_disconnect.php'); ?>
