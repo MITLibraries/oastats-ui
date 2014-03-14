@@ -1,13 +1,11 @@
 <?php
 
-session_start();
-
-require_once('salt.php'); 
-
 // Enable page debugging
 error_reporting(E_ALL);
 ini_set('display_errors', TRUE);
 ini_set('display_startup_errors', TRUE);
+
+session_start();
 
 // Functions that may be needed by various pages
 function setImpersonate() {
@@ -97,6 +95,7 @@ function buildLogoutURL() {
 
 
 function warehouseLookup() {
+	include($_SERVER["DOCUMENT_ROOT"]."/includes/salt.php");
 
 	switch ($_SERVER["SERVER_NAME"]) {
 		case "oastats":
