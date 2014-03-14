@@ -105,10 +105,10 @@ if(isset($_SESSION["admin"]) && $_SERVER["SCRIPT_NAME"] == "/author.php") {
 						window.open(uri);
 						break;
 					case "png":
-						alert('png coming soon...');
+						alert('Sorry, export to PNG format is not available yet.');
 						break;
 					case "pdf":
-						alert('pdf coming soon...');
+						alert('Sorry, export to PDF format is not available yet.');
 						break;
 					default:
 						alert('what?');

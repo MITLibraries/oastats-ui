@@ -38,8 +38,7 @@ session_start();
 
 		// Set export options
 		$("#exports").empty();
-		$("#exports").append('<li><a data-format="csv">CSV</a></li>')
-			.append('<li><a data-format="pdf">PDF</a></li>');
+		$("#exports").append('<li><a data-format="csv">CSV</a></li>');
 	});
 </script>
 <?php
