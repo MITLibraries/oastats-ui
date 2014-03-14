@@ -1,6 +1,6 @@
 <?php
 
-	include_once("/includes/initialize.php");
+	include_once($_SERVER["DOCUMENT_ROOT"]."/includes/initialize.php");
 
 	destroySession();
 
