@@ -20,6 +20,9 @@ if(isset($_SESSION["admin"]) && $_SERVER["SCRIPT_NAME"] == "/author.php") {
 $arrProjection = array(
 	'_id'=>1,
 );
+$arrSort = array(
+	'_id'=>1,
+);
 
 // get filter values
 if(isset($_GET["filter"])){
@@ -39,14 +42,14 @@ if($reqD!="") {
 		'_id'=>1,
 		'title'=>1
 	);
+	$arrSort = array(
+		'title'=>1
+	);
 } else {
 	$strInstructions = "Departments, Labs or Centers:";
 	$arrCriteria = array('type' => 'dlc');
 }
 
-$arrSort = array(
-	'_id'=>1,
-);
 $cursor = $summaries->find($arrCriteria,$arrProjection)->sort($arrSort);
 
 ?>

@@ -5,7 +5,7 @@
 					<a href="http://libraries.mit.edu"><img src="/images/logo-black.png" alt="MIT Libraries"></a>
 				</div>
 				<div class="center block">
-					Licensed under the <a href="http://creativecommons.org/licenses/by-nc/2.0/" target="_blank">Creative Commons Attribution Non-Commercial License</a> unless otherwise noted.
+					
 				</div>
 				<div class="right block">
 					<a href="http://libraries.mit.edu/scholarly/mit-open-access/open-access-at-mit/mit-open-access-policy/" id="homeFooter">MIT Faculty Open Access Policy</a>
