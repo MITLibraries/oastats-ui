@@ -10,6 +10,8 @@ session_start();
 // connect to Mongo
 require_once('includes/include_mongo_connect.php');
 
+require_once('includes/query_builder.php');
+
 /*
 db.requests.aggregate(
     [
@@ -70,6 +72,12 @@ Sample document:
 as the min/max values are calculated
 */ 
 $arrProjection = array('countries'=>1);
+
+echo '<h2>Criteria</h2>';
+print_r($arrCriteria);
+echo '<h2>Projection</h2>';
+print_r($arrProjection);
+
 $cursor = $summaries->find($arrCriteria,$arrProjection);
 
 $tempset = array();
