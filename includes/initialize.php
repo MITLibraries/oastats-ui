@@ -48,6 +48,7 @@ function debugSession() {
 function destroySession() {
 	unset($_SESSION["user"]);
 	unset($_SESSION["admin"]);
+	unset($_SESSION["impersonate"]);
 	unset($_SESSION["impersonator"]);
 	unset($_SESSION["hash"]);	
 	unset($_SESSION["fullname"]);
