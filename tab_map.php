@@ -215,6 +215,7 @@ foreach($dataset as $key => $val) {
 
   $(document).ready(function() {
     var dt = $( "table.mapdata" ).dataTable({
+      "aaSorting" : [[1, "desc"]],
       "bFilter": false,
       "bLengthChange": false,
       "bInfo": false,
