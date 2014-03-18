@@ -1,84 +1,100 @@
 <?php 
 
-header("Content-type: text/csv");
-header("Content-Disposition: attachment; filename=export.csv");
-header("Pragma: no-cache");
-header("Expires: 0");
-$export = fopen('php://output','w');
-
 require_once('../includes/salt.php'); 
-
-session_start();
 
 // connect to Mongo
 require_once('../includes/include_mongo_connect.php');
 
-// collect possible query parameters
-if(isset($_GET["user"])) {
-	$reqUser = urldecode($_GET["user"]);
-}
-if(isset($_GET["d"])) {
-	$reqD = $_GET["d"];
-	$strFilterTerm = '_id';
-	$arrCriteria = array('type' => 'author');
-	$nextType = "a";
-	$strGroup = "Author";
-} elseif(isset($_GET["a"])) {
-	$reqA = $_GET["a"];
-	$reqA = str_replace('@mit.edu','',$reqA);
-	$strFilterTerm = '_id';
-	$arrCriteria = array('type' => 'handle','parents.mitid'=>$salt.$_SESSION["hash"]);
-	$nextType = "";
-	$strGroup = "Paper";
-} elseif(isset($_GET["p"])) {
-	$reqA = $_GET["user"];
-	$strFilterTerm = 'handle';
-	$arrCriteria = array('type' => 'paper');
-	$nextType = "";
-	$strGroup = "Paper";
-} else {
-	$strFilterTerm = '_id';
-	$arrCriteria = array('type' => 'dlc');
-	$nextType = "d";
-	$strGroup = "Department, Lab or Center";
-}
-if(isset($_GET["user"])) {
-	$reqUser = urldecode($_GET["user"]);
-}
+require_once('../includes/initialize.php');
 
-if(isset($_GET["filter"])) {
-	$reqFilter = $_GET["filter"];
-	$arrFilter = array();
-	// iterate over reqFilter, padding out values
-	foreach($reqFilter as $term) {
-		array_push($arrFilter,array($strFilterTerm=>$term));
-	}
-	// if a filter is set, that should trump whatever was set as the criteria above
-	$arrCriteria = array( '$or' => $arrFilter);
-}
+require_once('../includes/query_builder.php');
 
-$arrProjection = array(
-	'_id'=>1,
-	'size'=>1,
-	'downloads'=>1
-);
+$strContext = findContext();
+$arrQuery = buildQuery($strContext);
 
-$cursor = $summaries->find($arrCriteria,$arrProjection);
+$strFilename = "OA_Stats_".$strContext.".csv";
+header("Content-type: text/csv");
+header("Content-Disposition: attachment; filename=".$strFilename);
+header("Pragma: no-cache");
+header("Expires: 0");
+
+$export = fopen('php://output','w');
+
+/*
+echo "<pre>";
+print_r($arrQuery);
+echo "</pre>";
+*/
+
+// execute query into cursor
+$cursor = $summaries->find($arrQuery["criteria"],$arrQuery["projection"]);
+
+// ############################################################################
+// ############################################################################
+// ############################################################################
+//
+// Each different tab will probably need its own rendering loop, apparently
 
 // Field labels
-$arrLabels = array($strGroup);
-if(!isset($reqA)) { array_push($arrLabels,"Articles"); }
-array_push($arrLabels,"Downloads");
-fputcsv($export,$arrLabels);
+fputcsv($export,$arrQuery["fields"]);
 
+// Transfer recordset to local array
+$arrRS = array();
 foreach($cursor as $document) {
-
-	$arrLine = array($document["_id"]);
-	if(!isset($reqA)) {
-		array_push($arrLine,$document["size"]);
+	switch($strContext){
+		case "Data":
+			array_push($arrRS,$document);
+			break;
+		case "Time":
+			// fputcsv($export,array_keys($document["dates"][0]));
+			foreach($document["dates"] as $item) {
+				array_push($arrRS,$item);
+			}			
+			break;
+		case "Map":
+			// fputcsv($export,array_keys($document["countries"][0]));
+			foreach($document["countries"] as $item) {
+				array_push($arrRS,$item);
+			}			
+			break;
+		default:
 	}
-	array_push($arrLine,$document["downloads"]);
-	fputcsv($export,$arrLine);
+}
+
+// Sort array
+switch($strContext) {
+	case "Data":
+	case "Time":
+		sort($arrRS);
+		break;
+	case "Map":
+		arsort($arrRS);
+		usort($arrRS, function($a, $b) {
+    		return $b['downloads'] - $a['downloads'];
+		});
+		break;
+	default:
+}
+
+// Augment array (running totals for timeline, country names for map, etc)
+switch($strContext) {
+	case "Data":
+		break;
+	case "Time":
+		$intRunning = 0;
+		for($i=0;$i<count($arrRS);$i++) {
+			$intRunning += $arrRS[$i]['downloads'];
+			$arrRS[$i]['cumulative'] = $intRunning;
+		}
+		break;
+	case "Map":
+		break;
+	default:
+}
+
+// Spit out contents
+foreach($arrRS as $line) {
+	fputcsv($export,$line);
 }
 
 require_once('../includes/include_mongo_disconnect.php'); 

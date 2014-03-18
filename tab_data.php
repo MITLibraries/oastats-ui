@@ -38,8 +38,7 @@ session_start();
 
 		// Set export options
 		$("#exports").empty();
-		$("#exports").append('<li><a data-format="csv">CSV</a></li>')
-			.append('<li><a data-format="pdf">PDF</a></li>');
+		$("#exports").append('<li><a data-format="csv">CSV</a></li>');
 	});
 </script>
 <?php
@@ -47,6 +46,7 @@ session_start();
 // connect to Mongo
 require_once('includes/include_mongo_connect.php');
 
+require_once('includes/query_builder.php');
 
 $arrProjection = array(
 	'_id'=>1,
@@ -104,6 +104,10 @@ if(isset($_GET["filter"])) {
 	$arrCriteria = array( '$or' => $arrFilter);
 }
 
+echo '<h2>Criteria</h2>';
+print_r($arrCriteria);
+echo '<h2>Projection</h2>';
+print_r($arrProjection);
 
 $cursor = $summaries->find($arrCriteria,$arrProjection);
 

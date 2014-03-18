@@ -1,11 +1,6 @@
 <!doctype html>
 <?php
 
-session_start();
-
-error_reporting(E_ALL);
-ini_set('display_errors', TRUE);
-ini_set('display_startup_errors', TRUE);
 
 // generic variables for determining what level is being visualized
 $reqD = "";
@@ -57,5 +52,5 @@ $reqA = "";
 				<div id="masthead">
 					<h1>Open Access Statistics</h1>
 				</div>
-				<?php require_once('includes/include_login.php'); ?>
+				<?php require_once('includes/navigation.php'); ?>
 				<section class="main">

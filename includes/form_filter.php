@@ -1,20 +1,6 @@
 <div id="oafilter">
 <form method="get">
 <?php
-// If the user is an admin, show the impersonate control
-if(isset($_SESSION["admin"]) && $_SERVER["SCRIPT_NAME"] == "/author.php") {
-	if($_SESSION["admin"] == true) {
-		?>
-		<h2>Administration</h2>
-		<label for="impersonate">
-		Which user would you like to see?
-		<input type="text" name="impersonate" id="impersonate" value="<?php echo $reqA; ?>">
-		</label>
-		<?php		
-	}
-}
-?>
-<?php
 
 // default projection
 $arrProjection = array(

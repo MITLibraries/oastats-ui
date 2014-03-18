@@ -9,6 +9,8 @@ session_start();
 // connect to Mongo
 require_once('../includes/include_mongo_connect.php');
 
+require_once('../includes/query_builder.php');
+
 $boolDebug = false;
 if(isset($_GET["debug"])){
   error_reporting(E_ALL);
