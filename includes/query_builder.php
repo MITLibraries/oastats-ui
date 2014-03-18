@@ -59,6 +59,34 @@ function buildQueryCriteria($strQueryType) {
 	return $arrTemp;
 }
 
+function buildQueryFields($strQueryType) {
+	$arrTemp = array();
+	switch($strQueryType) {
+		case "Data":
+			$arrTemp = array(
+				"Department, Lab or Center",
+				"Downloads",
+				"Articles"
+			);
+			break;
+		case "Time":
+			$arrTemp = array(
+				"Date",
+				"Downloads",
+				"Cumulative"
+			);
+			break;
+		case "Map":
+			$arrTemp = array(
+				"Country",
+				"Downloads"
+			);
+			break;
+		default:
+	}
+	return $arrTemp;
+}
+
 function buildQueryProjection($strQueryType) {
 	$arrTemp = array();
 	switch($strQueryType) {
@@ -93,6 +121,8 @@ function buildQueryProjection($strQueryType) {
 }
 
 function buildQuery($strQueryType) {
+	// fields
+	$arrFields = buildQueryFields($strQueryType);
 	// criteria
 	$arrCriteria = buildQueryCriteria($strQueryType);
 	// projection
@@ -100,6 +130,7 @@ function buildQuery($strQueryType) {
 	// assemble final array
 	$arrQuery = array(
 		"criteria" => $arrCriteria,
+		"fields" => $arrFields,
 		"projection" => $arrProjection
 	);
 	return $arrQuery;
