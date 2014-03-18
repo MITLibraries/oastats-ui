@@ -125,8 +125,10 @@ foreach($cursor as $document) {
 
   debugData('Document',$document,$boolDebug);
 
-  if(isset($_GET["a"])) {
+  if(isset($_GET["a"]) && isset($_GET["filter"]) ) {
     array_push($arrDataNamesRaw,$document["title"]);
+  } elseif(isset($_GET["a"])) {
+    array_push($arrDataNamesRaw,$document["_id"]["mitid"]);
   } else {
     array_push($arrDataNamesRaw,$document["_id"]);
   }
