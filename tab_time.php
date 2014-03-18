@@ -298,7 +298,7 @@ $(document).ready(function() {
     });
   })
   .done(function() {
-    graphNew('time', 10, 'Cumulative Bitstream Downloads');
+    graphNew('time', 10, 'Cumulative Article Downloads');
   });
 
   // Set export options
