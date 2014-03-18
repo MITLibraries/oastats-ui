@@ -2,6 +2,10 @@
 <form method="get">
 <?php
 
+if($_SERVER["SCRIPT_NAME"]=="/author.php") {
+	$reqA = $_SESSION["user"];
+}
+
 // default projection
 $arrProjection = array(
 	'_id'=>1,
@@ -21,6 +25,7 @@ if($reqD!="") {
 	$strInstructions = "Authors:";
 	$arrCriteria = array('type' => 'author');
 } elseif($reqA!="") {
+	include($_SERVER["DOCUMENT_ROOT"]."/includes/salt.php");
 	$reqA = str_replace('@mit.edu','',$reqA);
 	$strInstructions = "Papers:";
 	$arrCriteria = array('type' => 'handle','parents.mitid'=>$salt.$_SESSION["hash"]);
