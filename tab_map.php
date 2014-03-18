@@ -201,7 +201,7 @@ foreach($dataset as $key => $val) {
   });
 
   map.legend({
-    defaultFillName: "No data",
+    defaultFillName: "0",
     q0: "one",
     labels: {
       q0: "one",
