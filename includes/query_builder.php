@@ -36,13 +36,22 @@ function findContext() {
 	return $strQueryType;
 }
 
-function buildQueryCriteria($strQueryType) {
+function buildQueryCriteria($salt,$strQueryType) {
 	$arrTemp = array();
+	// first, assume no filter set - this is the default
 	switch($strQueryType) {
 		case "Data":
 			$arrTemp = array(
 				'type'=>'dlc'
 			);
+			if(isset($_GET["page"])) {
+				if($_GET["page"]=="/author.php") {
+					$arrTemp = array(
+						'type' => 'handle',
+						'parents.mitid' => $salt.$_SESSION["hash"]
+					);
+				}
+			}
 			break;
 		case "Time":
 			$arrTemp = array(
@@ -56,6 +65,15 @@ function buildQueryCriteria($strQueryType) {
 			break;
 		default:
 	}
+	// if a filter is set, then we build up a mongo Or clause
+	if(isset($_GET["filter"])) {
+		$reqFilter = $_GET["filter"];
+		$arrFilter = array();
+		foreach($reqFilter as $term) {
+			array_push($arrFilter,array('_id'=>$term));
+		}
+		$arrTemp = array('$or'=>$arrFilter);
+	}
 	return $arrTemp;
 }
 
@@ -65,22 +83,42 @@ function buildQueryFields($strQueryType) {
 		case "Data":
 			$arrTemp = array(
 				"Department, Lab or Center",
-				"Downloads",
-				"Articles"
-			);
-			break;
-		case "Time":
-			$arrTemp = array(
-				"Date",
-				"Downloads",
-				"Cumulative"
-			);
-			break;
-		case "Map":
-			$arrTemp = array(
-				"Country",
+				"Articles",
 				"Downloads"
 			);
+			if(isset($_GET["page"])) {
+				if($_GET["page"]=="/author.php") {
+					$arrTemp = array(
+						"Article",
+						"URL",
+						"Downloads"
+					);
+				}
+			}
+			break;
+		case "Time":
+			if(isset($_GET["filter"])) {
+				$arrFilter = $_GET["filter"];
+				$arrTemp = array("Date");
+				foreach($arrFilter as $filter) {
+					array_push($arrTemp,$filter." - Downloads",$filter." - Cumulative");
+				}
+			} else {
+				$arrTemp = array(
+					"Date",
+					"Downloads",
+					"Cumulative"
+				);
+			}
+			break;
+		case "Map":
+			if(isset($_GET["filter"])) {
+				$arrFilter = $_GET["filter"];
+				$arrTemp = array("Country");
+				foreach($arrFilter as $filter) {
+					array_push($arrTemp,$filter);
+				}
+			}
 			break;
 		default:
 	}
@@ -96,6 +134,15 @@ function buildQueryProjection($strQueryType) {
 				'size'=>1,
 				'downloads'=>1
 			);
+			if(isset($_GET["page"])) {
+				if($_GET["page"]=="/author.php") {
+					$arrTemp = array(
+						'_id' => 1,
+						'title' => 1,
+						'downloads' => 1
+					);
+				}
+			}
 			break;
 		case "Time":
 			$arrTemp = array(
@@ -120,11 +167,11 @@ function buildQueryProjection($strQueryType) {
 	return $arrTemp;
 }
 
-function buildQuery($strQueryType) {
+function buildQuery($salt,$strQueryType) {
 	// fields
 	$arrFields = buildQueryFields($strQueryType);
 	// criteria
-	$arrCriteria = buildQueryCriteria($strQueryType);
+	$arrCriteria = buildQueryCriteria($salt,$strQueryType);
 	// projection
 	$arrProjection = buildQueryProjection($strQueryType);
 	// assemble final array
