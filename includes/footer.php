@@ -97,9 +97,9 @@ if(isset($_SESSION["admin"])) {
 					case "csv":
 						var uri = 'exports/csv.php';
 						if(location.search){
-							uri += location.search+'&tab='+tab;
+							uri += location.search+'&tab='+tab+'&page='+location.pathname;
 						} else {
-							uri += '?tab='+tab;
+							uri += '?tab='+tab+'&page='+location.pathname;
 						}
 						window.open(uri);
 						break;

@@ -298,7 +298,7 @@ $(document).ready(function() {
     });
   })
   .done(function() {
-    graphNew('time', 10, 'Cumulative Bitstream Downloads');
+    graphNew('time', 10, 'Cumulative Article Downloads');
   });
 
   // Set export options
@@ -307,4 +307,5 @@ $(document).ready(function() {
 });
 
 </script>
+<!-- Debugging query structure -->
 <p>Data called from <a href="data/json-time-running.php?<?php echo $_SERVER["QUERY_STRING"];?>">data/json-time-running.php?<?php echo $_SERVER["QUERY_STRING"];?></a></p>

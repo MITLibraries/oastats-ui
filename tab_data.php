@@ -104,10 +104,12 @@ if(isset($_GET["filter"])) {
 	$arrCriteria = array( '$or' => $arrFilter);
 }
 
+/* Debugging query structure
 echo '<h2>Criteria</h2>';
 print_r($arrCriteria);
 echo '<h2>Projection</h2>';
 print_r($arrProjection);
+*/
 
 $cursor = $summaries->find($arrCriteria,$arrProjection);
 
