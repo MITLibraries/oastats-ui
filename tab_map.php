@@ -73,6 +73,7 @@ as the min/max values are calculated
 */ 
 $arrProjection = array('countries'=>1);
 
+/* Debugging query structure */
 echo '<h2>Criteria</h2>';
 print_r($arrCriteria);
 echo '<h2>Projection</h2>';
@@ -129,6 +130,11 @@ foreach($countries as $country) {
     $downloads = 0;
     $lo = 0;
   }
+  // call out unplottable traffic to treat separately
+  $intUnplottable = 0;
+  if ($code=="XXX") {
+    $intUnplottable = $tempset[$code];
+  }
   $datatable .= '<tr><td>'.$country["name"].'</td><td>'.$downloads.'</td></tr>';
   $dataItem = array();
   // $dataItem['fillKey'] = "q0";
@@ -167,6 +173,7 @@ foreach($dataset as $key => $val) {
 
 ?>
 <div id="map" style="position: relative; width: 100%;"></div>
+<p class="unmappable"><?php echo $intUnplottable; ?> downloads could not be placed onto a map.</p>
 <?php 
   echo $datatable; 
 ?>

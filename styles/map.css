@@ -5,6 +5,9 @@
 
 
 }
+.unmappable {
+  margin: 4px;
+}
 .stroke {
   fill: none;
   stroke: #000;
