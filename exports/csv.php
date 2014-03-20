@@ -8,6 +8,8 @@ require_once('../includes/initialize.php');
 
 require_once('../includes/query_builder.php');
 
+iconv_set_encoding("output_encoding", "UTF-8");
+
 // Determine export context
 $strContext = findContext();
 
@@ -29,6 +31,12 @@ foreach($cursor as $document) {
 echo '</pre>';
 */
 
+/*
+if($strContext=="Map") {
+	header("Content-Disposition: inline");
+}
+*/
+
 // Transfer cursor objct to local array, for sorting and augmentation
 $arrRS = array();
 foreach($cursor as $document) {
@@ -37,20 +45,22 @@ foreach($cursor as $document) {
 			array_push($arrRS,$document);
 			break;
 		case "Time":
+			// Time cursor needs to be folded from one-dimensional to two-dimensional array
 			// fputcsv($export,array_keys($document["dates"][0]));
 			foreach($document["dates"] as $item) {
 				$arrRS[$item["date"]][$document["_id"]] = $item["downloads"];
-				echo '<pre>';
-				print_r($arrRS);
-				echo '</pre>';
-				// array_push($arrRS,$item);
-			}			
+			}
 			break;
 		case "Map":
-			// fputcsv($export,array_keys($document["countries"][0]));
+			// Map cursor also needs to be folded, and subtotals ("Overall") generated
 			foreach($document["countries"] as $item) {
-				array_push($arrRS,$item);
-			}			
+				if(array_key_exists($item["country"],$arrRS) && array_key_exists("Overall",$arrRS[$item["country"]])) {
+					$arrRS[$item["country"]]["Overall"] += $item["downloads"];
+				} else {
+					$arrRS[$item["country"]]["Overall"] = $item["downloads"];
+				}
+				$arrRS[$item["country"]][$document["_id"]] = $item["downloads"];
+			}
 			break;
 		default:
 	}
@@ -63,7 +73,7 @@ switch($strContext) {
 		if($_GET["page"]=="/author.php") {
 			// Author sorts
 			usort($arrRS, function($a, $b) {
-	    		return strcmp($a['title'],$b['title']);
+	    		return strcasecmp($a['title'],$b['title']);
 			});
 			for($i=0;$i<count($arrRS);$i++) {
 				uksort($arrRS[$i], function($a, $b) {
@@ -79,7 +89,9 @@ switch($strContext) {
 			}
 		} else {
 			// DLC sorts
-			sort($arrRS);
+			usort($arrRS, function($a,$b) {
+				return strcasecmp($a['_id'],$b['_id']);
+			});
 			for($i=0;$i<count($arrRS);$i++) {
 				uksort($arrRS[$i], function($a, $b) {
 					if($a===$b){ return 0;}
@@ -95,13 +107,17 @@ switch($strContext) {
 		}
 		break;
 	case "Time":
-		sort($arrRS);
+		echo '<p>Sorting by date</p>';
+		ksort($arrRS);
+		print_r($arrQuery["fields"]);
+		echo '<h2>After Sorting, Before augmentation</h2>';
+		echo '<pre>';
+		print_r($arrRS);
+		echo '</pre>';
 		break;
 	case "Map":
+		// We've positioned the overall first in the field list, so we can do a simple descending sort
 		arsort($arrRS);
-		usort($arrRS, function($a, $b) {
-    		return $b['downloads'] - $a['downloads'];
-		});
 		break;
 	default:
 }
@@ -111,19 +127,53 @@ switch($strContext) {
 	case "Data":
 		break;
 	case "Time":
-		$intRunning = 0;
+		// augmentation for the timeline is to tally running downloads for each series
+		$arrAugmented = array();
 		for($i=0;$i<count($arrRS);$i++) {
-			$intRunning += $arrRS[$i]['downloads'];
-			$arrRS[$i]['cumulative'] = $intRunning;
+			echo $arrRS[$i];
 		}
+		echo '<pre>';
+		print_r($arrAugmented);
+		echo '</pre>';
 		break;
 	case "Map":
+		// This needs to load country names, as well as zero pad each column
+		$arrAugmented = array();
+		// Load country data
+		$countries = json_decode(file_get_contents('../data/countries.json'),true);
+		while ($item = current($arrRS)) {
+			// set up blank arrItem
+			$arrItem = array();
+			// debug this item
+			$strCountryName = 'Unknown Country';
+			foreach($countries as $country) {
+				if($country['cca3']===key($arrRS)) {
+					$strCountryName = $country['name'];
+					break;
+				}
+			}
+			// push country to item
+			array_push($arrItem,$strCountryName);
+			// loop over fields array, pushing each value to item
+			foreach($arrQuery["fields"] as $term) {
+				if($term!="Country") {
+					if(array_key_exists($term,$item)) {
+						array_push($arrItem,$item[$term]);
+					} else {
+						array_push($arrItem,0);
+					}
+				}
+			}
+			array_push($arrAugmented,$arrItem);
+			next($arrRS);
+		}
+		$arrRS = $arrAugmented;
 		break;
 	default:
 }
 
 $strFilename = "OA_Stats_".$strContext.".csv";
-header("Content-type: text/csv");
+header("Content-type: text/csv; charset=utf-8");
 header("Content-Disposition: attachment; filename=".$strFilename);
 header("Pragma: no-cache");
 header("Expires: 0");

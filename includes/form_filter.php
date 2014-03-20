@@ -43,6 +43,22 @@ if($reqD!="") {
 
 $cursor = $summaries->find($arrCriteria,$arrProjection)->sort($arrSort);
 
+$arrOptions = array();
+foreach($cursor as $document) {
+	if($reqA!="") {
+		$strTitle = $document["title"];
+	} else {
+		$strTitle = $document["_id"];
+	}
+	$arrOption = array(
+		"_id" => $document["_id"],
+		"title" => $strTitle
+	);
+	array_push($arrOptions,$arrOption);
+}
+usort($arrOptions, function($a,$b) {
+	return strcasecmp($a["title"],$b["title"]);
+});
 ?>
 	<h2>Filter</h2>
 		<?php
@@ -56,14 +72,12 @@ $cursor = $summaries->find($arrCriteria,$arrProjection)->sort($arrSort);
 		<div class="filter">
 			<label class="checkbox" for="all"><input type="checkbox" name="filter[]" id="all" value="all">All <?php echo $strInstructions; ?></label>
 		<?php
-			foreach($cursor as $document) {
-				if($reqA!=""){
-					$strTitle = $document["title"];
-				} else {
-					$strTitle = $document["_id"];
-				}
+			foreach($arrOptions as $document) {
 		?>
-			<label class="checkbox" for="<?php echo urlencode($document['_id']); ?>"><input type="checkbox" name="filter[]" id="<?php echo urlencode($document['_id']); ?>" value="<?php echo $document['_id']; ?>"<?php if(in_array($document['_id'],$reqFilter)) { echo 'checked="checked"'; } ?>><span><?php echo $strTitle; ?></span></label>
+			<label class="checkbox" for="<?php echo urlencode($document['_id']); ?>">
+				<input type="checkbox" name="filter[]" id="<?php echo urlencode($document['_id']); ?>" value="<?php echo $document['_id']; ?>"<?php if(in_array($document['_id'],$reqFilter)) { echo 'checked="checked"'; } ?>>
+				<span><?php echo $document['title']; ?></span>
+			</label>
 		<?php
 			}
 		?>
