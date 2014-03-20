@@ -62,6 +62,14 @@ function buildQueryCriteria($salt,$strQueryType) {
 			$arrTemp = array(
 				'_id'=>'Overall'
 			);
+			if(isset($_GET["page"])) {
+				if($_GET["page"]=="/author.php") {
+					$arrTemp = array(
+						'type' => 'handle',
+						'parents.mitid' => $salt.$_SESSION["hash"]
+					);
+				}
+			}
 			break;
 		default:
 	}
@@ -114,10 +122,12 @@ function buildQueryFields($strQueryType) {
 		case "Map":
 			if(isset($_GET["filter"])) {
 				$arrFilter = $_GET["filter"];
-				$arrTemp = array("Country");
+				$arrTemp = array("Country","Overall");
 				foreach($arrFilter as $filter) {
 					array_push($arrTemp,$filter);
 				}
+			} else {
+				$arrTemp = array("Country","Overall");
 			}
 			break;
 		default:
