@@ -29,9 +29,7 @@ foreach($cursor as $document) {
 	print_r($document);
 }
 echo '</pre>';
-*/
 
-/*
 if($strContext=="Map") {
 	header("Content-Disposition: inline");
 }
@@ -168,6 +166,18 @@ switch($strContext) {
 			next($arrRS);
 		}
 		$arrRS = $arrAugmented;
+		// Fieldnames also need to be swapped out for filtered author reports
+		if($_GET["page"]=="/author.php" && isset($_GET["filter"])) {
+			foreach($cursor as $document) {
+				// via http://stackoverflow.com/questions/8668826/search-and-replace-value-in-php-array
+				$arrQuery["fields"] = array_replace($arrQuery["fields"],
+					array_fill_keys(
+						array_keys($arrQuery["fields"], $document["_id"]),
+						$document["title"]
+					)
+				);
+			}
+		}
 		break;
 	default:
 }
