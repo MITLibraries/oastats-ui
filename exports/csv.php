@@ -23,17 +23,6 @@ echo "</pre>";
 
 // Execute query into cursor object
 $cursor = $summaries->find($arrQuery["criteria"],$arrQuery["projection"]);
-/*
-echo '<pre>';
-foreach($cursor as $document) {
-	print_r($document);
-}
-echo '</pre>';
-
-if($strContext=="Map") {
-	header("Content-Disposition: inline");
-}
-*/
 
 // Transfer cursor objct to local array, for sorting and augmentation
 $arrRS = array();
@@ -46,7 +35,19 @@ foreach($cursor as $document) {
 			// Time cursor needs to be folded from one-dimensional to two-dimensional array
 			// fputcsv($export,array_keys($document["dates"][0]));
 			foreach($document["dates"] as $item) {
-				$arrRS[$item["date"]][$document["_id"]] = $item["downloads"];
+				$strIDField = "Foo";
+				if(isset($_GET["page"])) {
+					if($_GET["page"]=="/public.php") {
+						$strIDField = $document["_id"];
+					} elseif ($_GET["page"]=="/author.php") {
+						if(!isset($_GET["filter"])) {
+							$strIDField = $document["_id"]["name"];
+						} else {
+							$strIDField = $document["title"];
+						}
+					}
+				} 
+				$arrRS[$item["date"]][$strIDField] = $item["downloads"];
 			}
 			break;
 		case "Map":
@@ -105,13 +106,7 @@ switch($strContext) {
 		}
 		break;
 	case "Time":
-		echo '<p>Sorting by date</p>';
 		ksort($arrRS);
-		print_r($arrQuery["fields"]);
-		echo '<h2>After Sorting, Before augmentation</h2>';
-		echo '<pre>';
-		print_r($arrRS);
-		echo '</pre>';
 		break;
 	case "Map":
 		// We've positioned the overall first in the field list, so we can do a simple descending sort
@@ -127,12 +122,59 @@ switch($strContext) {
 	case "Time":
 		// augmentation for the timeline is to tally running downloads for each series
 		$arrAugmented = array();
-		for($i=0;$i<count($arrRS);$i++) {
-			echo $arrRS[$i];
+		$arrItem = array();
+		// Initialize arrItem for public views
+		// Author views need to be rebuilt because they can't be predicted accurately
+		if($_GET["page"]=="/public.php") {
+			while ($field = current($arrQuery["fields"])) {
+				$arrItem[$field] = 0;
+				if($field!="Date") {
+					$arrItem["Cumulative ".$field] = 0;
+				}
+				next($arrQuery["fields"]);
+			}
+		} else {
+			$arrFields = array(0=>"Date");
+			if(!isset($_GET["filter"])) {
+				array_push($arrFields,$strIDField);
+			} else {
+				// loop over query results, rebuilding fieldlist with paper titles
+				foreach($cursor as $document){
+					array_push($arrFields,$document["title"]);
+				}
+			}
+			$arrQuery["fields"] = $arrFields;
 		}
-		echo '<pre>';
-		print_r($arrAugmented);
-		echo '</pre>';
+		// Loop through recordset
+		while ($item = current($arrRS)) {
+			// Reset arrItem with zeros
+			while ($field = current($arrQuery["fields"])) {
+				$arrItem[$field] = 0;
+				next($arrQuery["fields"]);
+			}
+			reset($arrQuery["fields"]);
+
+			// Date
+			$arrItem["Date"] = key($arrRS);
+
+			// Each other point in the array
+			while ($point = current($item)) {
+				$strBucket = key($item);
+				$strCumulativeBucket = "Cumulative ".key($item);
+				$arrItem[$strBucket] = $point;
+				if(array_key_exists($strCumulativeBucket, $arrItem)) {
+					$arrItem[$strCumulativeBucket] += $point;
+				} else {
+					$arrItem[$strCumulativeBucket] = $point;
+				}
+				next($item);
+			}
+			array_push($arrAugmented,$arrItem);
+			next($arrRS);
+		}
+		$arrRS = $arrAugmented;
+		// Query fields so far only have the filtered buckets - need to expand to add cumulative columns
+		$arrQuery["fields"] = array_keys($arrItem);
 		break;
 	case "Map":
 		// This needs to load country names, as well as zero pad each column
