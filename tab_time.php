@@ -307,5 +307,6 @@ $(document).ready(function() {
 });
 
 </script>
-<!-- Debugging query structure -->
+<!-- Debugging query structure 
 <p>Data called from <a href="data/json-time-running.php?<?php echo $_SERVER["QUERY_STRING"];?>">data/json-time-running.php?<?php echo $_SERVER["QUERY_STRING"];?></a></p>
+-->

@@ -73,11 +73,12 @@ as the min/max values are calculated
 */ 
 $arrProjection = array('countries'=>1);
 
-/* Debugging query structure */
+/* Debugging query structure 
 echo '<h2>Criteria</h2>';
 print_r($arrCriteria);
 echo '<h2>Projection</h2>';
 print_r($arrProjection);
+*/
 
 $cursor = $summaries->find($arrCriteria,$arrProjection);
 
