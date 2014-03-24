@@ -57,6 +57,14 @@ function buildQueryCriteria($salt,$strQueryType) {
 			$arrTemp = array(
 				'_id'=>'Overall'
 			);
+			if(isset($_GET["page"])) {
+				if($_GET["page"]=="/author.php") {
+					$arrTemp = array(
+						'type' => 'author',
+						'_id.mitid' => $salt.$_SESSION["hash"]
+					);
+				}
+			}
 			break;
 		case "Map":
 			$arrTemp = array(
@@ -109,13 +117,13 @@ function buildQueryFields($strQueryType) {
 				$arrFilter = $_GET["filter"];
 				$arrTemp = array("Date");
 				foreach($arrFilter as $filter) {
-					array_push($arrTemp,$filter." - Downloads",$filter." - Cumulative");
+					// array_push($arrTemp,$filter,"Cumulative ".$filter);
+					array_push($arrTemp,$filter);
 				}
 			} else {
 				$arrTemp = array(
 					"Date",
-					"Downloads",
-					"Cumulative"
+					"Overall"
 				);
 			}
 			break;
@@ -127,7 +135,10 @@ function buildQueryFields($strQueryType) {
 					array_push($arrTemp,$filter);
 				}
 			} else {
-				$arrTemp = array("Country","Overall");
+				$arrTemp = array(
+					"Country",
+					"Overall"
+				);
 			}
 			break;
 		default:
