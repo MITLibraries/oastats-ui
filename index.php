@@ -1,4 +1,5 @@
 <?php
+	$strPageTitle = "Welcome to MIT's Open Access Article Statistics";
 
 	require_once('includes/initialize.php'); 
 
@@ -6,7 +7,6 @@
 
 ?>
 <div id="content">
-<h2>Welcome to the Open Access Statistics Site</h2>
 <p>This application provides access to download data for articles deposited in DSpace@MIT in relation to the MIT Faculty Open Access Policy.</p>
 <p>MIT authors can log in using their MIT Touchstone credentials and view download statistics for their own articles in the Open Access Articles Collection, including views through table, timeline, and world map displays.   Download statistics for individual papers are available only to the paper's author(s).</p>
 <p>Anyone can view aggregated download data for all of the articles in the Collection, or for particular Departments, Labs, or Centers, with the same table, timeline, and world map display options.</p>
