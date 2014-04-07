@@ -29,7 +29,8 @@ strong {
 	max-width: 1180px;
 	background: #000;
 	padding: 1rem;
-	font-size: 13px;
+	font-size: 14px;
+	line-height: 1.125rem;
 }
 .page-inner {
 	background: #fff;
@@ -201,6 +202,17 @@ section.main {
 #page table.dataTable tr.even td.sorting_1 { background-color: #ececec; }
 
 /* general styles */
+.error {
+	background-color: #5B0C06;
+	color: #ffffff;
+	padding: 0.5rem;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+}
+.error h2,
+.error p {
+	margin-bottom: 1rem;
+}
 .warning {
 	background-color: #5B0C06;
 	color: #ffffff;
