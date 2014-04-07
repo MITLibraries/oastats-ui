@@ -6,11 +6,15 @@
 $reqD = "";
 $reqA = "";
 
+if(!isset($strPageTitle)) {
+	$strPageTitle = '';
+}
+
 ?>
 <html lang="en">
 	<head>
 		<?php require_once('includes/include_mongo_connect.php'); ?>
-		<title>Open Access Statistics</title>
+		<title><?php echo $strPageTitle; ?> | MIT's Open Access Article Statistics</title>
 		<link rel="stylesheet" href="styles/reset.css">
 		<link rel="stylesheet" href="styles/styles.css">
 <?php
@@ -50,7 +54,8 @@ $reqA = "";
 		<div id="page">
 			<div class="page-inner">
 				<div id="masthead">
-					<h1>Open Access Statistics</h1>
+					<h1>MIT's Open Access Article Statistics</h1>
 				</div>
 				<?php require_once('includes/navigation.php'); ?>
+				<h2 class="pagetitle"><?php echo $strPageTitle; ?></h2>
 				<section class="main">

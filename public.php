@@ -1,5 +1,7 @@
 <?php
 
+	$strPageTitle = "Public Statistics";
+
 	require_once('includes/initialize.php'); 
 
 	// collect possible query parameters

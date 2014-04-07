@@ -4,6 +4,9 @@
 				<div class="left block">
 					<a href="http://libraries.mit.edu"><img src="/images/logo-black.png" alt="MIT Libraries"></a>
 				</div>
+				<div class="center block">
+					Please email <a href="mailto:oastats@mit.edu">oastats@mit.edu</a> with any comments or questions regarding this site.
+				</div>
 				<div class="right block">
 					<a href="http://libraries.mit.edu/scholarly/mit-open-access/open-access-at-mit/mit-open-access-policy/" id="homeFooter">MIT Faculty Open Access Policy</a>
 					|
@@ -17,10 +20,10 @@ if(isset($_SESSION["admin"]) && $_SERVER["SCRIPT_NAME"] == "/author.php") {
 		?>
 			<div id="administration">
 				<h2>Administration</h2>
-				<p>You are currently using his application as: <strong><?php echo $_SESSION["fullname"];?></strong>.</p>
+				<p>You are currently logged in as: <strong><?php echo $_SESSION["fullname"];?></strong>.</p>
 				<form>
 					<label for="impersonate">
-					Specify the Touchstone username of the user whom you want to impersonate - leave blank to resume your real identity.
+					Specify the MIT Kerberos username of the user whom you want to impersonate - leave blank to resume your real identity.
 					<input type="text" name="impersonate" id="impersonate" value="<?php echo $reqA; ?>">
 					</label>
 					<input type="submit" value="Switch User">
@@ -30,18 +33,6 @@ if(isset($_SESSION["admin"]) && $_SERVER["SCRIPT_NAME"] == "/author.php") {
 	}
 }
 
-if(isset($_SESSION["admin"])) {
-?>			
-			<div style="background-color: #fff; padding: 1rem; margin-top: 1rem;">
-				<h2>Debugging</h2>
-<?php
-	foreach($_SESSION as $key => $val) {
-		echo "<p>".$key." = ".$val."</p>";
-	}
-?>				
-			</div>
-<?php
-}
 ?>
 		</div>
 		<?php require_once('includes/include_mongo_disconnect.php'); ?>

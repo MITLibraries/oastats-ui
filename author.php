@@ -1,5 +1,7 @@
 <?php
 	
+	$strPageTitle = "My Statistics";
+
 	require_once('includes/initialize.php'); 
 
 	setImpersonate();

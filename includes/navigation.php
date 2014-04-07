@@ -13,7 +13,6 @@
 	if(isset($_SESSION["user"])) {
 ?>
 						<li><a href="author.php">My Stats</a></li>
-						<li><a href="http://dspace.mit.edu/advanced-search?num_search_field=1&amp;results_per_page=10&amp;scope=1721.1%2F49432&amp;field1=author&amp;query1=<?php echo urlencode($_SESSION["fullname"]); ?>&amp;rpp=10&amp;sort_by=0&amp;order=DESC">My Articles</a></li>
 						<li class="login"><a href="<?php echo buildLogoutURL(); ?>">Logout</a></li>
 <?php		
 	} else {
