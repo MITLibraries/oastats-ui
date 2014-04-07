@@ -201,6 +201,17 @@ section.main {
 #page table.dataTable tr.even td.sorting_1 { background-color: #ececec; }
 
 /* general styles */
+.error {
+	background-color: #5B0C06;
+	color: #ffffff;
+	padding: 0.5rem;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+}
+.error h2,
+.error p {
+	margin-bottom: 1rem;
+}
 .warning {
 	background-color: #5B0C06;
 	color: #ffffff;

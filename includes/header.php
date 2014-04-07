@@ -13,7 +13,6 @@ if(!isset($strPageTitle)) {
 ?>
 <html lang="en">
 	<head>
-		<?php require_once('includes/include_mongo_connect.php'); ?>
 		<title><?php echo $strPageTitle; ?> | MIT's Open Access Article Statistics</title>
 		<link rel="stylesheet" href="styles/reset.css">
 		<link rel="stylesheet" href="styles/styles.css">
@@ -57,5 +56,6 @@ if(!isset($strPageTitle)) {
 					<h1>MIT's Open Access Article Statistics</h1>
 				</div>
 				<?php require_once('includes/navigation.php'); ?>
+				<?php require_once('includes/include_mongo_connect.php'); ?>
 				<h2 class="pagetitle"><?php echo $strPageTitle; ?></h2>
 				<section class="main">
