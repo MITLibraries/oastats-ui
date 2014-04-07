@@ -60,7 +60,7 @@ usort($arrOptions, function($a,$b) {
 	return strcasecmp($a["title"],$b["title"]);
 });
 ?>
-	<h2>Filter</h2>
+	<h2>Show Only</h2>
 		<?php
 		// store the current depth in the filter form
 		if($reqD!="") {
@@ -82,7 +82,7 @@ usort($arrOptions, function($a,$b) {
 			}
 		?>
 		</div>
-	<input type="submit">
+	<input type="submit" value="Submit">
 	</form>
 	<h2>Export</h2>
 	<!-- Export options are placed here by the active tab -->
