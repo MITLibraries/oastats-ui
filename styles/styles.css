@@ -29,7 +29,8 @@ strong {
 	max-width: 1180px;
 	background: #000;
 	padding: 1rem;
-	font-size: 13px;
+	font-size: 14px;
+	line-height: 1.125rem;
 }
 .page-inner {
 	background: #fff;
