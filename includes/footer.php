@@ -4,6 +4,9 @@
 				<div class="left block">
 					<a href="http://libraries.mit.edu"><img src="/images/logo-black.png" alt="MIT Libraries"></a>
 				</div>
+				<div class="center block">
+					Please email <a href="mailto:oastats@mit.edu">oastats@mit.edu</a> with any comments or questions regarding this site.
+				</div>
 				<div class="right block">
 					<a href="http://libraries.mit.edu/scholarly/mit-open-access/open-access-at-mit/mit-open-access-policy/" id="homeFooter">MIT Faculty Open Access Policy</a>
 					|
