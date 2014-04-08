@@ -200,7 +200,14 @@ section.main {
 #page table.dataTable tr.even { background-color: white; }
 #page table.dataTable tr.odd td.sorting_1 { background-color: #d8d8d8; }
 #page table.dataTable tr.even td.sorting_1 { background-color: #ececec; }
-
+#page .sorting,
+#page .sorting_desc,
+#page .sorting_asc {
+	background-position: center left;
+}
+#page table.dataTable thead th {
+	padding: 3px 10px 3px 18px;
+}
 /* general styles */
 .error {
 	background-color: #5B0C06;
@@ -228,6 +235,21 @@ section.main {
 #content p {
 	margin-bottom: 1rem;
 }
+p.option a.button {
+	display: table-cell;
+	background: #08306B; 
+	color: white;
+	text-decoration: none;
+	padding: 0.5rem;
+	width: 20%;
+	vertical-align: middle;
+}
+p.option span {
+	display: table-cell;
+	padding: 0.5rem 0 0.5rem 1rem;
+	vertical-align: middle;
+}
+
 /* Colophon */
 #colophon {
 	margin-top: 1rem;
@@ -278,6 +300,7 @@ section.main {
 #colophon .right {
 	text-align: right;
 }
+/* Admin control panel */
 #administration {
 	background-color: #fff;
 	padding: 1rem;
