@@ -13,9 +13,13 @@ if(!isset($strPageTitle)) {
 ?>
 <html lang="en">
 	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
 		<title><?php echo $strPageTitle; ?> | MIT's Open Access Article Statistics</title>
 		<link rel="stylesheet" href="styles/reset.css">
 		<link rel="stylesheet" href="styles/styles.css">
+		<!--[if lte IE 7]>
+		<link rel="stylesheet" href="styles/ie7.css">
+		<![endif]-->
 <?php
 	switch ($_SERVER["SERVER_NAME"]) {
 		case "oastats-dev.mit.edu":
