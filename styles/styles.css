@@ -200,7 +200,14 @@ section.main {
 #page table.dataTable tr.even { background-color: white; }
 #page table.dataTable tr.odd td.sorting_1 { background-color: #d8d8d8; }
 #page table.dataTable tr.even td.sorting_1 { background-color: #ececec; }
-
+#page .sorting,
+#page .sorting_desc,
+#page .sorting_asc {
+	background-position: center left;
+}
+#page table.dataTable thead th {
+	padding: 3px 10px 3px 18px;
+}
 /* general styles */
 .error {
 	background-color: #5B0C06;
