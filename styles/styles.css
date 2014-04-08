@@ -228,6 +228,21 @@ section.main {
 #content p {
 	margin-bottom: 1rem;
 }
+p.option a.button {
+	display: table-cell;
+	background: #08306B; 
+	color: white;
+	text-decoration: none;
+	padding: 0.5rem;
+	width: 20%;
+	vertical-align: middle;
+}
+p.option span {
+	display: table-cell;
+	padding: 0.5rem 0 0.5rem 1rem;
+	vertical-align: middle;
+}
+
 /* Colophon */
 #colophon {
 	margin-top: 1rem;
@@ -278,6 +293,7 @@ section.main {
 #colophon .right {
 	text-align: right;
 }
+/* Admin control panel */
 #administration {
 	background-color: #fff;
 	padding: 1rem;
