@@ -70,7 +70,7 @@ usort($arrOptions, function($a,$b) {
 		}
 		?>
 		<div class="filter">
-			<label class="checkbox" for="all"><input type="checkbox" name="filter[]" id="all" value="all">All <?php echo $strInstructions; ?></label>
+			<label class="checkbox" for="all"><input type="checkbox" name="filter[]" id="all" value="all"><span>All <?php echo $strInstructions; ?></span></label>
 		<?php
 			foreach($arrOptions as $document) {
 		?>

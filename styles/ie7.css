@@ -1,4 +1,30 @@
-body {
-	background: #f00;
-	border: 10px solid green;
+section.main {
+	display: block;
+}
+#oafilter {
+	display: inline;
+	float: left;
+}
+#oafilter .filter .checkbox {
+	display: block;
+}
+#oafilter .filter .checkbox input {
+	display: inline;
+	vertical-align: top;
+	float: left;
+	clear: both;
+}
+#oafilter .filter .checkbox span {
+	display: inline;
+	vertical-align: top;
+	float: left;
+}
+#tabs {
+	display: inline;
+	float: left;
+	width: 75%;
+}
+#colophon .block {
+	display: inline;
+	float: left;
 }
