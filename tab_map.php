@@ -159,18 +159,8 @@ for($i=0;$i<$intBins;$i++) {
 
 // parse dataset, sorting records into quintiles
 foreach($dataset as $key => $val) {
-  if($val['downloads'] == 0) { 
-    $intVal = 1;
-  } else {
-    $intVal = $val['downloads'];
-  }
-
-  // $intQuintile = intval( ( log($intVal) / log($hi) ) * 4 );
-  $intQuintile = intval( ( (log($intVal) - log($lo)) / (log($hi) - log($lo)) ) * $intBins );
+  $intQuintile = intval( ( (log($val['downloads']) - log($lo)) / (log($hi) - log($lo)) ) * $intBins );
   if($intQuintile == $intBins) { $intQuintile--; }
-
-
-  // $val['fillKey'] = "q".$intQuintile;
   $val['fillKey'] = $arrBinLabels[$intQuintile];
   $dataset[$key] = $val;
 }
