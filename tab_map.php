@@ -151,23 +151,16 @@ $arrBinLabels = array();
 $dblLogRange = log($hi) - log($lo);
 $dblQuintSize = $dblLogRange / $intBins;
 for($i=0;$i<$intBins;$i++) {
-  $dblQuintMin = intval(exp(log($lo) + ($i * $dblQuintSize)));
-  $dblQuintMax = intval(exp(log($lo) + (($i + 1) * $dblQuintSize)));
+  $dblQuintMin = intval( exp( log($lo) + ($i * $dblQuintSize) ) );
+  if($i>0){$dblQuintMin++;}
+  $dblQuintMax = intval( exp( log($lo) + ( ($i + 1) * $dblQuintSize) ) );
   array_push($arrBinLabels,$dblQuintMin.' - '.$dblQuintMax);
 }
 
 // parse dataset, sorting records into quintiles
 foreach($dataset as $key => $val) {
-  if($val['downloads'] == 0) { 
-    $intVal = 1;
-  } else {
-    $intVal = $val['downloads'];
-  }
-  // $intQuintile = intval( ( log($intVal) / log($hi) ) * 4 );
-  $intQuintile = intval( ( log($intVal - $lo) / log($hi - $lo) ) * $intBins );
+  $intQuintile = intval( ( (log($val['downloads']) - log($lo)) / (log($hi) - log($lo)) ) * $intBins );
   if($intQuintile == $intBins) { $intQuintile--; }
-
-  // $val['fillKey'] = "q".$intQuintile;
   $val['fillKey'] = $arrBinLabels[$intQuintile];
   $dataset[$key] = $val;
 }
