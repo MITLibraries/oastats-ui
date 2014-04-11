@@ -191,12 +191,12 @@ foreach($dataset as $key => $val) {
       }
     },
     fills: {
-      defaultFill: "#cccccc",
-      "<?php echo $arrBinLabels[0]; ?>": "rgb(173,186,206)",
-      "<?php echo $arrBinLabels[1]; ?>": "rgb(132,152,181)",
-      "<?php echo $arrBinLabels[2]; ?>": "rgb(90,117,156)",
-      "<?php echo $arrBinLabels[3]; ?>": "rgb(49,83,132)",
-      "<?php echo $arrBinLabels[4]; ?>": "rgb(8,48,107)",
+      defaultFill: "#e6e6e6",
+      "<?php echo $arrBinLabels[0]; ?>": "rgb(193,207,230)",
+      "<?php echo $arrBinLabels[1]; ?>": "rgb(143,165,196)",
+      "<?php echo $arrBinLabels[2]; ?>": "rgb(96,124,166)",
+      "<?php echo $arrBinLabels[3]; ?>": "rgb(50,85,135)",
+      "<?php echo $arrBinLabels[4]; ?>": "rgb(8,46,102)",
     },
     data: mapdata
   });
