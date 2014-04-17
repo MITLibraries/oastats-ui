@@ -186,10 +186,12 @@ foreach($dataset as $key => $val) {
   var map = new Datamap({
     element: document.getElementById('map'),
     geographyConfig: {
+      dataUrl: '/data/world-50m.topo.json',
       popupTemplate: function(geography, data) {
         return '<div class="hoverinfo"><strong>' + geography.properties.name + '<br>' + data.downloads.toLocaleString() + '</strong></div>';
       }
     },
+    scope: 'world-50m',
     fills: {
       defaultFill: "#e6e6e6",
       "<?php echo $arrBinLabels[0]; ?>": "rgb(193,207,230)",
@@ -198,7 +200,16 @@ foreach($dataset as $key => $val) {
       "<?php echo $arrBinLabels[3]; ?>": "rgb(50,85,135)",
       "<?php echo $arrBinLabels[4]; ?>": "rgb(8,46,102)",
     },
-    data: mapdata
+    data: mapdata,
+    setProjection: function(element) {
+      var projection = d3.geo.equirectangular()
+        .center([0, 0])
+        .scale(element.offsetWidth / 6.27)
+        .translate([element.offsetWidth / 2, element.offsetHeight / 2]);
+
+       var path = d3.geo.path().projection(projection);
+       return {path: path, projection: projection};
+    }
   });
 
   map.legend({
