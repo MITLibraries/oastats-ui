@@ -42,6 +42,24 @@ strong {
 	padding: 1rem;
 	margin: -0.5rem;
 	background-image: url('../images/banner.png');
+	position: relative;
+	min-height: 3rem;
+}
+#masthead #mit-libraries {
+	position: absolute;
+	left: 1rem;
+	top: 1rem;
+}
+#masthead h1 {
+	margin-top: 1.4rem;
+	margin-right: 6rem;
+	margin-left: 8rem;
+	line-height: 2rem;
+}
+#masthead #mit {
+	position: absolute;
+	right: 1rem;
+	top: 1.5rem;
 }
 #navigation {
 	margin-top: 0.5rem;
@@ -239,14 +257,17 @@ p.option span {
 	display: table-cell;
 	vertical-align: top;
 }
-#colophon .block.left {
+#colophon .left {
 	width: 20%;
 }
-#colophon .block.center {
-	width: 50%;
+#colophon .center {
+	width: 40%;
+	text-align: center;
+	line-height: 1.5rem;
 }
-#colophon .block.right {
-	width: 30%;
+#colophon .right {
+	width: 20%;
+	text-align: right;
 }
 #colophon a {
 	text-decoration: none;

@@ -186,19 +186,30 @@ foreach($dataset as $key => $val) {
   var map = new Datamap({
     element: document.getElementById('map'),
     geographyConfig: {
+      dataUrl: '/data/world-50m.topo.json',
       popupTemplate: function(geography, data) {
         return '<div class="hoverinfo"><strong>' + geography.properties.name + '<br>' + data.downloads.toLocaleString() + '</strong></div>';
       }
     },
+    scope: 'world-50m',
     fills: {
-      defaultFill: "#cccccc",
-      "<?php echo $arrBinLabels[0]; ?>": "rgb(173,186,206)",
-      "<?php echo $arrBinLabels[1]; ?>": "rgb(132,152,181)",
-      "<?php echo $arrBinLabels[2]; ?>": "rgb(90,117,156)",
-      "<?php echo $arrBinLabels[3]; ?>": "rgb(49,83,132)",
-      "<?php echo $arrBinLabels[4]; ?>": "rgb(8,48,107)",
+      defaultFill: "#e6e6e6",
+      "<?php echo $arrBinLabels[0]; ?>": "rgb(193,207,230)",
+      "<?php echo $arrBinLabels[1]; ?>": "rgb(143,165,196)",
+      "<?php echo $arrBinLabels[2]; ?>": "rgb(96,124,166)",
+      "<?php echo $arrBinLabels[3]; ?>": "rgb(50,85,135)",
+      "<?php echo $arrBinLabels[4]; ?>": "rgb(8,46,102)",
     },
-    data: mapdata
+    data: mapdata,
+    setProjection: function(element) {
+      var projection = d3.geo.equirectangular()
+        .center([0, 0])
+        .scale(element.offsetWidth / 6.27)
+        .translate([element.offsetWidth / 2, element.offsetHeight / 2]);
+
+       var path = d3.geo.path().projection(projection);
+       return {path: path, projection: projection};
+    }
   });
 
   map.legend({

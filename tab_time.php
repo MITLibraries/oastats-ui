@@ -11,6 +11,7 @@ $(document).ready(function() {
   var color = ["#1792e4", "#ff4248", "#51b23b", "#ff6e00", "#9574D4", "#008751", "#ac51ad", "#044187", "#ff3467", "#e7a609"];
   var colorLight = ["#97d2ff", "#ff9298", "#a1f27b", "#ffae50", "#9574D4", "#008751", "#ac51ad", "#044187", "#ff3467", "#e7a609"];
   var timeFormat = d3.time.format('%b %d, %Y');
+  var tickFormat = d3.time.format('%b %Y');
 
   var dataRaw = new Array;
 
@@ -124,7 +125,8 @@ $(document).ready(function() {
         .tickFormat(d3.format('d'))
         .scale(x)
         .ticks(7)
-        .tickFormat(timeFormat);
+        .tickFormat(tickFormat)
+        .tickSize(10);
 
       var yAxis = d3.svg.axis()
         .scale(y)
@@ -161,12 +163,13 @@ $(document).ready(function() {
         .attr('text-anchor', 'middle')
         .attr('class', 'title');
 
+      var xAxisAdjust = 2;
       var xAxisElem = svg.append('g')
         .attr('class', 'x axis')
         .attr('transform', 'translate(0,' + y(minY) + ')')
         .call(xAxis)
         .selectAll('text')
-        .attr('transform', function(d) { return 'rotate(-45,' + this.getAttribute('x') + ',' + this.getAttribute('y') + ')'; })
+        .attr('transform', function(d) { return 'rotate(-90,' + (+this.getAttribute('x')-2) + ',' + (+this.getAttribute('y')+2) + ')'; })
         .style('text-anchor', 'end')
 
       var yAxisElem = svg.append('g')
