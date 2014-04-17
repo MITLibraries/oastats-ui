@@ -4,8 +4,8 @@
 		switch ($_SERVER["SERVER_NAME"]) {
 			case "oastats-dev.mit.edu":
 				$m = new Mongo('mongodb://libdb-dev.mit.edu:27017');
-				$db = $m->oatest;
-				$collection = $db->request;
+				$db = $m->oastats_ua;
+				$collection = $db->requests;
 				$summaries = $db->summary;
 				break;
 			case "oastats-test.mit.edu":
