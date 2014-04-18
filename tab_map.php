@@ -232,13 +232,20 @@ foreach($dataset as $key => $val) {
       "bLengthChange": false,
       "bInfo": false,
       "sPaginationType": "full_numbers",
-      "iDisplayLength": 25
+      "iDisplayLength": 25,
+      "fnDrawCallback": function() {
+        var pagination = this.attr('id')+'_paginate';
+        if(this.fnSettings().fnRecordsDisplay()<=25){
+          $("#"+pagination).hide();
+        } else {
+          $("#"+pagination).show();
+        }
+      }      
     });
 
     var toggle = $(".paging_full_numbers").append('<a class="showall paginate_button">Show All</a>');
 
     $(".showall").click(function() {
-      console.log("clicked");
       var dtSettings = dt.fnSettings();
       var label = $(this).html();
       if(label == "Show All") {
@@ -249,7 +256,6 @@ foreach($dataset as $key => $val) {
         $(this).text("Show All");
       }
       dt.fnDraw();
-      console.log("changed");
     });
 
     // Set export options
