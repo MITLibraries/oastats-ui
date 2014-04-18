@@ -58,10 +58,10 @@ if(!isset($strPageTitle)) {
 			<div class="page-inner">
 				<div id="masthead">
 					<div id="mit-libraries"><a href="http://libraries.mit.edu"><img src="/images/logo-black.png" alt="MIT Libraries logo"></a></div>
-					<h1>MIT's Open Access Article Statistics</h1>
+					<div id="sitetitle">MIT's Open Access Article Statistics</div>
 					<div id="mit"><a href="http://web.mit.edu"><img src="/images/logo-mit-74x40.png" alt="MIT logo"></a></div>
 				</div>
 				<?php require_once('includes/navigation.php'); ?>
 				<?php require_once('includes/include_mongo_connect.php'); ?>
-				<h2 class="pagetitle"><?php echo $strPageTitle; ?></h2>
+				<h1 class="pagetitle"><?php echo $strPageTitle; ?></h1>
 				<section class="main">
