@@ -189,7 +189,9 @@ foreach($dataset as $key => $val) {
       dataUrl: '/data/world-50m.topo.json',
       popupTemplate: function(geography, data) {
         return '<div class="hoverinfo"><strong>' + geography.properties.name + '<br>' + data.downloads.toLocaleString() + '</strong></div>';
-      }
+      },
+      highlightFillColor: '#9E8E4D',
+      highlightBorderColor: '#907D33'
     },
     scope: 'world-50m',
     fills: {
