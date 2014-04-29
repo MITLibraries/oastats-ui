@@ -31,7 +31,7 @@ strong {
 	line-height: 1.125rem;
 }
 .page-inner {
-	background: #fff;
+	background: #ececec;
 	border: 1px solid #999;
 	padding: 0.5rem;
 }
@@ -99,8 +99,6 @@ section.main {
 #oafilter {
 	display: table-cell;
 	width: 20%;               /* For old syntax, otherwise collapses. */
-	background-color: #ccc;
-	padding: 0.25rem;
 	vertical-align: top;
 }
 #oafilter h2 {
@@ -109,14 +107,22 @@ section.main {
 }
 #oafilter form {
 	margin-bottom: 1rem;
+	background-color: #fff;
+	padding: 0.5rem;
 }
 #oafilter .filter {
 	max-height: 20rem;
 	overflow-y: auto;	
+	overflow-x: hidden;
 	margin: 0.5rem 0;
+	padding: 0;
+	padding-right: 1rem;
 }
 #oafilter .filter .checkbox {
 	display: table-row;
+}
+#oafilter .filter .checkbox:nth-child(odd) {
+	/* background-color: #e6e6e6; */
 }
 #oafilter .filter .checkbox input {
 	display: table-cell;
@@ -128,6 +134,7 @@ section.main {
 #oafilter .filter .checkbox span {
 	display: table-cell;
 	padding-bottom: .5rem;
+	padding-right: 0.5rem;
 	vertical-align: top;
 }
 /* Export controls */
@@ -143,6 +150,7 @@ section.main {
 	width: 80%;               /* For old syntax, otherwise collapses. */
 	vertical-align: top;
 	padding-left: 10px;
+	background-color: #ececec;
 }
 #tabs ul {
 	list-style-type: none;
@@ -160,8 +168,6 @@ section.main {
 	padding: 0.5em;
 	color: #000;
 	text-decoration: none;
-	border: 1px solid #eaeaea;
-	border-bottom: none;
 	font-size: 16px;
 	font-weight: bold;
 }
@@ -170,11 +176,11 @@ section.main {
 	background: #f2f2f2;
 }
 #tabs ul li.ui-state-active {
-	background: #eaeaea;
+	background: #fff;
 }
 .ui-tabs-panel {
 	clear: both;
-	background: #eaeaea;
+	background: #fff;
 	padding: 1em;
 }
 .semantic {
@@ -183,8 +189,24 @@ section.main {
 	top: -999px;
 }
 /* DataTables overrides */
+#page .dataTable thead th {
+	border-bottom: 1px solid #aaa;
+}
+#page .dataTable tr {
+	border-bottom: 1px solid #aaa;
+}
 #page .dataTable td {
 	padding: 5px 10px;
+	border-left: 1px solid #aaa;
+}
+#page .dataTable td:first-child {
+	border-left: none;
+}
+#page .dataTable tr.odd:hover td {
+	background-color: #e6daac !important;
+}
+#page .dataTable tr.even:hover td {
+	background-color: #e6daac !important;
 }
 #page .dataTables_paginate {
 	float: none;
@@ -196,15 +218,28 @@ section.main {
 	-webkit-border-radius: 0px;
 	-moz-border-radius: 0px;
 	border-radius: 0px;
+	color: #000 !important;
 }
-#page table.dataTable tr.odd { background-color: #e6e6e6; }
+#page .paging_full_numbers a.paginate_active {
+	background-color: #9E8E4D;
+}
+#page .dataTable a img { 
+	margin-right: 6px;
+}
+#page table.dataTable tr.odd { background-color: white; }
 #page table.dataTable tr.even { background-color: white; }
-#page table.dataTable tr.odd td.sorting_1 { background-color: #d8d8d8; }
-#page table.dataTable tr.even td.sorting_1 { background-color: #ececec; }
+#page table.dataTable tr.odd td.sorting_1 { background-color: white; }
+#page table.dataTable tr.even td.sorting_1 { background-color: white; }
 #page .sorting,
 #page .sorting_desc,
 #page .sorting_asc {
 	background-position: center left;
+}
+#page .sorting_desc {
+	background-image: url('../images/sort_desc_a.png');
+}
+#page .sorting_asc {
+	background-image: url('../images/sort_asc_a.png');
 }
 #page table.dataTable thead th {
 	padding: 3px 10px 3px 18px;
