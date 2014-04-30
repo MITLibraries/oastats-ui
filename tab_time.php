@@ -1,4 +1,14 @@
+<?php
+if(isset($_GET["d"])) {
+  $strGroup = "authors";
+} elseif(isset($_GET["a"])) {
+  $strGroup = "papers";
+} else {
+  $strGroup = "departments, labs or centers";
+}
+?>
 <link rel="stylesheet" href="styles/time.css">
+<p id="instructions">This chart displays up to ten different <?php echo $strGroup; ?>. Data for additional selections can be downloaded via the export tools, but only the first ten records will be visualized.</p>
 <div class="vis new" id="time">
   <div id="time-tooltip" class="tooltip"></div>
 </div>
@@ -66,7 +76,7 @@ $(document).ready(function() {
       }
       if (single) {
         tooltipElem.append(_.template(tooltipSingleTemplate, {
-          value: data[0][index],
+          value: formatNumber(data[0][index]),
           date: date
         }));
         return;
@@ -83,7 +93,7 @@ $(document).ready(function() {
         if (index < 0) {
           value = '';
         } else {
-          value = d[index];
+          value = formatNumber(d[index]);
         }
         _results.push(tooltipElem.append(_.template(tooltipSectionTemplate, {
           name: dataNames[_i],
@@ -92,6 +102,12 @@ $(document).ready(function() {
         })));
       }
       return _results;
+    };
+
+    var formatNumber = function(x) {
+      // from http://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
+      // Using this instead of .toLocaleString() because of Safari and mobile problems
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     };
 
     var render = function() {
@@ -195,35 +211,29 @@ $(document).ready(function() {
         .attr('fill', 'none')
         .attr('stroke-width', '1.5px');
 
-      if(multi) {
-        var circle = svg.append('g').selectAll('g')
-          .data(data)
-          .enter().append('g').append('circle')
-          .attr('cx', x(dates[0]))
-          .attr('cy', function(d) { return y(d[0]); })
-          .attr('opacity', 0)
-          .attr('r', 4)
-          .attr('fill', function(d, i) {
-            return color[i];
-          });
-      }
+      var circle = svg.append('g').selectAll('g')
+        .data(data)
+        .enter().append('g').append('circle')
+        .attr('cx', x(dates[0]))
+        .attr('cy', function(d) { return y(d[0]); })
+        .attr('opacity', 0)
+        .attr('r', 4)
+        .attr('fill', function(d, i) {
+          return color[i];
+        });
 
       resetTooltip();
 
       $('#' + id)
         .on('mouseenter', function(e) {
-          if(multi) {
-            circle.attr('opacity', 1);
-          }
-          else {
+          circle.attr('opacity', 1);
+          if(!multi) {
             $('#' + tooltip).show();
           }
         })
         .on('mouseleave', function(e) {
           resetTooltip();
-          if(multi) {
-            circle.attr('opacity', 0);
-          }
+          circle.attr('opacity', 0);
         })
         .on('mousemove', function(e) {
           var mouseX = e.pageX - $('svg').offset().left;
@@ -252,11 +262,9 @@ $(document).ready(function() {
             if(multi) tooltipY = 50;
 
             updateTooltip(tooltipX, tooltipY, index, closestDate);
-            if(multi) {
-              circle.transition().duration(50)
-                .attr('cx', xVal)
-                .attr('cy', function(d) { return y(d[curIndex]); });
-            }
+            circle.transition().duration(50)
+              .attr('cx', xVal)
+              .attr('cy', function(d) { return y(d[curIndex]); });
           }
         });
 
@@ -271,7 +279,7 @@ $(document).ready(function() {
 
 
   var showTooLong = function() {
-    $(".vis").before('<div class="warning"><strong>Please note:</strong> You have selected more filter items than this chart can display. Only the first ten have been displayed, although the full set is available using the export tools.</div>');
+    $("#instructions").html('<div class="warning"><strong>Please note:</strong> You have selected more filter items than this chart can display. Only the first ten have been displayed, although the full set is available using the export tools.</div>');
   };
 
   $.getJSON('data/json-time-running.php?<?php echo $_SERVER["QUERY_STRING"];?>',function(data) {
