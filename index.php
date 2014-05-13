@@ -1,5 +1,5 @@
 <?php
-	$strPageTitle = "Welcome to MIT's Open Access Article Statistics";
+	$strPageTitle = "Welcome";
 
 	require_once('includes/initialize.php'); 
 

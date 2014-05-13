@@ -2,7 +2,7 @@
 			</div>
 			<div id="colophon">
 				<div class="left block">
-					<a href="http://libraries.mit.edu"><img src="/images/logo-black.png" alt="MIT Libraries"></a>
+					
 				</div>
 				<div class="center block">
 					<p>Please email <a href="mailto:oastats@mit.edu">oastats@mit.edu</a> with any comments or questions regarding this site.</p>
@@ -11,7 +11,7 @@
 					<a href="http://dspace.mit.edu/handle/1721.1/49433">Open Access Articles</a></p>
 				</div>
 				<div class="right block">
-					<a href="http://web.mit.edu"><img src="/images/logo-mit-74x40.png" alt="MIT logo"></a>
+					
 				</div>
 			</div>
 <?php
