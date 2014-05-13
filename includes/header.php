@@ -10,6 +10,12 @@ if(!isset($strPageTitle)) {
 	$strPageTitle = '';
 }
 
+if($_SERVER['SCRIPT_NAME']=='/index.php') {
+	$strBodyClass = 'front';
+} else {
+	$strBodyClass = '';
+}
+
 ?>
 <html lang="en">
 	<head>
@@ -53,7 +59,7 @@ if(!isset($strPageTitle)) {
 
 		</script>
 	</head>
-	<body>
+	<body class="<?php echo $strBodyClass; ?>">
 		<div id="page">
 			<div class="page-inner">
 				<div id="masthead">
