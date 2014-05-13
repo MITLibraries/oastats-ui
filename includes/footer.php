@@ -68,13 +68,11 @@ if(isset($_SESSION["admin"]) && $_SERVER["SCRIPT_NAME"] == "/author.php") {
 				if(item=="all") {
 					// Clicked on "all"
 					$("#oafilter input[value!='all']").each(function() {
-						console.log($(this).val());
 						$(this).attr('checked', false);
 					});
 				} else {
 					// Clicked on something else - make sure "all" isn't checked
 					$("#oafilter #all").attr('checked', false);
-					console.log('b');
 				}
 			});
 
