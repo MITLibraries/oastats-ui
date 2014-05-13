@@ -35,6 +35,9 @@ strong {
 	border: 1px solid #999;
 	padding: 0.5rem;
 }
+.front .page-inner {
+	background: #ececec url('/images/bg_map.png') no-repeat 43.142857rem 3.78571rem;
+}
 #masthead {
 	background: #ffcdcd;
 	padding: 1rem;
@@ -271,19 +274,28 @@ section.main {
 #content p {
 	margin-bottom: 1rem;
 }
-p.option a.button {
-	display: table-cell;
-	background: #08306B; 
-	color: white;
-	text-decoration: none;
+#content p.option {
+	margin-top: 0.5rem;
+	margin-bottom: 1.5rem;
 	padding: 0.5rem;
-	width: 20%;
-	vertical-align: middle;
+	border: 1px solid #aaa;
+}
+#content p.option:hover {
+	background-color: #e6daac;
+}
+p.option a {
+	text-decoration: none;
+	color: black;
 }
 p.option span {
 	display: table-cell;
-	padding: 0.5rem 0 0.5rem 1rem;
-	vertical-align: middle;
+	vertical-align: top;
+}
+p.option span.button {
+	font-weight: bold;
+	width: 20%;
+	color: black;
+	font-size: 16px;
 }
 
 /* Colophon */
