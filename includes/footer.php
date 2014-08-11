@@ -36,7 +36,7 @@ if(isset($_SESSION["admin"]) && $_SERVER["SCRIPT_NAME"] == "/author.php") {
 
 ?>
 		</div>
-		<?php require_once('includes/include_mongo_disconnect.php'); ?>
+		<?php require_once($_SERVER["DOCUMENT_ROOT"].'/includes/include_mongo_disconnect.php'); ?>
 		<script>
 		$(document).ready(function() {
 
