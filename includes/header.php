@@ -21,8 +21,8 @@ if($_SERVER['SCRIPT_NAME']=='/index.php') {
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
 		<title><?php echo $strPageTitle; ?> | MIT's Open Access Article Statistics</title>
-		<link rel="stylesheet" href="styles/reset.css">
-		<link rel="stylesheet" href="styles/styles.css">
+		<link rel="stylesheet" href="/styles/reset.css">
+		<link rel="stylesheet" href="/styles/styles.css">
 		<!--[if lte IE 7]>
 		<link rel="stylesheet" href="styles/ie7.css">
 		<![endif]-->
@@ -37,17 +37,17 @@ if($_SERVER['SCRIPT_NAME']=='/index.php') {
 <?php
 		default:
 ?>
-		<script src="scripts/jquery-1.8.3.js"></script>
-		<script src="scripts/jquery-ui-1.10.3.js"></script>
+		<script src="/scripts/jquery-1.8.3.js"></script>
+		<script src="/scripts/jquery-ui-1.10.3.js"></script>
 <?php
 	}
 ?>		
-		<script src="scripts/jquery.ba-bbq.min.js" charset="utf-8"></script>
-		<script src="scripts/d3.v3.min.js" charset="utf-8"></script>
-		<script src="scripts/d3.geo.projection.v0.min.js" charset="utf-8"></script>
-		<script src="scripts/topojson.v1.min.js" charset="utf-8"></script>
-		<script src="scripts/datamaps.world.min.js" charset="utf-8"></script>
-		<script src="scripts/underscore.js"></script>
+		<script src="/scripts/jquery.ba-bbq.min.js" charset="utf-8"></script>
+		<script src="/scripts/d3.v3.min.js" charset="utf-8"></script>
+		<script src="/scripts/d3.geo.projection.v0.min.js" charset="utf-8"></script>
+		<script src="/scripts/topojson.v1.min.js" charset="utf-8"></script>
+		<script src="/scripts/datamaps.world.min.js" charset="utf-8"></script>
+		<script src="/scripts/underscore.js"></script>
 		<script>
 		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -67,7 +67,7 @@ if($_SERVER['SCRIPT_NAME']=='/index.php') {
 					<div id="sitetitle">MIT's Open Access Article Statistics</div>
 					<div id="mit"><a href="http://web.mit.edu"><img src="/images/logo-mit-74x40.png" alt="MIT logo"></a></div>
 				</div>
-				<?php require_once('includes/navigation.php'); ?>
-				<?php require_once('includes/include_mongo_connect.php'); ?>
+				<?php require_once($_SERVER["DOCUMENT_ROOT"].'/includes/navigation.php'); ?>
+				<?php require_once($_SERVER["DOCUMENT_ROOT"].'/includes/include_mongo_connect.php'); ?>
 				<h1 class="pagetitle"><?php echo $strPageTitle; ?></h1>
 				<section class="main">
