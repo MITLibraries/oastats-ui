@@ -48,7 +48,7 @@ function buildQueryCriteria($salt,$strQueryType) {
 				if($_GET["page"]=="/author.php") {
 					$arrTemp = array(
 						'type' => 'handle',
-						'parents.mitid' => $salt.$_SESSION["hash"]
+						'parents.mitid' => $_SESSION["mitid"]
 					);
 				}
 			}
@@ -61,7 +61,7 @@ function buildQueryCriteria($salt,$strQueryType) {
 				if($_GET["page"]=="/author.php") {
 					$arrTemp = array(
 						'type' => 'author',
-						'_id.mitid' => $salt.$_SESSION["hash"]
+						'_id.mitid' => $_SESSION["mitid"]
 					);
 				}
 			}
@@ -74,7 +74,7 @@ function buildQueryCriteria($salt,$strQueryType) {
 				if($_GET["page"]=="/author.php") {
 					$arrTemp = array(
 						'type' => 'handle',
-						'parents.mitid' => $salt.$_SESSION["hash"]
+						'parents.mitid' => $_SESSION["mitid"]
 					);
 				}
 			}
@@ -86,7 +86,7 @@ function buildQueryCriteria($salt,$strQueryType) {
 		$reqFilter = $_GET["filter"];
 		$arrFilter = array();
 		foreach($reqFilter as $term) {
-			array_push($arrFilter,array('_id'=>$term));
+			array_push($arrFilter,array('_id.display'=>$term));
 		}
 		$arrTemp = array('$or'=>$arrFilter);
 	}

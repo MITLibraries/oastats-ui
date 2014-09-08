@@ -38,7 +38,7 @@ if(isset($_GET["d"])) {
   $reqA = urldecode($_GET["a"]);
   $reqA = str_replace('@mit.edu','',$reqA);
   $arrCriteria = array('_id'=>$reqA);
-  $arrCriteria = array('type' => 'author','_id.mitid'=>$salt.$_SESSION["hash"]);
+  $arrCriteria = array('type' => 'author','_id.mitid'=>$_SESSION["mitid"]);
   $arrMatch = array('$match' => array('author'=>$reqA) );
   array_push($arrQuery,$arrMatch);
 } else {
@@ -49,7 +49,7 @@ if(isset($_GET["filter"])) {
   $reqFilter = $_GET["filter"];
   $arrFilter = array();
   foreach($reqFilter as $term) {
-    array_push($arrFilter,array('_id'=>$term));
+    array_push($arrFilter,array('_id.display'=>$term));
   }
   $arrCriteria = array('$or'=>$arrFilter);
 }

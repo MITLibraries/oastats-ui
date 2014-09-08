@@ -74,7 +74,7 @@ if(isset($_GET["d"])) {
 	$reqA = $_GET["a"];
 	$reqA = str_replace('@mit.edu','',$reqA);
 	$strFilterTerm = '_id';
-	$arrCriteria = array('type' => 'handle','parents.mitid'=>$salt.$_SESSION["hash"]);
+	$arrCriteria = array('type' => 'handle','parents.mitid'=>$_SESSION["mitid"]);
 	$nextType = "";
 	$strGroup = "Paper";
 	$arrProjection = array(
@@ -90,7 +90,7 @@ if(isset($_GET["d"])) {
 	$nextType = "";
 	$strGroup = "Paper";
 } else {
-	$strFilterTerm = '_id';
+	$strFilterTerm = '_id.display';
 	$arrCriteria = array('type' => 'dlc');
 	$nextType = "d";
 	$strGroup = "Department, Lab or Center";
@@ -136,9 +136,9 @@ foreach($cursor as $document) {
 		$strLink = '<a href="'.$document["_id"].'"><img src="/images/icon-link.png" alt="'.$strEquivalent.'" title="'.$strEquivalent.'"></a>';
 		$strTitle = $document["title"];
 	} else {
-		$strEquivalent = 'View papers from '.$document["_id"].' in DSpace@MIT';
-		$strLink = '<a href="http://dspace.mit.edu/advanced-search?num_search_field=1&results_per_page=10&scope=1721.1%2F49432&field1=department&query1='.urlencode($document["_id"]).'&rpp=10&sort_by=0&order=DESC"><img src="/images/icon-link.png" alt="'.$strEquivalent.'" title="'.$strEquivalent.'"></a>';
-		$strTitle = $document["_id"];
+		$strEquivalent = 'View papers from '.$document["_id"]["display"].' in DSpace@MIT';
+		$strLink = '<a href="http://dspace.mit.edu/advanced-search?num_search_field=1&results_per_page=10&scope=1721.1%2F49432&field1=department&query1=&quot;'.urlencode($document["_id"]["canonical"]).'&quot;&rpp=10&sort_by=0&order=DESC"><img src="/images/icon-link.png" alt="'.$strEquivalent.'" title="'.$strEquivalent.'"></a>';
+		$strTitle = $document["_id"]["display"];
 	}
 ?>
 	<tr>

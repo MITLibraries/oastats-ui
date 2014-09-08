@@ -57,7 +57,7 @@ foreach($cursor as $document) {
 	array_push($arrOptions,$arrOption);
 }
 usort($arrOptions, function($a,$b) {
-	return strcasecmp($a["title"],$b["title"]);
+	return strcasecmp($a["title"]["display"],$b["title"]["display"]);
 });
 ?>
 	<h2>Show Only</h2>
@@ -74,9 +74,9 @@ usort($arrOptions, function($a,$b) {
 		<?php
 			foreach($arrOptions as $document) {
 		?>
-			<label class="checkbox" for="<?php echo urlencode($document['_id']); ?>">
-				<input type="checkbox" name="filter[]" id="<?php echo urlencode($document['_id']); ?>" value="<?php echo $document['_id']; ?>"<?php if(in_array($document['_id'],$reqFilter)) { echo 'checked="checked"'; } ?>>
-				<span><?php echo $document['title']; ?></span>
+			<label class="checkbox" for="<?php echo urlencode($document['_id']['display']); ?>">
+				<input type="checkbox" name="filter[]" id="<?php echo urlencode($document['_id']['display']); ?>" value="<?php echo $document['_id']['display']; ?>"<?php if(in_array($document['_id']['display'],$reqFilter)) { echo 'checked="checked"'; } ?>>
+				<span><?php echo $document['title']['display']; ?></span>
 			</label>
 		<?php
 			}
