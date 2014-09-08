@@ -50,6 +50,7 @@ function destroySession() {
 	unset($_SESSION["impersonator"]);
 	unset($_SESSION["hash"]);	
 	unset($_SESSION["fullname"]);
+	unset($_SESSION["mitid"]);
 }
 
 function buildReturnURL() {
@@ -85,7 +86,7 @@ function buildLogoutURL() {
 		case "oastats-test.mit.edu":
 		case "oastats.mit.edu":
 			// oastats servers
-			$strURL = "/Shibboleth.sso/Logout?return=/destroyer.php";
+			$strURL = "https://".$_SERVER["SERVER_NAME"]."/Shibboleth.sso/Logout?return=/destroyer.php";
 			break;
 		default:
 			$strURL = "/";
@@ -135,9 +136,11 @@ function warehouseLookup() {
 				// Set fullname and temporary ID
 				if(!$results["MIT_ID"]) {
 					$intID = 0;
+					$_SESSION["mitid"] = 0;
 					$_SESSION["fullname"] = "";
 				} else {
 					$intID = $results["MIT_ID"];
+					$_SESSION["mitid"] = $results["MIT_ID"];
 					$_SESSION["fullname"] = $results["FULL_NAME"];
 				}
 				// hash and store temporary ID

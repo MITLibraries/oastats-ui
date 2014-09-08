@@ -46,7 +46,7 @@ $arrProjection = array(
 
 if(isset($_GET["a"])) {
   // if this is coming from an author view, pull that author
-  $arrCriteria = array('type' => 'author','_id.mitid'=>$salt.$_SESSION["hash"]);
+  $arrCriteria = array('type' => 'author','_id.mitid'=>$_SESSION["mitid"]);
   $arrProjection = array(
     '_id'=>1,
     'title'=>1,
@@ -59,7 +59,7 @@ if(isset($_GET["filter"])) {
   $arrFilter = array();
   // iterate over reqFilter, padding out values
   foreach($reqFilter as $term) {
-    array_push($arrFilter,array('_id'=>$term));
+    array_push($arrFilter,array('_id.display'=>$term));
   }
   $arrCriteria = array( '$or' => $arrFilter);
 }
@@ -130,7 +130,7 @@ foreach($cursor as $document) {
   } elseif(isset($_GET["a"])) {
     array_push($arrDataNamesRaw,$document["_id"]["mitid"]);
   } else {
-    array_push($arrDataNamesRaw,$document["_id"]);
+    array_push($arrDataNamesRaw,$document["_id"]["display"]);
   }
 
   foreach($document["dates"] as $date) {
@@ -143,7 +143,7 @@ foreach($cursor as $document) {
     } elseif(isset($_GET["a"])) {
       $arrSubData[$date["date"]][$document["title"]] = $date["downloads"];
     } else {
-      $arrSubData[$date["date"]][$document["_id"]] = $date["downloads"];
+      $arrSubData[$date["date"]][$document["_id"]["display"]] = $date["downloads"];
     }
   }
 }

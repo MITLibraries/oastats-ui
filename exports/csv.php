@@ -15,6 +15,7 @@ $strContext = findContext();
 
 // Build query
 $arrQuery = buildQuery($salt,$strContext);
+
 /*
 echo "<pre>";
 print_r($arrQuery);
@@ -29,7 +30,8 @@ $arrRS = array();
 foreach($cursor as $document) {
 	switch($strContext){
 		case "Data":
-			array_push($arrRS,$document);
+			array_push($arrRS,array('_id'=>$document['_id']['display'],'size'=>$document['size'],'downloads'=>$document['downloads']));
+			//array_push($arrRS,$document);
 			break;
 		case "Time":
 			// Time cursor needs to be folded from one-dimensional to two-dimensional array
@@ -38,7 +40,7 @@ foreach($cursor as $document) {
 				$strIDField = "Foo";
 				if(isset($_GET["page"])) {
 					if($_GET["page"]=="/public.php") {
-						$strIDField = $document["_id"];
+						$strIDField = $document["_id"]["display"];
 					} elseif ($_GET["page"]=="/author.php") {
 						if(!isset($_GET["filter"])) {
 							$strIDField = $document["_id"]["name"];
@@ -58,7 +60,7 @@ foreach($cursor as $document) {
 				} else {
 					$arrRS[$item["country"]]["Overall"] = $item["downloads"];
 				}
-				$arrRS[$item["country"]][$document["_id"]] = $item["downloads"];
+				$arrRS[$item["country"]][$document["_id"]["display"]] = $item["downloads"];
 			}
 			break;
 		default:
