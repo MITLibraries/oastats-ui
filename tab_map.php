@@ -48,8 +48,13 @@ if(isset($_GET["filter"])) {
   $scope = "Filtered Records";
   $reqFilter = $_GET["filter"];
   $arrFilter = array();
+  if(isset($_GET["a"])) {
+    $strKey = "_id";
+  } else {
+    $strKey = "_id.display";
+  }
   foreach($reqFilter as $term) {
-    array_push($arrFilter,array('_id.display'=>$term));
+    array_push($arrFilter,array($strKey=>$term));
   }
   $arrCriteria = array('$or'=>$arrFilter);
 }

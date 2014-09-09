@@ -85,8 +85,13 @@ function buildQueryCriteria($salt,$strQueryType) {
 	if(isset($_GET["filter"])) {
 		$reqFilter = $_GET["filter"];
 		$arrFilter = array();
+		if($_GET["page"]=="/author.php") {
+			$strKey = '_id';
+		} else {
+			$strKey = '_id.display';
+		}
 		foreach($reqFilter as $term) {
-			array_push($arrFilter,array('_id.display'=>$term));
+			array_push($arrFilter,array($strKey=>$term));
 		}
 		$arrTemp = array('$or'=>$arrFilter);
 	}

@@ -30,7 +30,11 @@ $arrRS = array();
 foreach($cursor as $document) {
 	switch($strContext){
 		case "Data":
-			array_push($arrRS,array('_id'=>$document['_id']['display'],'size'=>$document['size'],'downloads'=>$document['downloads']));
+			if($_GET["page"]=="/author.php") {
+				array_push($arrRS,array('_id'=>$document['_id'],'downloads'=>$document['downloads'],'title'=>$document['title']));
+			} else {
+				array_push($arrRS,array('_id'=>$document['_id']['display'],'size'=>$document['size'],'downloads'=>$document['downloads']));
+			}
 			//array_push($arrRS,$document);
 			break;
 		case "Time":
@@ -60,12 +64,22 @@ foreach($cursor as $document) {
 				} else {
 					$arrRS[$item["country"]]["Overall"] = $item["downloads"];
 				}
-				$arrRS[$item["country"]][$document["_id"]["display"]] = $item["downloads"];
+				if($_GET["page"]=="/author.php") {
+					$arrRS[$item["country"]][$document["_id"]] = $item["downloads"];
+				} else {
+					$arrRS[$item["country"]][$document["_id"]["display"]] = $item["downloads"];
+				}
 			}
 			break;
 		default:
 	}
 }
+
+/*
+echo "<pre>";
+print_r($arrRS);
+echo "</pre>";
+*/
 
 // Sort array
 switch($strContext) {
