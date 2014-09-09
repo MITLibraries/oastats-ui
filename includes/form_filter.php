@@ -28,7 +28,7 @@ if($reqD!="") {
 	include($_SERVER["DOCUMENT_ROOT"]."/includes/salt.php");
 	$reqA = str_replace('@mit.edu','',$reqA);
 	$strInstructions = "Papers:";
-	$arrCriteria = array('type' => 'handle','parents.mitid'=>$salt.$_SESSION["hash"]);
+	$arrCriteria = array('type' => 'handle','parents.mitid'=>$_SESSION["mitid"]);
 	$arrProjection = array(
 		'_id'=>1,
 		'title'=>1
@@ -43,22 +43,30 @@ if($reqD!="") {
 
 $cursor = $summaries->find($arrCriteria,$arrProjection)->sort($arrSort);
 
+// Process result set into the structure needed by the filter UI (stored in arrOptions)
 $arrOptions = array();
 foreach($cursor as $document) {
 	if($reqA!="") {
+		// Author
+		$strID = $document["_id"];
 		$strTitle = $document["title"];
 	} else {
-		$strTitle = $document["_id"];
+		// DLC
+		$strID = $document["_id"]["display"];
+		$strTitle = $document["_id"]["display"];
 	}
 	$arrOption = array(
-		"_id" => $document["_id"],
+		"_id" => $strID,
 		"title" => $strTitle
 	);
 	array_push($arrOptions,$arrOption);
 }
+
+// Sort the result set (arrOptions)
 usort($arrOptions, function($a,$b) {
-	return strcasecmp($a["title"]["display"],$b["title"]["display"]);
+	return strcasecmp($a["title"],$b["title"]);
 });
+
 ?>
 	<h2>Show Only</h2>
 		<?php
@@ -74,9 +82,9 @@ usort($arrOptions, function($a,$b) {
 		<?php
 			foreach($arrOptions as $document) {
 		?>
-			<label class="checkbox" for="<?php echo urlencode($document['_id']['display']); ?>">
-				<input type="checkbox" name="filter[]" id="<?php echo urlencode($document['_id']['display']); ?>" value="<?php echo $document['_id']['display']; ?>"<?php if(in_array($document['_id']['display'],$reqFilter)) { echo 'checked="checked"'; } ?>>
-				<span><?php echo $document['title']['display']; ?></span>
+			<label class="checkbox" for="<?php echo urlencode($document['_id']); ?>">
+				<input type="checkbox" name="filter[]" id="<?php echo urlencode($document['_id']); ?>" value="<?php echo $document['_id']; ?>"<?php if(in_array($document['_id'],$reqFilter)) { echo 'checked="checked"'; } ?>>
+				<span><?php echo $document['title']; ?></span>
 			</label>
 		<?php
 			}
