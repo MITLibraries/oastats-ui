@@ -13,7 +13,7 @@
 				$m = new Mongo('mongodb://libdb-dev.mit.edu:27017');
 				$db = $m->oastats;
 				$collection = $db->requests;
-				$summaries = $db->summary_solr;
+				$summaries = $db->summary;
 				break;
 			case "oastats.mit.edu":
 				$m = new Mongo('mongodb://libdb-1.mit.edu:27017');
