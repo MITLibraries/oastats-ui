@@ -4,7 +4,7 @@
 		switch ($_SERVER["SERVER_NAME"]) {
 			case "oastats-dev.mit.edu":
 				$m = new Mongo('mongodb://libdb-dev.mit.edu:27017');
-				$db = $m->oastats_ua;
+				$db = $m->oastats;
 				$collection = $db->requests;
 				$summaries = $db->summary;
 				break;
@@ -13,13 +13,13 @@
 				$m = new Mongo('mongodb://libdb-dev.mit.edu:27017');
 				$db = $m->oastats;
 				$collection = $db->requests;
-				$summaries = $db->summary;
+				$summaries = $db->summary_solr;
 				break;
 			case "oastats.mit.edu":
-				$m = new Mongo('mongodb://libdb-3.mit.edu:270171');
-				$db = $m->oatest;
-				$collection = $db->request;
-				$summaries = $db->summaries;
+				$m = new Mongo('mongodb://libdb-1.mit.edu:27017');
+				$db = $m->oastats;
+				$collection = $db->requests;
+				$summaries = $db->summary;
 				break;
 			default:
 				$m = new Mongo();
