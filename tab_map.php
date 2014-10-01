@@ -27,6 +27,7 @@ $arrQuery = array();
 
 $scope = "All records";
 $arrCriteria = array('_id'=>'Overall');
+$intLimit = 0;
 
 if(isset($_GET["d"])) {
   $scope = "d";
@@ -41,6 +42,7 @@ if(isset($_GET["d"])) {
   $arrCriteria = array('type' => 'author','_id.mitid'=>$_SESSION["mitid"]);
   $arrMatch = array('$match' => array('author'=>$reqA) );
   array_push($arrQuery,$arrMatch);
+  $intLimit = 1;
 } else {
 }
 
@@ -57,6 +59,7 @@ if(isset($_GET["filter"])) {
     array_push($arrFilter,array($strKey=>$term));
   }
   $arrCriteria = array('$or'=>$arrFilter);
+  $intLimit = 0;
 }
 
 /*
@@ -85,7 +88,7 @@ echo '<h2>Projection</h2>';
 print_r($arrProjection);
 */
 
-$cursor = $summaries->find($arrCriteria,$arrProjection);
+$cursor = $summaries->find($arrCriteria,$arrProjection)->limit($intLimit);
 
 $tempset = array();
 foreach($cursor as $document) {
