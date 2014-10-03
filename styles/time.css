@@ -67,7 +67,7 @@ svg line {
 }
 
 .vis .tooltip .tooltip-section {
-  overflow: auto;
+  overflow: hidden;
   overflow-y: hidden;
   width: 100%;
   margin-bottom: 6px;
@@ -92,6 +92,6 @@ svg line {
   float: left;
   text-align: right;
   font-weight: bold;
-  width: 42px;
+  width: 48px;
   height: 18px;
 }
