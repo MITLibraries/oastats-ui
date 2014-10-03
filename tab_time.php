@@ -114,7 +114,7 @@ $(document).ready(function() {
       if(data.length > 1) {
         multi = true;
         // adjust right margin
-        margin.right = 180;
+        margin.right = 185;
         // 
         $('#' + tooltip).css('top', 30);
         $('#' + tooltip).css('right', 0);
