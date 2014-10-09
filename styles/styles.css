@@ -147,6 +147,10 @@ section.main {
 #oafilter #exports li a {
 	cursor: pointer;
 }
+#oafilter #exports li a:hover,
+#oafilter #exports li a:focus {
+	text-decoration: underline;
+}
 
 #tabs {
 	display: table-cell;
