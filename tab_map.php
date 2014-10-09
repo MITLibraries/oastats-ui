@@ -180,6 +180,12 @@ foreach($dataset as $key => $val) {
   echo $datatable; 
 ?>
 <script>
+  // http://stackoverflow.com/questions/21536984/javascript-format-whole-numbers-using-tolocalestring
+  var formatNumber = function(x) {
+    // from http://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
+    // Using this instead of .toLocaleString() because of Safari and mobile problems
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
 
   var width = $("#map").width();
   var height = width * 9 / 16;
@@ -196,7 +202,7 @@ foreach($dataset as $key => $val) {
     geographyConfig: {
       dataUrl: '/data/world-50m.topo.json',
       popupTemplate: function(geography, data) {
-        return '<div class="hoverinfo"><strong>' + geography.properties.name + '<br>' + data.downloads.toLocaleString() + '</strong></div>';
+        return '<div class="hoverinfo"><strong>' + geography.properties.name + '<br>' + formatNumber(data.downloads) + '</strong></div>';
       },
       highlightFillColor: '#9E8E4D',
       highlightBorderColor: '#907D33',
