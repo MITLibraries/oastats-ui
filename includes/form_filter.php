@@ -78,7 +78,7 @@ usort($arrOptions, function($a,$b) {
 		}
 		?>
 		<div class="filter">
-			<label class="checkbox" for="all"><input type="checkbox" name="filter[]" id="all" value="all"<?php if(!$reqFilter) { echo 'checked="checked"'; }?>><span>All <?php echo $strInstructions; ?></span></label>
+			<label class="checkbox" for="all"><input type="checkbox" name="filter[]" id="all" value="all" <?php if(!$reqFilter) { echo 'checked="checked"'; }?>><span>All <?php echo $strInstructions; ?></span></label>
 		<?php
 			foreach($arrOptions as $document) {
 		?>
