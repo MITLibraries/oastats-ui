@@ -19,7 +19,8 @@ if($_SERVER['SCRIPT_NAME']=='/index.php') {
 ?>
 <html lang="en">
 	<head>
-		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE10">
 		<title><?php echo $strPageTitle; ?> | MIT's Open Access Article Statistics</title>
 		<link rel="stylesheet" href="/styles/reset.css">
 		<link rel="stylesheet" href="/styles/styles.css">
