@@ -242,6 +242,15 @@ foreach($dataset as $key => $val) {
     },
   });
 
+  // Map Title
+  var svg = d3.select('svg');
+  svg.append('g').append('text')
+    .text('Geographic Distribution of Article Downloads')
+    .attr('x', width / 2)
+    .attr('y', 28)
+    .attr('text-anchor', 'middle')
+    .attr('class', 'title');
+
   $(document).ready(function() {
     var dt = $( "table.mapdata" ).dataTable({
       "aaSorting" : [[1, "desc"]],
