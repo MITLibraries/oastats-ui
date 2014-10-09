@@ -68,7 +68,7 @@ usort($arrOptions, function($a,$b) {
 });
 
 ?>
-	<h2>Show Only</h2>
+	<h2>Show only</h2>
 		<?php
 		// store the current depth in the filter form
 		if($reqD!="") {
@@ -90,7 +90,7 @@ usort($arrOptions, function($a,$b) {
 			}
 		?>
 		</div>
-	<input type="submit" value="Submit">
+	<input type="submit" value="Apply filter">
 	</form>
 	<h2>Export</h2>
 	<!-- Export options are placed here by the active tab -->
