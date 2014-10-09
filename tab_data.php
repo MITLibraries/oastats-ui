@@ -16,6 +16,9 @@ session_start();
 			"bLengthChange": false,
 			"bInfo": false,
 			"sPaginationType": "full_numbers",
+			"oLanguage": {
+				"sEmptyTable": "There are no papers currently associated with your name.",
+			},
 			"iDisplayLength": 25,
 			"fnDrawCallback": function() {
 		        var pagination = this.attr('id')+'_paginate';
