@@ -8,7 +8,7 @@ if(isset($_GET["d"])) {
 }
 ?>
 <link rel="stylesheet" href="styles/time.css">
-<p id="instructions">This chart displays up to ten different <?php echo $strGroup; ?>. Data for additional selections can be downloaded via the export tools, but only the first ten records will be visualized.</p>
+<p id="instructions">Use the "Show Only" filter at left to select items for display. "All <?php echo $strGroup; ?>" will display a single line for all values. Alternatively, you can make up to ten individual selections for display on the Timeline. Data for additional selections can be downloaded via the export tools.</p>
 <div class="vis new" id="time">
   <div id="time-tooltip" class="tooltip"></div>
 </div>
