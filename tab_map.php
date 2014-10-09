@@ -176,6 +176,7 @@ foreach($dataset as $key => $val) {
 ?>
 <div id="map" style="position: relative; width: 100%;"></div>
 <p class="unmappable"><?php echo $intUnplottable; ?> downloads could not be placed onto a map.</p>
+<p>Map shows cumulative data from October 1, 2010.</p>
 <?php 
   echo $datatable; 
 ?>
