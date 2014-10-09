@@ -188,7 +188,7 @@ foreach($dataset as $key => $val) {
   };
 
   var width = $("#map").width();
-  var height = width * 9 / 16;
+  var height = (width * 9 / 16) + 30;
 
   $("#map").height(height);
 
@@ -243,8 +243,8 @@ foreach($dataset as $key => $val) {
   });
 
   // Map Title
-  var svg = d3.select('svg');
-  svg.append('g').append('text')
+  var svgmap = d3.select('#map').select('svg');
+  svgmap.append('g').append('text')
     .text('Geographic Distribution of Article Downloads')
     .attr('x', width / 2)
     .attr('y', 28)
