@@ -307,21 +307,11 @@ p.option span.button {
 	margin-top: 1rem;
 	color: #ccc;
 }
-#colophon .block {
-	display: table-cell;
-	vertical-align: top;
-}
-#colophon .left {
-	width: 20%;
-}
 #colophon .center {
-	width: 40%;
+	display: block;
+	vertical-align: top;
 	text-align: center;
 	line-height: 1.5rem;
-}
-#colophon .right {
-	width: 20%;
-	text-align: right;
 }
 #colophon a {
 	text-decoration: none;

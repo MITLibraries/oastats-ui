@@ -1,17 +1,11 @@
 				</section>
 			</div>
 			<div id="colophon">
-				<div class="left block">
-					
-				</div>
 				<div class="center block">
 					<p>Please email <a href="mailto:oastats@mit.edu">oastats@mit.edu</a> with any comments or questions regarding this site.</p>
 					<p><a href="http://libraries.mit.edu/scholarly/mit-open-access/open-access-at-mit/mit-open-access-policy/" id="homeFooter">MIT Faculty Open Access Policy</a>
 					|
 					<a href="http://dspace.mit.edu/handle/1721.1/49433">Open Access Articles</a></p>
-				</div>
-				<div class="right block">
-					
 				</div>
 			</div>
 <?php
