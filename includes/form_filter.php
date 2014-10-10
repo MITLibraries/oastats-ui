@@ -68,7 +68,7 @@ usort($arrOptions, function($a,$b) {
 });
 
 ?>
-	<h2>Show only</h2>
+	<h2>Show only (scroll for more)</h2>
 		<?php
 		// store the current depth in the filter form
 		if($reqD!="") {
