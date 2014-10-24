@@ -76,6 +76,7 @@ foreach($cursor as $document) {
 }
 
 /*
+echo "<h2>After Fold</h2>";
 echo "<pre>";
 print_r($arrRS);
 echo "</pre>";
@@ -131,6 +132,13 @@ switch($strContext) {
 	default:
 }
 
+/*
+echo "<h2>After Sort</h2>";
+echo "<pre id='post-sort'>";
+print_r($arrRS);
+echo "</pre>";
+*/
+
 // Augment array (running totals for timeline, country names for map, etc)
 switch($strContext) {
 	case "Data":
@@ -160,9 +168,11 @@ switch($strContext) {
 				}
 			}
 			$arrQuery["fields"] = $arrFields;
+
 		}
 		// Loop through recordset
 		while ($item = current($arrRS)) {
+
 			// Reset arrItem with zeros
 			while ($field = current($arrQuery["fields"])) {
 				$arrItem[$field] = 0;
@@ -174,17 +184,18 @@ switch($strContext) {
 			$arrItem["Date"] = key($arrRS);
 
 			// Each other point in the array
-			while ($point = current($item)) {
-				$strBucket = key($item);
-				$strCumulativeBucket = "Cumulative ".key($item);
-				$arrItem[$strBucket] = $point;
+			foreach ($item as $key => $val) {
+				$strBucket = $key;
+				$strCumulativeBucket = "Cumulative ".$key;
+				$arrItem[$strBucket] = $val;
 				if(array_key_exists($strCumulativeBucket, $arrItem)) {
-					$arrItem[$strCumulativeBucket] += $point;
+					$arrItem[$strCumulativeBucket] += $val;
 				} else {
-					$arrItem[$strCumulativeBucket] = $point;
+					$arrItem[$strCumulativeBucket] = $val;
 				}
-				next($item);
+
 			}
+
 			array_push($arrAugmented,$arrItem);
 			next($arrRS);
 		}
@@ -239,6 +250,13 @@ switch($strContext) {
 		break;
 	default:
 }
+
+/*
+echo "<h2>After Augmentation</h2>";
+echo "<pre id='post-augment'>";
+print_r($arrRS);
+echo "</pre>";
+*/
 
 $strFilename = "OA_Stats_".$strContext.".csv";
 header("Content-type: text/csv; charset=utf-8");
