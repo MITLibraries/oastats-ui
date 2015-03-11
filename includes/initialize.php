@@ -127,7 +127,7 @@ function warehouseLookup() {
 				$reqA = strtoupper($reqA);
 				$reqA = str_replace('@MIT.EDU', '', $reqA);
 				// search warehouse for ID and Kerberos name, if not found result will be set to false
-				$sql = "select FULL_NAME, MIT_ID from library_employee where krb_name_uppercase = '$reqA'";
+				$sql = "select FULL_NAME, MIT_ID from library_person_lookup where krb_name = '$reqA'";
 				$statement = oci_parse($warehouse, $sql);
 				oci_execute($statement, OCI_DEFAULT);
 				$results = oci_fetch_assoc($statement);
