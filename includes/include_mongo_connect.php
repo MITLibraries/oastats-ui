@@ -1,6 +1,6 @@
 <?php
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/includes/credentials.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/includes/credentials.php");
 
 	try {
 		// connect to Mongo

@@ -108,7 +108,7 @@ function lookupUser($warehouse,$sql) {
 
 function warehouseLookup() {
 	include($_SERVER["DOCUMENT_ROOT"]."/includes/salt.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/includes/credentials.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/includes/credentials.php");
 
 	switch ($_SERVER["SERVER_NAME"]) {
 		case "oastats":
