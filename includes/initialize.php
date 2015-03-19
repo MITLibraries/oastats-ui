@@ -7,6 +7,7 @@ ini_set('display_startup_errors', TRUE);
 
 session_start();
 
+
 // Functions that may be needed by various pages
 function setImpersonate() {
 	// This checks to see whether an administrator has chosen to impersonate another user.
@@ -107,6 +108,7 @@ function lookupUser($warehouse,$sql) {
 
 function warehouseLookup() {
 	include($_SERVER["DOCUMENT_ROOT"]."/includes/salt.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/includes/credentials.php");
 
 	switch ($_SERVER["SERVER_NAME"]) {
 		case "oastats":
@@ -129,7 +131,7 @@ function warehouseLookup() {
 			$reqA = $_SESSION["user"];
 
 			// From this Touchstone name, Look up and hash the MIT ID for this user
-			$warehouse = oci_connect('libuser','tmp3216', '(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=warehouse.mit.edu)(PORT=1521)))(CONNECT_DATA=(SID=DWRHS)))');
+			$warehouse = oci_connect( $warehouse["user"] , $warehouse["password"] , $warehouse["connection"] );
 
 			$intID = 0;
 			$_SESSION["mitid"] = 0;

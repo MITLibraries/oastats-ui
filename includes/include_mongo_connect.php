@@ -1,22 +1,26 @@
 <?php
+
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/includes/credentials.php");
+
 	try {
 		// connect to Mongo
 		switch ($_SERVER["SERVER_NAME"]) {
 			case "oastats-dev.mit.edu":
-				$m = new Mongo('mongodb://libdb-dev.mit.edu:27017');
+				// $m = new Mongo( $mongo["dev"] );
+				$m = new Mongo( $mongo["prod"] );
 				$db = $m->oastats;
 				$collection = $db->requests;
 				$summaries = $db->summary;
 				break;
 			case "oastats-test.mit.edu":
-				// this should be libdb-test when we launch
-				$m = new Mongo('mongodb://libdb-dev.mit.edu:27017');
+				// $m = new Mongo( $mongo["dev"] );
+				$m = new Mongo( $mongo["prod"] );
 				$db = $m->oastats;
 				$collection = $db->requests;
 				$summaries = $db->summary;
 				break;
 			case "oastats.mit.edu":
-				$m = new Mongo('mongodb://libdb-1.mit.edu:27017');
+				$m = new Mongo( $mongo["prod"] );
 				$db = $m->oastats;
 				$collection = $db->requests;
 				$summaries = $db->summary;
