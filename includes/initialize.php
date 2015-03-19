@@ -94,6 +94,16 @@ function buildLogoutURL() {
 	return $strURL;
 }
 
+function lookupUser($warehouse,$sql) {
+	$statement = oci_parse($warehouse, $sql);
+	oci_execute($statement, OCI_DEFAULT);
+	$results = oci_fetch_assoc($statement);
+	if ($results["MIT_ID"]) {
+		$intID = $results["MIT_ID"];
+		$_SESSION["mitid"] = $results["MIT_ID"];
+		$_SESSION["fullname"] = $results["FULL_NAME"];
+	}
+}
 
 function warehouseLookup() {
 	include($_SERVER["DOCUMENT_ROOT"]."/includes/salt.php");
@@ -121,28 +131,26 @@ function warehouseLookup() {
 			// From this Touchstone name, Look up and hash the MIT ID for this user
 			$warehouse = oci_connect('libuser','tmp3216', '(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=warehouse.mit.edu)(PORT=1521)))(CONNECT_DATA=(SID=DWRHS)))');
 
+			$intID = 0;
+			$_SESSION["mitid"] = 0;
+			$_SESSION["fullname"] = "";
+
 			if (!$warehouse) {
 				echo "<p>Error - Unable to connect to data warehouse for identity lookup.</p>";
 			} else {
 				$reqA = strtoupper($reqA);
 				$reqA = str_replace('@MIT.EDU', '', $reqA);
-				// search warehouse for ID and Kerberos name, if not found result will be set to false
-				$sql = "select FULL_NAME, MIT_ID from library_employee where krb_name_uppercase = '$reqA'";
-				$statement = oci_parse($warehouse, $sql);
-				oci_execute($statement, OCI_DEFAULT);
-				$results = oci_fetch_assoc($statement);
-				// disconnect from warehouse
-				oci_close($warehouse);
-				// Set fullname and temporary ID
-				if(!$results["MIT_ID"]) {
-					$intID = 0;
-					$_SESSION["mitid"] = 0;
-					$_SESSION["fullname"] = "";
-				} else {
-					$intID = $results["MIT_ID"];
-					$_SESSION["mitid"] = $results["MIT_ID"];
-					$_SESSION["fullname"] = $results["FULL_NAME"];
+
+				// First we try looking up against library_person_lookup
+				$sql = "select FULL_NAME, MIT_ID from library_person_lookup where krb_name = '$reqA'";
+				lookupUser($warehouse,$sql);
+
+				// If that failed, then try looking up against library_employee
+				if ($intID == 0) {
+					$sql = "select FULL_NAME, MIT_ID from library_employee where krb_name_uppercase = '$reqA'";
+					lookupUser($warehouse,$sql);
 				}
+
 				// hash and store temporary ID
 				$strHash = md5($salt.$intID);
 				$_SESSION["hash"] = $strHash;
