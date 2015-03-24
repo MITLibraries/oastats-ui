@@ -162,6 +162,7 @@ for($i=0;$i<$intBins;$i++) {
   $dblQuintMin = intval( exp( log($lo) + ($i * $dblQuintSize) ) );
   if($i>0){$dblQuintMin++;}
   $dblQuintMax = intval( exp( log($lo) + ( ($i + 1) * $dblQuintSize) ) );
+  if($dblQuintMax == $hi - 1){$dblQuintMax = $hi;}
   array_push($arrBinLabels,$dblQuintMin.' - '.$dblQuintMax);
 }
 
